@@ -1,0 +1,42 @@
+<div mat-card ngClass="card-container">
+    <div ngClass="Job">
+        <div>
+            <label>JObID</label>
+            <h2>{{job.ID}}</h2>
+        </div>
+        <div>
+            <label>JOB NAME</label>
+            <h2>{{job.JOB_NAME}}</h2>
+        </div>
+        <div>
+            <label>BRAND</label>
+            <h2>{{job.BRAND_NAME}}</h2>
+        </div>
+        <div>
+            <label>DEPARTMENT</label>
+            <h2>{{job.DEPARTMENT_NAME}}</h2>
+        </div>
+        <div>
+            <label>PRODUCT LINE</label>
+            <h2>{{job.PRODUCT_LINE_NAME}}</h2>
+        </div>
+    </div>
+    <div ngClass="status">
+        <div>
+            <label>COUNTRY</label>
+            <h2>{{job.COUNTRY_DISPLAY_NAME}}</h2>
+        </div>
+        <div>
+            <label>CREATED DATE</label>
+            <h2>{{job.CREATED_DATE|date:'shortDate'}}</h2>
+        </div>
+        <div>
+            <label>JOB STATUS</label>
+            <h2>{{job.JOB_STATUS}}</h2>
+        </div>
+    </div>
+    <div ngClass="actions">
+        <button>Edit</button>
+        <button>Preview</button>
+    </div>
+</div>

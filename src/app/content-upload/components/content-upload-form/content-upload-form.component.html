@@ -1,0 +1,64 @@
+<form [formGroup]="myForm" (ngSubmit)="submitForm()">
+  <mat-form-field>
+    <mat-label>Brand</mat-label>
+    <input matInput type="input" formControlName="brand" required />
+    <mat-error
+      *ngIf="myForm?.get('brand')?.invalid && myForm?.get('brand')?.touched"
+    >
+      Please enter a valid Brand.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Product Line</mat-label>
+    <input matInput type="input" formControlName="productLine" required />
+    <mat-error
+      *ngIf="
+        myForm?.get('productLine')?.invalid &&
+        myForm?.get('productLine')?.touched
+      "
+    >
+      Please select the ProductLine.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Country</mat-label>
+    <input matInput type="input" formControlName="country" required />
+    <mat-error
+      *ngIf="myForm?.get('country')?.invalid && myForm?.get('country')?.touched"
+    >
+      Please enter Country.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Album Name</mat-label>
+    <input matInput type="input" formControlName="albumName" required />
+    <mat-error
+      *ngIf="
+        myForm?.get('albumName')?.invalid && myForm?.get('albumName')?.touched
+      "
+    >
+      Please enter Album Name
+    </mat-error>
+  </mat-form-field>
+
+  <mat-label>Department</mat-label>
+  <mat-radio-group formControlName="department">
+    <mat-radio-button type="radio" value="creative">Creative</mat-radio-button>
+    <mat-radio-button type="radio" value="sales">Sales</mat-radio-button>
+    <mat-radio-button type="radio" value="marketing"
+      >Marketing</mat-radio-button
+    >
+  </mat-radio-group>
+
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="myForm.invalid"
+  >
+    Submit
+  </button>
+</form>

@@ -1,0 +1,69 @@
+<mat-toolbar>
+  <div ngClass="nav-contents">
+    <div ngClass="nav-item">
+      <mat-icon (click)="onToolbarMenuToggle()">menu</mat-icon>
+      <img class="logo" src="assets/images/monster-logo.png" />
+    </div>
+    <div ngClass="nav-item">
+      <button mat-button>
+        <i class="fa-solid fa-bell fa-2x" style="color: #1e9c1c"></i>
+      </button>
+      <button mat-button>
+        <i class="fa-solid fa-user fa-2x" style="color: #1e9c1c"></i>
+      </button>
+      <button mat-button>
+        <p>Chris</p>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav id="sidenav" mode="side" [class.menu-open]="isMenuOpen" [class.menu-close]="!isMenuOpen" opened>
+    <mat-list *ngIf="!isMenuOpen" role="list">
+      <mat-list-item role="listitem">
+        <button class=""> <img class="side-nav-images" src="assets/images/myjobgs.png"></button>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <button> <img class="side-nav-images" src="assets/images/alljobs.png"></button>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <button> <img class="side-nav-images" src="assets/images/myworkflows.png"></button>
+      </mat-list-item>
+      <mat-list-item>
+        <button> <img class="side-nav-images" src="assets/images/mytasks.png"></button>
+      </mat-list-item>
+    </mat-list>
+    <mat-list role="list" *ngIf="isMenuOpen">
+      <mat-list-item role="listitem">
+        <button class="">
+          <img class="side-nav-images" src="assets/images/myjobgs.png">
+          <p>My Jobs</p>
+        </button>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <button>
+          <img class="side-nav-images" src="assets/images/alljobs.png">
+          <p>All Jobs</p>
+        </button>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <button>
+          <img class="side-nav-images" src="assets/images/myworkflows.png">
+          <p>All Jobs</p>
+        </button>
+      </mat-list-item>
+      <mat-list-item>
+        <button>
+          <img class="side-nav-images" src="assets/images/mytasks.png">
+          <p>All Jobs</p>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content [ngStyle]="{'margin-left':contentMargin+'%'}">
+    <div ngClass="route-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

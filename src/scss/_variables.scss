@@ -1,0 +1,295 @@
+@use "@angular/material" as mat;
+$md-primary-pallette: (
+  50: #f3f5e3,
+  100: #e1e5b9,
+  200: #cdd48b,
+  300: #b9c25d,
+  400: #aab53a,
+  500: #9ba817,
+  600: #93a014,
+  700: #899711,
+  800: #7f8d0d,
+  900: #6d7d07,
+  A100: #f3ffac,
+  A200: #ebff79,
+  A400: #e4ff46,
+  A700: #e0ff2c,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$md-accent-pallette: (
+  50: #eeeeee,
+  100: #d4d4d4,
+  200: #b8b8b8,
+  300: #9b9b9b,
+  400: #858585,
+  500: #707070,
+  600: #686868,
+  700: #5d5d5d,
+  800: #535353,
+  900: #414141,
+  A100: #f5a9a9,
+  A200: #f07b7b,
+  A400: #ff3a3a,
+  A700: #ff2020,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);
+
+$white: #ffffff;
+$grey: mat.get-color-from-palette($md-accent-pallette, 500);
+$border: 5px solid #303030;
+$black: #000000;
+$text-color: #8cc63f;
+$typography-config: mat.define-typography-config();
+$body-font-size: mat.font-size($typography-config, "caption");
+$padding: $body-font-size;
+$background-color: $black;
+$background: #8cc63f;
+$background-button: linear-gradient(270deg, #bfec1d -4.72%, #22bb39 100.79%);
+$border-radius: 7px;
+$font-family: "Teko";
+$font-style: normal;
+$font-weight: 400;
+$font-size: 24px;
+$line-height: 24px;
+
+/* div.row */
+
+// position: absolute;
+// width: 838px;
+// height: 48px;
+// right: 0px;
+// top: 121px;
+
+// /* div.input-group */
+
+// position: absolute;
+// width: 353px;
+// height: 38px;
+// left: 15px;
+// top: 4px;
+
+// /* search */
+
+// position: absolute;
+// width: 160px;
+// height: 30.52px;
+// left: 101px;
+// top: 7px;
+
+// /* Group 8733 */
+
+// position: absolute;
+// width: 160px;
+// height: 27.52px;
+// left: 101px;
+// top: 10px;
+
+// /* Line 5 */
+
+// position: absolute;
+// width: 160px;
+// height: 0px;
+// left: 101px;
+// top: 37.52px;
+
+// border: 5px solid #303030;
+
+// /* svg.svg-inline--fa */
+
+// position: absolute;
+// width: 15px;
+// height: 15px;
+// left: 106px;
+// top: 10px;
+
+// /* Frame */
+
+// position: absolute;
+// width: 15px;
+// height: 15px;
+// left: calc(50% - 15px/2);
+// top: 0px;
+
+// /* Vector */
+
+// position: absolute;
+// left: 0%;
+// right: 0.01%;
+// top: 0%;
+// bottom: -0.01%;
+
+// background: #E0E0E0;
+
+// /* SEARCH */
+
+// position: absolute;
+// width: 97px;
+// height: 24px;
+// left: 138px;
+// top: 7px;
+
+// font-family: 'Teko';
+// font-style: normal;
+// font-weight: 400;
+// font-size: 24px;
+// line-height: 24px;
+// /* identical to box height, or 100% */
+// display: flex;
+// align-items: center;
+// text-align: right;
+// letter-spacing: 0.35em;
+
+// $color: #555555;
+
+// /* button.mat-focus-indicator */
+
+// /* Auto layout */
+// display: flex;
+// flex-direction: row;
+// align-items: flex-start;
+// padding: 7.5px 20px 4.5px;
+
+// position: absolute;
+// visibility: hidden;
+// width: 64px;
+// height: 36px;
+// left: 1px;
+// top: 1px;
+
+// background: #8CC63F;
+// border-radius: 4px;
+
+// /* refresh */
+
+// width: 24px;
+// height: 24px;
+
+// font-family: 'Material Icons';
+// font-style: normal;
+// font-weight: 400;
+// font-size: 24px;
+// line-height: 24px;
+// /* identical to box height, or 100% */
+// display: flex;
+// align-items: center;
+// text-align: center;
+
+// $color: #E6E6E6;
+
+// /* Inside auto layout */
+// flex: none;
+// order: 0;
+// flex-grow: 0;
+
+// /* Reload Btn */
+
+// position: absolute;
+// width: 61px;
+// height: 38px;
+// left: 4px;
+// top: 1px;
+
+// /* Vector 8 */
+
+// position: absolute;
+// left: 0%;
+// right: 0%;
+// top: 0%;
+// bottom: 0%;
+
+// background: linear-gradient(270deg, #BFEC1D -4.72%, #22BB39 100.79%);
+// box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+// border-radius: 7px;
+
+// /* refresh */
+
+// position: absolute;
+// left: 45.9%;
+// right: 45.61%;
+// top: 17.37%;
+// bottom: 19.47%;
+
+// font-family: 'Material Icons';
+// font-style: normal;
+// font-weight: 400;
+// font-size: 24px;
+// line-height: 24px;
+// /* identical to box height, or 100% */
+// display: flex;
+// align-items: center;
+// text-align: center;
+
+// color: #E6E6E6;
+
+// /* Create Job Btn */
+
+// position: absolute;
+// width: 190px;
+// height: 40px;
+// left: 629.39px;
+// top: 3.63px;
+
+// /* Vector 8 */
+
+// position: absolute;
+// width: 190px;
+// height: 40px;
+// left: 629.39px;
+// top: 3.63px;
+
+// background: linear-gradient(270deg, #BFEC1D -4.72%, #22BB39 100.79%);
+// box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+// border-radius: 7px;
+
+// /* CREATE JOB */
+
+// position: absolute;
+// width: 121px;
+// height: 20.43px;
+// left: 664px;
+// top: 14.16px;
+
+// font-family: 'Teko';
+// font-style: normal;
+// font-weight: 700;
+// font-size: 24px;
+// line-height: 24px;
+// /* or 100% */
+// display: flex;
+// align-items: center;
+// text-align: center;
+// letter-spacing: 1.25px;
+// text-transform: uppercase;
+
+// color: #FFFFFF;

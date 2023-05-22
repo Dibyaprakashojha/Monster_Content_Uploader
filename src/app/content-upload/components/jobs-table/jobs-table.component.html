@@ -1,0 +1,77 @@
+<div ngClass="table-container">
+    <div *ngIf="!isMobile" class="flex-row">
+        <div>
+            <button>Reload</button>
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event)" type="input" placeholder="Search" />
+            </mat-form-field>
+        </div>
+        <button routerLink="create-job">Create Job</button>
+    </div>
+    <mat-table *ngIf="!isMobile" [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matSort matColumnDef="JOB_ID">
+            <th ngClass="decorate" mat-header-cell *matHeaderCellDef> JOB ID</th>
+            <td mat-cell *matCellDef="let element"> {{element.JOB_ID}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="JOB_NAME">
+            <th mat-header-cell *matHeaderCellDef> JOB NAME </th>
+            <td mat-cell *matCellDef="let element"> {{element.JOB_NAME}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="BRAND_DISPLAY_NAME">
+            <th mat-header-cell *matHeaderCellDef> BRAND NAME </th>
+            <td mat-cell *matCellDef="let element"> {{element.BRAND_DISPLAY_NAME}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="COUNTRY_DISPLAY_NAME">
+            <th mat-header-cell *matHeaderCellDef> COUNTRY NAME </th>
+            <td mat-cell *matCellDef="let element"> {{element.COUNTRY_DISPLAY_NAME}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="DEPARTMENT_NAME">
+            <th mat-header-cell *matHeaderCellDef> DEPARTMENT NAME </th>
+            <td mat-cell *matCellDef="let element"> {{element.DEPARTMENT_NAME}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="PRODUCT_LINE_NAME">
+            <th mat-header-cell *matHeaderCellDef> PRODUCT LINE </th>
+            <td mat-cell *matCellDef="let element"> {{element.PRODUCT_LINE_NAME}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="JOB_STATUS">
+            <th mat-header-cell *matHeaderCellDef> JOB STATUS </th>
+            <td mat-cell *matCellDef="let element" [ngClass]="{
+                'status approved':element.JOB_STATUS==='APPROVED',
+                'status draft':element.JOB_STATUS==='DRAFT',
+                'status inReview':element.JOB_STATUS==='INREVIEW',
+
+        }"> {{element.JOB_STATUS}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="CREATED_DATE">
+            <th mat-header-cell *matHeaderCellDef> CREATED DATE </th>
+            <td mat-cell *matCellDef="let element"> {{element.CREATED_DATE|date:'shortDate'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ACTIONS">
+            <th mat-header-cell *matHeaderCellDef> ACTIONS </th>
+            <td mat-cell *matCellDef="let element">
+                <button>Delete</button>
+                <button>Edit</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></tr>
+        <tr mat-row [ngStyle]="{'margin-bottom':'10px'}" *matRowDef="let row; columns: displayedColumns;"></tr>
+    </mat-table>
+    <mat-paginator *ngIf="!isMobile" #paginator class="demo-paginator" (page)="handlePageEvent($event)"
+        [length]="length" [pageSize]="pageSize" [showFirstLastButtons]="showFirstLastButtons"
+        [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
+        [pageIndex]="pageIndex" aria-label="Select page">
+    </mat-paginator>
+    <mcu-mobile-jobs-list [jobList]="jobData" *ngIf="isMobile"></mcu-mobile-jobs-list>
+</div>
