@@ -1,18 +1,34 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./scss/theme";
+@import "./scss/variables";
+@font-face {
+  font-family: "teko";
+  src: url("./assets/fonts/Teko/Teko-Light.ttf");
+}
 
 html,
 body {
   height: 100%;
+  background-color: black;
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: teko;
 }
 
 .mat-header-cell {
-  background: var(--background-color, black);
+  background: var(--background-color, #303030);
 }
 
+mat-sidenav-content,
+mat-sidenav,
+mat-paginator,
+mat-mdc-paginator-outer-container {
+  background-color: black;
+}
+
+.mat-cell {
+  font-family: teko;
+}
 .flex-row {
   display: flex;
   justify-content: space-between;

@@ -11,7 +11,7 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$content-upload-primary: mat.define-palette($md-primary-pallette);
+$content-upload-primary: mat.define-palette($md-primary-pallette, A800);
 $content-upload-accent: mat.define-palette($md-accent-pallette);
 
 // The warn palette is optional (defaults to red).
@@ -24,10 +24,30 @@ $content-upload-theme: mat.define-light-theme(
     color: (
       primary: $content-upload-primary,
       accent: $content-upload-accent,
-      //   warn: $content-upload-warn,
+      // warn: $content-upload-warn,
     ),
   )
 );
+
+// @function modify-background($theme, $background-color) {
+//   // Replace the background in the color object's background palette.
+//   $theme-color: map-get($theme, color);
+//   $color-background-palette: map-get($theme-color, black);
+//   $color-background-palette: map-merge($color-background-palette, (black: $background-color));
+//   $color-background-palette: map-merge($color-background-palette, (raised-button: $background-color));
+
+//   // Replace the background in the background palette.
+//   $background-palette: map-get($theme, black);
+//   $background-palette: map-merge($background-palette, (background-color: $background-color));
+//   $background-palette: map-merge($background-palette, (raised-button: $background-color));
+
+//   // Merge the changes into a new theme.
+//   $modified-theme-color: map-merge($theme-color, (background: $color-background-palette));
+//   $modified-theme: map-merge($theme, (color: $modified-theme-color));
+//   $modified-theme: map-merge($modified-theme, (background: $background-palette));
+
+//   @return $modified-theme;
+// }
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component

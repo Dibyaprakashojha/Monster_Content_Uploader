@@ -5,14 +5,12 @@
   max-height: 80%;
 }
 
-mat-table {
-  width: 300px;
-}
-
 th {
-  background-color: black !important;
+  background-color: #303030 !important;
   color: $text-color;
   border-bottom: 2px solid white;
+  font-family: teko;
+  font-size: 20px;
 }
 ::ng-deep {
   mat-header-cell,
@@ -20,11 +18,14 @@ th {
     justify-content: center !important;
   }
 }
+
 td {
-  background-color: black !important;
+  background-color: #303030 !important;
   color: white;
   border-bottom: 2px solid white;
   margin-top: 5px;
+  font-family: teko;
+  font-size: 20px;
 }
 
 .status {

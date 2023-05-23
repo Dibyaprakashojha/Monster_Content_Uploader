@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
   <div ngClass="nav-contents">
     <div ngClass="nav-item">
       <mat-icon (click)="onToolbarMenuToggle()">menu</mat-icon>
@@ -18,7 +18,7 @@
   </div>
 </mat-toolbar>
 
-<mat-sidenav-container>
+<mat-sidenav-container color="primary">
   <mat-sidenav #sidenav id="sidenav" mode="side" [class.menu-open]="isMenuOpen" [class.menu-close]="!isMenuOpen" opened>
     <mat-list *ngIf="!isMenuOpen" role="list">
       <mat-list-item role="listitem">
