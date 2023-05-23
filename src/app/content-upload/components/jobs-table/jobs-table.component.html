@@ -2,9 +2,7 @@
     <div *ngIf="!isMobile" class="flex-row">
         <div>
             <button>Reload</button>
-            <mat-form-field>
-                <input matInput (keyup)="applyFilter($event)" type="input" placeholder="Search" />
-            </mat-form-field>
+            <input (keyup)="applyFilter($event)" type="input" placeholder="Search" />
         </div>
         <button routerLink="create-job">Create Job</button>
     </div>
@@ -60,8 +58,8 @@
         <ng-container matColumnDef="ACTIONS">
             <th mat-header-cell *matHeaderCellDef> ACTIONS </th>
             <td mat-cell *matCellDef="let element">
-                <button>Delete</button>
-                <button>Edit</button>
+                <button ngClass="delete-button"><img src="assets/images/edit.png"></button>
+                <button ngClass="delete-button"><img src="assets/images/preview.png"></button>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></tr>

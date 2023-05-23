@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoutingConstants } from '../RoutingConstants';
 
@@ -7,10 +7,4 @@ import { RoutingConstants } from '../RoutingConstants';
   templateUrl: './core.component.html',
   styleUrls: ['./core.component.scss'],
 })
-export class CoreComponent {
-  constructor(public router: Router) {}
-
-  ngOnInit() {
-    this.router.navigate([RoutingConstants.mcuBaseRoute]);
-  }
-}
+export class CoreComponent {}

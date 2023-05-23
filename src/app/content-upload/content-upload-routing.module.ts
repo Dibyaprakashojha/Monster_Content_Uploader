@@ -9,8 +9,9 @@ const routes: Routes = [
     path: '',
     component: DashboardComponent,
     children: [
-      { path: '', component: JobsTableComponent },
+      { path: 'my-jobs', component: JobsTableComponent },
       { path: 'create-job', component: ContentUploadFormComponent },
+      { path: '', redirectTo: 'my-jobs', pathMatch: 'full' },
     ],
   },
 ];

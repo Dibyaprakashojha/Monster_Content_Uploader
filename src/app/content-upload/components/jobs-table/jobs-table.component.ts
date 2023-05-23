@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { AfterViewInit, OnInit } from '@angular/core';
+import { AfterViewInit, DoCheck, OnInit } from '@angular/core';
 import { Component, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -272,6 +272,7 @@ export class JobsTableComponent implements OnInit, AfterViewInit {
         } else {
           this.isMobile = false;
         }
+        console.log(this.isMobile);
       });
     this.dataSource = new MatTableDataSource(jobDetails);
   }

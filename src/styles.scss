@@ -1,7 +1,7 @@
 @import "./scss/theme";
 @import "./scss/variables";
 @font-face {
-  font-family: "teko";
+  font-family: $font-family;
   src: url("./assets/fonts/Teko/Teko-Light.ttf");
 }
 
@@ -12,7 +12,7 @@ body {
 }
 body {
   margin: 0;
-  font-family: teko;
+  font-family: $font-family;
 }
 
 .mat-header-cell {

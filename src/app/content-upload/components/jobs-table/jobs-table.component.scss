@@ -6,10 +6,10 @@
 }
 
 th {
-  background-color: #303030 !important;
+  background-color: black !important;
   color: $text-color;
-  border-bottom: 2px solid white;
-  font-family: teko;
+  border-bottom: 2px solid black;
+  font-family: $font-family;
   font-size: 20px;
 }
 ::ng-deep {
@@ -22,19 +22,18 @@ th {
 td {
   background-color: #303030 !important;
   color: white;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid black;
   margin-top: 5px;
-  font-family: teko;
+  font-family: $font-family;
   font-size: 20px;
 }
 
-.status {
+img {
+  width: 30px;
+  height: 30px;
 }
 
-.approved {
-}
-.draft {
-}
-
-.inReview {
+button {
+  background-color: transparent;
+  border-width: 0px;
 }
