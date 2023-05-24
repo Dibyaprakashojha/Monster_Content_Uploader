@@ -37,23 +37,24 @@ export class DashboardComponent implements OnInit {
       this.menu = 'my-jobs';
     } else if (this.router.url.includes('all-jobs')) {
       this.menu = 'all-jobs';
-    } else if (this.router.url.includes('all-jobs')) {
-      this.menu = 'all-jobs';
     } else if (this.router.url.includes('my-workflows')) {
-      this.menu = 'my-workFlows';
+      this.menu = 'my-workflows';
     } else if (this.router.url.includes('my-tasks')) {
       this.menu = 'my-tasks';
+    } else if (this.router.url.includes('content-manager')) {
+      this.menu = 'content-manager';
+    } else if (this.router.url.includes('assets-team')) {
+      this.menu = 'assets-team';
     }
   }
 
   checkMenu(menuName: string): boolean {
+    this.activeMenuCompare();
     if (this.menu === menuName) {
       return true;
     }
     return false;
   }
 
-  ngOnInit(): void {
-    this.activeMenuCompare();
-  }
+  ngOnInit(): void {}
 }

@@ -37,3 +37,71 @@ button {
   background-color: transparent;
   border-width: 0px;
 }
+
+.button-slanted {
+  -ms-transform: skewX(-20deg);
+  -webkit-transform: skewX(-20deg);
+  transform: skewX(-20deg);
+  border-radius: 5px;
+  width: 100%;
+  font-family: $font-family;
+  font-size: 15px;
+  color: white;
+  font-weight: bold;
+  word-spacing: 2%;
+  letter-spacing: 2px;
+}
+.create-button {
+  border-radius: 4px;
+  font-family: $font-family;
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+  word-spacing: 2%;
+  margin-right: 30px;
+  height: 40px;
+  width: 150px;
+  letter-spacing: 2px;
+  -ms-transform: skewX(-20deg);
+  -webkit-transform: skewX(-20deg);
+  transform: skewX(-20deg);
+}
+
+.reload {
+  border-radius: 4px;
+  font-family: $font-family;
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+  word-spacing: 2%;
+  height: 40px;
+  width: 60px;
+  letter-spacing: 2px;
+  -ms-transform: skewX(-10deg);
+  -webkit-transform: skewX(-10deg);
+  transform: skewX(-10deg);
+  margin-right: 15px;
+  align-self: flex-end;
+}
+
+.approved {
+  background: linear-gradient(270deg, #49c732 -4.72%, #248512 100.79%);
+}
+.draft {
+  background: linear-gradient(270deg, #657ccd -4.72%, #093bef 100.79%);
+}
+.inReview {
+  background: linear-gradient(270deg, #f99500 -4.72%, #e2ad5d 100.79%);
+}
+
+::ng-deep .custom-input .mat-input-element {
+  background-color: transparent !important; /* Replace with your desired background color */
+  color: #ffffff; /* Replace with your desired text color */
+}
+
+::ng-deep {
+  .mat-sort-header-arrow {
+    color: $background !important;
+    opacity: 1 !important;
+  }
+}

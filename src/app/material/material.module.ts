@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
 import { CdkTableModule } from '@angular/cdk/table';
+import { MatSortModule } from '@angular/material/sort';
 const modules = [
   CdkTableModule,
   MatToolbarModule,
@@ -28,6 +29,7 @@ const modules = [
   MatAutocompleteModule,
   MatRadioModule,
   MatFormFieldModule,
+  MatSortModule,
 ];
 @NgModule({
   declarations: [],

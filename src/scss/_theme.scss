@@ -29,27 +29,4 @@ $content-upload-theme: mat.define-light-theme(
   )
 );
 
-// @function modify-background($theme, $background-color) {
-//   // Replace the background in the color object's background palette.
-//   $theme-color: map-get($theme, color);
-//   $color-background-palette: map-get($theme-color, black);
-//   $color-background-palette: map-merge($color-background-palette, (black: $background-color));
-//   $color-background-palette: map-merge($color-background-palette, (raised-button: $background-color));
-
-//   // Replace the background in the background palette.
-//   $background-palette: map-get($theme, black);
-//   $background-palette: map-merge($background-palette, (background-color: $background-color));
-//   $background-palette: map-merge($background-palette, (raised-button: $background-color));
-
-//   // Merge the changes into a new theme.
-//   $modified-theme-color: map-merge($theme-color, (background: $color-background-palette));
-//   $modified-theme: map-merge($theme, (color: $modified-theme-color));
-//   $modified-theme: map-merge($modified-theme, (background: $background-palette));
-
-//   @return $modified-theme;
-// }
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
 @include mat.all-component-themes($content-upload-theme);

@@ -1,8 +1,9 @@
+import { ContentUploadService } from './../../services/content-upload.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AfterViewInit, DoCheck, OnInit } from '@angular/core';
 import { Component, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { filter } from 'rxjs';
 
@@ -232,6 +233,7 @@ export class JobsTableComponent implements OnInit, AfterViewInit {
   jobData = jobDetails;
 
   pageEvent!: PageEvent;
+
   displayedColumns: string[] = [
     'JOB_ID',
     'JOB_NAME',
@@ -249,18 +251,53 @@ export class JobsTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private contentUploadService: ContentUploadService
+  ) {}
 
   applyFilter(event: Event) {
     let filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  offset!: number;
+
   handlePageEvent(e: PageEvent) {
-    this.pageEvent = e;
-    this.length = e.length;
+    this.offset = e.pageIndex;
     this.pageSize = e.pageSize;
-    this.pageIndex = e.pageIndex;
+    console.log(this.offset + '...' + this.pageSize);
+    this.sortwithPagination();
+  }
+
+  active!: string;
+  direction!: string;
+  sortData(sort: Sort) {
+    this.active = sort.active;
+    this.direction = sort.direction;
+    this.sortwithPagination();
+  }
+
+  sortwithPagination() {
+    this.contentUploadService
+      .getJobsWithSortingAndPagination(
+        this.offset,
+        this.pageSize,
+        this.active,
+        this.direction
+      )
+      .subscribe({
+        next: (data) => {
+          this.dataSource.data = data;
+          this.jobData = data;
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {
+          console.log('Sorting with Pagination Completed');
+        },
+      });
   }
 
   ngOnInit(): void {

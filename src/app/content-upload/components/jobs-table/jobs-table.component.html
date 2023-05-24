@@ -1,14 +1,19 @@
 <div ngClass="table-container">
     <div *ngIf="!isMobile" class="flex-row">
-        <div>
-            <button>Reload</button>
-            <input (keyup)="applyFilter($event)" type="input" placeholder="Search" />
+        <div class="reload-cont">
+            <button class="reload approved">
+                <mat-icon>autorenew</mat-icon>
+            </button>
+            <mat-form-field class="search">
+                <mat-icon matSuffix>search</mat-icon>
+                <input matInput (keyup)="applyFilter($event)" class="search-input" type="input" placeholder="Search" />
+            </mat-form-field>
         </div>
-        <button routerLink="create-job">Create Job</button>
+        <button class="create-button approved" routerLink="create-job">Create Job</button>
     </div>
-    <table mat-table *ngIf="!isMobile" [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container matSort matColumnDef="JOB_ID">
-            <th ngClass="decorate" mat-header-cell *matHeaderCellDef> JOB ID</th>
+    <table mat-table matSort *ngIf="!isMobile" [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="JOB_ID">
+            <th ngClass="decorate" mat-sort-header mat-header-cell *matHeaderCellDef> JOB ID</th>
             <td mat-cell *matCellDef="let element"> {{element.JOB_ID}} </td>
         </ng-container>
 
@@ -42,12 +47,13 @@
 
         <ng-container matColumnDef="JOB_STATUS">
             <th mat-header-cell *matHeaderCellDef> JOB STATUS </th>
-            <td mat-cell *matCellDef="let element" [ngClass]="{
-                'status approved':element.JOB_STATUS==='APPROVED',
-                'status draft':element.JOB_STATUS==='DRAFT',
-                'status inReview':element.JOB_STATUS==='INREVIEW',
-
-        }"> {{element.JOB_STATUS}} </td>
+            <td mat-cell *matCellDef="let element">
+                <button [ngClass]="{
+                    'status approved':element.JOB_STATUS==='APPROVED',
+                    'status draft':element.JOB_STATUS==='DRAFT',
+                    'status inReview':element.JOB_STATUS==='INREVIEW',
+                }" class="button-slanted">{{element.JOB_STATUS}}</button>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="CREATED_DATE">
@@ -70,5 +76,6 @@
         [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
         [pageIndex]="pageIndex" aria-label="Select page">
     </mat-paginator>
-    <mcu-mobile-jobs-list [jobList]="jobData" *ngIf="isMobile"></mcu-mobile-jobs-list>
+
+
 </div>

@@ -33,8 +33,11 @@
   height: 100%;
   width: 80%;
 }
+
 mat-sidenav {
   background-color: black;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .menu-button {
@@ -67,4 +70,16 @@ mat-sidenav {
     display: flex;
     flex-direction: column;
   }
+}
+
+.underline {
+  width: 80%;
+  align-self: center;
+  justify-self: center;
+}
+
+.login-name {
+  color: $text-color;
+  font-size: 30px;
+  font-family: $font-family;
 }

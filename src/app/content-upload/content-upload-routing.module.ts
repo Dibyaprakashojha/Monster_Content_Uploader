@@ -10,7 +10,11 @@ const routes: Routes = [
     component: DashboardComponent,
     children: [
       { path: 'my-jobs', component: JobsTableComponent },
-      { path: 'create-job', component: ContentUploadFormComponent },
+      { path: 'all-jobs', component: JobsTableComponent },
+      { path: 'my-workflows', component: JobsTableComponent },
+      { path: 'content-manager', component: JobsTableComponent },
+      { path: 'assets-team', component: JobsTableComponent },
+      { path: 'my-tasks', component: ContentUploadFormComponent },
       { path: '', redirectTo: 'my-jobs', pathMatch: 'full' },
     ],
   },
