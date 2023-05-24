@@ -43,6 +43,7 @@ mat-sidenav {
 .menu-button {
   background-color: transparent;
   border-width: 0px;
+  top: 12px;
 }
 
 .menu-button-expanded {
@@ -65,13 +66,22 @@ mat-sidenav {
   font-size: 25px;
   font-weight: 500;
 }
-:ng-deep {
-  .mdc-list-item {
-    display: flex;
-    flex-direction: column;
-  }
+
+.mdc-list-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0px 0 16px !important;
 }
 
+.mat-mdc-list-item:not(.mat-mdc-list-item-interactive),
+.mat-mdc-list-option:not(.mat-mdc-list-item-interactive) {
+  width: 74px !important;
+}
+mat-list-item {
+  ::ng-deep .mdc-list-item__content {
+    width: 65px !important;
+  }
+}
 .underline {
   width: 80%;
   align-self: center;
