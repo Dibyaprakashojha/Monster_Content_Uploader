@@ -11,6 +11,8 @@ th {
   border-bottom: 2px solid black;
   font-family: $font-family;
   font-size: 20px;
+  text-align: center;
+  letter-spacing: 1px;
 }
 ::ng-deep {
   mat-header-cell,
@@ -26,6 +28,8 @@ td {
   margin-top: 5px;
   font-family: $font-family;
   font-size: 20px;
+  text-align: center;
+  // letter-spacing: 1px;
 }
 
 img {

@@ -9,5 +9,7 @@ import { Component } from '@angular/core';
 export class CardViewComponent implements OnInit {
   @Input() job: any;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(`jobis`, this.job);
+  }
 }

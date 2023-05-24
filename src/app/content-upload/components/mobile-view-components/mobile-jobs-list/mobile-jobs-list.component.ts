@@ -1,3 +1,4 @@
+import { Route, Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnInit } from '@angular/core';
 
@@ -11,7 +12,30 @@ export class MobileJobsListComponent implements OnInit {
 
   @Input() jobList: any;
 
-  constructor(private breakPointObserver: BreakpointObserver) {}
+  constructor(
+    private breakPointObserver: BreakpointObserver,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {}
+  menuName!: string;
+
+  menuNameIdentifier() {
+    if (this.router.url.includes('my-jobs')) {
+      this.menuName = 'MY JOBS';
+    } else if (this.router.url.includes('all-jobs')) {
+      this.menuName = 'ALL JOBS';
+    } else if (this.router.url.includes('my-workflows')) {
+      this.menuName = 'MY WORKFLOWS';
+    } else if (this.router.url.includes('my-tasks')) {
+      this.menuName = 'MY TASKS';
+    } else if (this.router.url.includes('content-manager')) {
+      this.menuName = 'CONTENT MANAGER';
+    } else if (this.router.url.includes('assets-team')) {
+      this.menuName = 'ASSETS TEAM';
+    }
+  }
+
+  ngOnInit(): void {
+    this.menuNameIdentifier();
+  }
 }

@@ -1,26 +1,64 @@
+@import "src/scss/variables";
+:host {
+  width: 100%;
+}
 .card-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-start;
-  width: 80%;
+  width: 90%;
   padding: 20px;
   background-color: black;
   border-radius: 10px;
   margin-bottom: 5px;
+  max-height: 20%;
+  background-color: #303030;
 }
 
-.status,
+.status-container,
 .actions {
   display: flex;
   flex-direction: column;
 }
 
 .actions {
-  align-self: center;
+  align-self: flex-start;
 }
 
-h2,
+p {
+  color: white;
+  margin: 0px;
+}
 label {
   color: green;
+  font-size: 15px;
+}
+.reload-button {
+  background-color: transparent;
+  border-width: 0px;
+}
+.reload-image {
+  height: 35px;
+  width: 35px;
+}
+
+.status {
+  border-radius: 5px;
+  font-family: $font-family;
+  font-size: 15px;
+  color: white;
+  font-weight: 200;
+  word-spacing: 2%;
+  letter-spacing: px;
+  text-align: center;
+  width: 100%;
+}
+.approved {
+  background: linear-gradient(270deg, #49c732 -4.72%, #248512 100.79%);
+}
+.draft {
+  background: linear-gradient(270deg, #657ccd -4.72%, #093bef 100.79%);
+}
+.inReview {
+  background: linear-gradient(270deg, #f99500 -4.72%, #e2ad5d 100.79%);
 }

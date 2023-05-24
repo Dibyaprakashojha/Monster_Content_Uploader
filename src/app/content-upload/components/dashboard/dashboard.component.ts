@@ -3,9 +3,10 @@ import {
   BreakpointState,
   Breakpoints,
 } from '@angular/cdk/layout';
-import { EventEmitter, Input } from '@angular/core';
+import { EventEmitter, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Output } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
@@ -13,9 +14,11 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
   isMenuOpen = false;
   contentMargin = 10;
+
+  @ViewChild('mobileSideNav') mobileSideNav!: MatSidenav;
 
   onToolbarMenuToggle() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -29,7 +32,22 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  constructor(private router: Router) {}
+  mobileMenuOpen = false;
+  onMobileToolBarToggle() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+    if (this.mobileMenuOpen) {
+      this.mobileSideNav.close();
+    } else {
+      this.mobileSideNav.open();
+    }
+  }
+
+  constructor(
+    private router: Router,
+    private breakpointObserver: BreakpointObserver
+  ) {}
+
+  ngAfterViewInit(): void {}
 
   menu!: string;
   activeMenuCompare() {
@@ -56,5 +74,37 @@ export class DashboardComponent implements OnInit {
     return false;
   }
 
-  ngOnInit(): void {}
+  isMobile!: boolean;
+  isDesktop!: boolean;
+  isTablet!: boolean;
+  ngOnInit(): void {
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall, Breakpoints.Small])
+      .subscribe((result) => {
+        console.log(`result`, result);
+        if (result.matches) {
+          this.isMobile = true;
+          this.isTablet = false;
+          this.isDesktop = false;
+        }
+      });
+    this.breakpointObserver
+      .observe([Breakpoints.Large, Breakpoints.XLarge])
+      .subscribe((result) => {
+        if (result.matches) {
+          this.isMobile = false;
+          this.isTablet = false;
+          this.isDesktop = true;
+        }
+      });
+    this.breakpointObserver
+      .observe([Breakpoints.Medium])
+      .subscribe((result) => {
+        if (result.matches) {
+          this.isMobile = false;
+          this.isTablet = true;
+          this.isDesktop = false;
+        }
+      });
+  }
 }

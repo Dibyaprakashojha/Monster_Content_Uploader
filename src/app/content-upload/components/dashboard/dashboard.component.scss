@@ -99,3 +99,27 @@ mat-list-item {
   height: 50px;
   width: 30px;
 }
+
+/*mobile-view  css*/
+
+.mb-nav-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.mb-nav-item-2 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.mb-menu-image {
+  width: 20px;
+  height: 30px;
+  transform: scale(0.8);
+}
+
+.mb-logo {
+  height: 30px;
+}

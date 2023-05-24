@@ -300,16 +300,30 @@ export class JobsTableComponent implements OnInit, AfterViewInit {
       });
   }
 
+  isDesktop!: boolean;
+  isTablet!: boolean;
   ngOnInit(): void {
     this.breakpointObserver
       .observe([Breakpoints.XSmall, Breakpoints.Small])
       .subscribe((result) => {
+        console.log(`result`, result);
         if (result.matches) {
           this.isMobile = true;
-        } else {
-          this.isMobile = false;
         }
-        console.log(this.isMobile);
+      });
+    this.breakpointObserver
+      .observe([Breakpoints.XLarge])
+      .subscribe((result) => {
+        if (result.matches) {
+          this.isDesktop = true;
+        }
+      });
+    this.breakpointObserver
+      .observe([Breakpoints.Large, Breakpoints.Medium])
+      .subscribe((result) => {
+        if (result.matches) {
+          this.isTablet = true;
+        }
       });
     this.dataSource = new MatTableDataSource(jobDetails);
   }

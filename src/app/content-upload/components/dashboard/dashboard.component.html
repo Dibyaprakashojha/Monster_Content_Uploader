@@ -1,28 +1,25 @@
-<mat-toolbar color="primary">
+<mat-toolbar *ngIf="isDesktop" color="primary">
   <div ngClass="nav-contents">
     <div ngClass="nav-item">
-      <button
-        *ngIf="!isMenuOpen"
-        class="menu-button"
-        (click)="onToolbarMenuToggle()"
-      >
+      <button *ngIf="!isMenuOpen" class="menu-button" (click)="onToolbarMenuToggle()">
         <img class="menu-image" src="assets/images/hamburger.png" />
       </button>
-      <button
-        *ngIf="isMenuOpen"
-        class="menu-button"
-        (click)="onToolbarMenuToggle()"
-      >
+      <button *ngIf="isMenuOpen" class="menu-button" (click)="onToolbarMenuToggle()">
         <img class="menu-image" src="assets/images/close.png" />
       </button>
       <img class="logo" src="assets/images/monster-logo.png" />
     </div>
     <div ngClass="nav-item">
       <button mat-button>
-        <i class="fa-solid fa-bell fa-2x" style="color: #1e9c1c"></i>
+        <i class="fa-solid fa-bell fa-2x" style="color: #8cc63f"></i>
       </button>
+      <!-- <button mat-button>
+        <img src="assets/images/qds.png" />
+      </button> <button mat-button>
+        <img src="assets/images/up-down.png" />
+      </button> -->
       <button mat-button>
-        <i class="fa-solid fa-user fa-2x" style="color: #1e9c1c"></i>
+        <i class="fa-solid fa-user fa-2x" style="color: #8cc63f"></i>
       </button>
       <button mat-button>
         <p class="login-name">Susan Wright</p>
@@ -30,36 +27,51 @@
     </div>
   </div>
 </mat-toolbar>
-<!-- matBadge="3" matbadgeSize="small" matBadgeColor="accent" matBadgePosition="before" -->
+
+
+<mat-toolbar *ngIf="isMobile" color="primary">
+  <div ngClass="nav-contents">
+    <div class="mb-nav-item">
+      <button class="menu-button" *ngIf="!isMenuOpen" (click)="onMobileToolBarToggle()">
+        <img class="mb-menu-image" src="assets/images/hamburger.png" />
+      </button>
+      <button class="menu-button" *ngIf="isMenuOpen" (click)="onMobileToolBarToggle()">
+        <img class="mb-menu-image" src="assets/images/close.png" />
+      </button>
+      <button class="menu-button">
+        <img class="mb-logo" src="assets/images/monster-small.png" />
+      </button>
+      <button class="menu-button">
+        <img class="mb-menu-image" src=" assets/images/add.png" />
+      </button>
+    </div>
+    <div ngClass="mb-nav-item-2">
+      <button class="menu-button">
+        <img class="mb-menu-image" src=" assets/images/save.png" />
+      </button>
+      <button class="menu-button">
+        <img class="mb-menu-image" src=" assets/images/bell.png" />
+      </button>
+      <button class="menu-button">
+        <img class="mb-menu-image" src=" assets/images/login.png" />
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+
 <mat-sidenav-container color="primary">
-  <mat-sidenav
-    #sidenav
-    id="sidenav"
-    mode="side"
-    [class.menu-open]="isMenuOpen"
-    [class.menu-close]="!isMenuOpen"
-    opened
-  >
+  <mat-sidenav *ngIf="isDesktop" #sidenav id="sidenav" mode="side" [class.menu-open]=" isMenuOpen"
+    [class.menu-close]="!isMenuOpen" opened>
     <mat-list *ngIf="!isMenuOpen" role="list">
+
       <mat-list-item class="listitem" role="listitem">
-        <button
-          routerLink="my-jobs"
-          class="menu-button"
-          matBadge="3"
-          matBadgeOverlap="true"
-          matbadgeSize="small"
-          matBadgeColor="accent"
-          matBadgePosition="above"
-        >
-          <img class="menu-image" src="assets/images/myjobgs.png" />
+        <button routerLink="my-jobs" class="menu-button" routerLink="my-jobs" class="menu-button" matBadge="3"
+          matBadgeOverlap="true" matbadgeSize="small" matBadgeColor="accent" matBadgePosition="above">
+          <img class="menu-image" src="assets/images/myjobgs.png">
         </button>
       </mat-list-item>
 
-      <img
-        class="underline"
-        *ngIf="checkMenu('my-jobs')"
-        src="assets/images/underline-sm.png"
-      />
+      <img class="underline" *ngIf="checkMenu('my-jobs')" src="assets/images/underline-sm.png" />
 
       <mat-list-item role="listitem">
         <button routerLink="all-jobs" class="menu-button">
@@ -75,10 +87,7 @@
         </button>
       </mat-list-item>
 
-      <img
-        *ngIf="checkMenu('my-workflows')"
-        src="assets/images/underline-sm.png"
-      />
+      <img *ngIf="checkMenu('my-workflows')" src="assets/images/underline-sm.png" />
 
       <mat-list-item role="listitem">
         <button routerLink="my-tasks" class="menu-button">
@@ -88,7 +97,6 @@
 
       <img *ngIf="checkMenu('my-tasks')" src="assets/images/underline-sm.png" />
     </mat-list>
-
     <mat-list role="list" *ngIf="isMenuOpen">
       <mat-list-item role="listitem">
         <button routerLink="my-jobs" class="menu-button-expanded">
@@ -96,11 +104,7 @@
           <p class="menu-text">My Jobs</p>
         </button>
       </mat-list-item>
-      <img
-        class="underline"
-        *ngIf="checkMenu('my-jobs')"
-        src="assets/images/underline-lg.png"
-      />
+      <img class="underline" *ngIf="checkMenu('my-jobs')" src="assets/images/underline-lg.png" />
 
       <mat-list-item>
         <button routerLink="all-jobs" class="menu-button-expanded">
@@ -116,33 +120,22 @@
           <p class="menu-text">My WorkFlows</p>
         </button>
       </mat-list-item>
-      <img
-        *ngIf="checkMenu('my-workflows')"
-        src="assets/images/underline-lg.png"
-      />
+      <img *ngIf="checkMenu('my-workflows')" src="assets/images/underline-lg.png" />
 
-      <mat-list
-        *ngIf="menu === 'my-workflows' || 'content-manager' || 'assets-team'"
-      >
+      <mat-list *ngIf="menu === 'my-workflows' || 'content-manager' || 'assets-team'">
         <mat-list-item>
           <button routerLink="content-manager" class="menu-button-expanded">
             <p class="menu-text">Conent Manager</p>
           </button>
         </mat-list-item>
-        <img
-          *ngIf="menu === 'content-manager'"
-          src="assets/images/underline-lg.png"
-        />
+        <img *ngIf="menu === 'content-manager'" src="assets/images/underline-lg.png" />
 
         <mat-list-item>
           <button routerLink="assets-team" class="menu-button-expanded">
             <p class="menu-text">Media Assets Team</p>
           </button>
         </mat-list-item>
-        <img
-          *ngIf="menu === 'assets-team'"
-          src="assets/images/underline-lg.png"
-        />
+        <img *ngIf="menu === 'assets-team'" src="assets/images/underline-lg.png" />
       </mat-list>
 
       <mat-list-item>
@@ -153,6 +146,14 @@
       </mat-list-item>
 
       <img *ngIf="checkMenu('my-tasks')" src="assets/images/underline-lg.png" />
+    </mat-list>
+  </mat-sidenav>
+
+  <mat-sidenav *ngIf="isMobile" mode="side" #mobileSideNav>
+    <mat-list>
+      <mat-list-item>
+        <mat-list-item matBadge="2"></mat-list-item>
+      </mat-list-item>
     </mat-list>
   </mat-sidenav>
   <mat-sidenav-content [ngStyle]="{ 'margin-left': contentMargin + '%' }">

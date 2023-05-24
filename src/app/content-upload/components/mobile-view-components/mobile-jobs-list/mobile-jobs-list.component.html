@@ -1,3 +1,9 @@
+<div class="reload-container">
+    <p style="color:green">{{menuName}}</p>
+    <button class="reload-button">
+        <img class="reload-image" src="assets/images/refresh.png" />
+    </button>
+</div>
 <ng-container *ngFor='let job of jobList'>
     <mcu-card-view [job]="job"></mcu-card-view>
 </ng-container>

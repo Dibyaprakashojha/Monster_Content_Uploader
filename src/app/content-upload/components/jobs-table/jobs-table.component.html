@@ -1,7 +1,7 @@
 <div ngClass="table-container">
     <div *ngIf="!isMobile" class="flex-row">
         <div class="reload-cont">
-            <button class="reload approved">
+            <button mat-button class="reload approved">
                 <mat-icon>autorenew</mat-icon>
             </button>
             <mat-form-field class="search">
@@ -9,7 +9,7 @@
                 <input matInput (keyup)="applyFilter($event)" class="search-input" type="input" placeholder="Search" />
             </mat-form-field>
         </div>
-        <button class="create-button approved" routerLink="create-job">Create Job</button>
+        <button mat-button class="create-button approved" routerLink="create-job">Create Job</button>
     </div>
     <table mat-table matSort *ngIf="!isMobile" [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="JOB_ID">
@@ -64,18 +64,17 @@
         <ng-container matColumnDef="ACTIONS">
             <th mat-header-cell *matHeaderCellDef> ACTIONS </th>
             <td mat-cell *matCellDef="let element">
-                <button ngClass="delete-button"><img src="assets/images/edit.png"></button>
-                <button ngClass="delete-button"><img src="assets/images/preview.png"></button>
+                <button><img src="assets/images/edit.png"></button>
+                <button><img src="assets/images/preview.png"></button>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></tr>
         <tr mat-row [ngStyle]="{'margin-bottom':'10px'}" *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator *ngIf="!isMobile" #paginator class="demo-paginator" (page)="handlePageEvent($event)"
+    <mat-paginator *ngIf="isDesktop" #paginator class="demo-paginator" (page)="handlePageEvent($event)"
         [length]="length" [pageSize]="pageSize" [showFirstLastButtons]="showFirstLastButtons"
         [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
         [pageIndex]="pageIndex" aria-label="Select page">
     </mat-paginator>
-
-
+    <mcu-mobile-jobs-list *ngIf="isMobile" [jobList]="jobData"></mcu-mobile-jobs-list>
 </div>

@@ -2,41 +2,50 @@
     <div ngClass="Job">
         <div>
             <label>JObID</label>
-            <h2>{{job.ID}}</h2>
+            <p>{{job.ID}}</p>
         </div>
         <div>
             <label>JOB NAME</label>
-            <h2>{{job.JOB_NAME}}</h2>
+            <p>{{job.JOB_NAME}}</p>
         </div>
         <div>
             <label>BRAND</label>
-            <h2>{{job.BRAND_NAME}}</h2>
+            <p>{{job.BRAND_NAME}}</p>
         </div>
         <div>
             <label>DEPARTMENT</label>
-            <h2>{{job.DEPARTMENT_NAME}}</h2>
+            <p>{{job.DEPARTMENT_NAME}}</p>
         </div>
+
+    </div>
+    <div ngClass="status-container">
         <div>
             <label>PRODUCT LINE</label>
-            <h2>{{job.PRODUCT_LINE_NAME}}</h2>
+            <p>{{job.PRODUCT_LINE_NAME}}</p>
         </div>
-    </div>
-    <div ngClass="status">
         <div>
             <label>COUNTRY</label>
-            <h2>{{job.COUNTRY_DISPLAY_NAME}}</h2>
+            <p>{{job.COUNTRY_DISPLAY_NAME}}</p>
         </div>
         <div>
             <label>CREATED DATE</label>
-            <h2>{{job.CREATED_DATE|date:'shortDate'}}</h2>
+            <p>{{job.CREATED_DATE|date:'shortDate'}}</p>
         </div>
         <div>
             <label>JOB STATUS</label>
-            <h2>{{job.JOB_STATUS}}</h2>
+            <p [ngClass]="{
+                'approved':job.JOB_STATUS==='APPROVED',
+                'draft':job.JOB_STATUS==='DRAFT',
+                'inReview':job.JOB_STATUS==='INREVIEW',
+            }" class="status">{{job.JOB_STATUS}}</p>
         </div>
     </div>
     <div ngClass="actions">
-        <button>Edit</button>
-        <button>Preview</button>
+        <button class="reload-button">
+            <img class="reload-image" src="assets/images/preview.png" />
+        </button>
+        <button class="reload-button">
+            <img class="reload-image" src="assets/images/edit.png" />
+        </button>
     </div>
 </div>
