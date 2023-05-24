@@ -76,10 +76,16 @@ mat-sidenav {
   width: 80%;
   align-self: center;
   justify-self: center;
+  margin-top: 0px;
 }
 
 .login-name {
   color: $text-color;
   font-size: 30px;
   font-family: $font-family;
+}
+
+.list-item {
+  height: 50px;
+  width: 30px;
 }
