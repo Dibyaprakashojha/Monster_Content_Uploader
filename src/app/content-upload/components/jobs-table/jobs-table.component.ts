@@ -304,22 +304,20 @@ export class JobsTableComponent implements OnInit, AfterViewInit {
   isTablet!: boolean;
   ngOnInit(): void {
     this.breakpointObserver
-      .observe([Breakpoints.XSmall, Breakpoints.Small])
+      .observe([Breakpoints.Handset])
       .subscribe((result) => {
         console.log(`result`, result);
         if (result.matches) {
           this.isMobile = true;
         }
       });
+    this.breakpointObserver.observe([Breakpoints.Web]).subscribe((result) => {
+      if (result.matches) {
+        this.isDesktop = true;
+      }
+    });
     this.breakpointObserver
-      .observe([Breakpoints.XLarge])
-      .subscribe((result) => {
-        if (result.matches) {
-          this.isDesktop = true;
-        }
-      });
-    this.breakpointObserver
-      .observe([Breakpoints.Large, Breakpoints.Medium])
+      .observe([Breakpoints.Tablet])
       .subscribe((result) => {
         if (result.matches) {
           this.isTablet = true;

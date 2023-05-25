@@ -10,6 +10,6 @@ export class CardViewComponent implements OnInit {
   @Input() job: any;
 
   ngOnInit(): void {
-    console.log(`jobis`, this.job);
+    // console.log(`jobis`, this.job);
   }
 }

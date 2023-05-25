@@ -1,4 +1,4 @@
-<mat-toolbar *ngIf="isDesktop" color="primary">
+<mat-toolbar *ngIf="!isMobile" color="primary">
   <div ngClass="nav-contents">
     <div ngClass="nav-item">
       <button *ngIf="!isMenuOpen" class="menu-button" (click)="onToolbarMenuToggle()">
@@ -13,11 +13,6 @@
       <button mat-button>
         <i class="fa-solid fa-bell fa-2x" style="color: #8cc63f"></i>
       </button>
-      <!-- <button mat-button>
-        <img src="assets/images/qds.png" />
-      </button> <button mat-button>
-        <img src="assets/images/up-down.png" />
-      </button> -->
       <button mat-button>
         <i class="fa-solid fa-user fa-2x" style="color: #8cc63f"></i>
       </button>
@@ -60,7 +55,8 @@
 </mat-toolbar>
 
 <mat-sidenav-container color="primary">
-  <mat-sidenav *ngIf="isDesktop" #sidenav id="sidenav" mode="side" [class.menu-open]=" isMenuOpen"
+
+  <mat-sidenav *ngIf="!isMobile" #sidenav id="sidenav" mode="side" [class.menu-open]=" isMenuOpen"
     [class.menu-close]="!isMenuOpen" opened>
     <mat-list *ngIf="!isMenuOpen" role="list">
 

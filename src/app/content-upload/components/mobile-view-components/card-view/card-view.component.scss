@@ -11,7 +11,8 @@
   background-color: black;
   border-radius: 10px;
   margin-bottom: 5px;
-  max-height: 20%;
+  // height: 20vh;
+  max-height: 30%;
   background-color: #303030;
 }
 
@@ -61,4 +62,10 @@ label {
 }
 .inReview {
   background: linear-gradient(270deg, #f99500 -4.72%, #e2ad5d 100.79%);
+}
+
+.job,
+.status-container,
+.actions {
+  min-width: 0;
 }

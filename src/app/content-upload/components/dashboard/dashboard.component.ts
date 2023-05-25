@@ -79,31 +79,31 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   isTablet!: boolean;
   ngOnInit(): void {
     this.breakpointObserver
-      .observe([Breakpoints.XSmall, Breakpoints.Small])
+      .observe([Breakpoints.Handset])
       .subscribe((result) => {
-        console.log(`result`, result);
         if (result.matches) {
           this.isMobile = true;
           this.isTablet = false;
           this.isDesktop = false;
+          console.log(`isMobile`, this.isMobile);
         }
       });
+    this.breakpointObserver.observe([Breakpoints.Web]).subscribe((result) => {
+      if (result.matches) {
+        this.isMobile = false;
+        this.isTablet = false;
+        this.isDesktop = true;
+        console.log(`dskp`, this.isDesktop);
+      }
+    });
     this.breakpointObserver
-      .observe([Breakpoints.Large, Breakpoints.XLarge])
-      .subscribe((result) => {
-        if (result.matches) {
-          this.isMobile = false;
-          this.isTablet = false;
-          this.isDesktop = true;
-        }
-      });
-    this.breakpointObserver
-      .observe([Breakpoints.Medium])
+      .observe([Breakpoints.Tablet])
       .subscribe((result) => {
         if (result.matches) {
           this.isMobile = false;
           this.isTablet = true;
           this.isDesktop = false;
+          console.log(`tablet`, this.isTablet);
         }
       });
   }
