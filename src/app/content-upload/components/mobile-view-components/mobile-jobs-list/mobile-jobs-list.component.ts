@@ -1,3 +1,4 @@
+import { SearchService } from './../../../services/search.service';
 import { Route, Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnInit } from '@angular/core';
@@ -9,12 +10,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class MobileJobsListComponent implements OnInit {
   isMobile!: boolean;
-
-  @Input() jobList: any;
+  jobList: any;
 
   constructor(
     private breakPointObserver: BreakpointObserver,
-    private router: Router
+    private router: Router,
+    private searchService: SearchService
   ) {}
 
   menuName!: string;
@@ -35,7 +36,25 @@ export class MobileJobsListComponent implements OnInit {
     }
   }
 
+  search(event: any) {
+    this.searchService.searchByKeyWord(event.target.value).subscribe((data) => {
+      console.log((event.target as HTMLInputElement).value);
+      this.jobList = data;
+    });
+  }
+
+  sortType = true;
+  sortTheData() {
+    this.searchService.SortByJobId(this.sortType).subscribe((data) => {
+      this.jobList = data;
+      this.sortType = !this.sortType;
+    });
+  }
+
   ngOnInit(): void {
+    this.searchService.getAllJobDeatils().subscribe((data) => {
+      this.jobList = data;
+    });
     this.menuNameIdentifier();
   }
 }

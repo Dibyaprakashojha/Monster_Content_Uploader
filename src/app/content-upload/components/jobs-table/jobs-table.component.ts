@@ -321,6 +321,7 @@ export class JobsTableComponent implements OnInit, AfterViewInit {
       .subscribe((result) => {
         if (result.matches) {
           this.isTablet = true;
+          console.log(`tablet`, result);
         }
       });
     this.dataSource = new MatTableDataSource(jobDetails);

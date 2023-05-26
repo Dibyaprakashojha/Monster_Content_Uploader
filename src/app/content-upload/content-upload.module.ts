@@ -9,9 +9,8 @@ import { ContentUploadFormComponent } from './components/content-upload-form/con
 import { LayoutModule } from '@angular/cdk/layout';
 import { MobileJobsListComponent } from './components/mobile-view-components/mobile-jobs-list/mobile-jobs-list.component';
 import { CardViewComponent } from './components/mobile-view-components/card-view/card-view.component';
-import { PageComponent } from './components/page/page.component';
-import { McuPaginationComponent } from './components/mcu-pagination/mcu-pagination.component';
 import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -19,8 +18,6 @@ import { HttpClientModule } from '@angular/common/http';
     ContentUploadFormComponent,
     MobileJobsListComponent,
     CardViewComponent,
-    PageComponent,
-    McuPaginationComponent,
   ],
   imports: [
     CommonModule,

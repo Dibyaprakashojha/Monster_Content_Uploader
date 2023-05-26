@@ -1,8 +1,19 @@
 <div class="reload-container">
-    <p style="color:green">{{menuName}}</p>
-    <button class="reload-button">
-        <img class="reload-image" src="assets/images/refresh.png" />
-    </button>
+    <div class="menu-name-container">
+        <p ngClass="menu-name">
+            {{menuName}}
+        </p>
+        <!-- <hr> -->
+    </div>
+    <div class="search-reload">
+        <button class="reload-button">
+            <img class="reload-image" src=" assets/images/save.png" />
+        </button>
+        <input mat-Input class="input" placeholder="Search" (keydown.enter)="search($event)" type="text">
+        <button (click)="sortTheData()" class="reload-button">
+            <img class="reload-image" src="assets/images/refresh.png" />
+        </button>
+    </div>
 </div>
 <ng-container *ngFor='let job of jobList'>
     <mcu-card-view [job]="job"></mcu-card-view>

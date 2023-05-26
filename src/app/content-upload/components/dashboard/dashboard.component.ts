@@ -3,7 +3,13 @@ import {
   BreakpointState,
   Breakpoints,
 } from '@angular/cdk/layout';
-import { EventEmitter, Input, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  EventEmitter,
+  Input,
+  ViewChild,
+  AfterViewInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Output } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';

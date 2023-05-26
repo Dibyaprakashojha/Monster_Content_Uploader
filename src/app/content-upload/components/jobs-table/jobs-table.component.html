@@ -4,10 +4,9 @@
             <button mat-button class="reload approved">
                 <mat-icon>autorenew</mat-icon>
             </button>
-            <mat-form-field class="search">
-                <mat-icon matSuffix>search</mat-icon>
-                <input matInput (keyup)="applyFilter($event)" class="search-input" type="input" placeholder="Search" />
-            </mat-form-field>
+            <div class="search">
+                <input (keyup)=" applyFilter($event)" class="input" type="input" placeholder="Search" />
+            </div>
         </div>
         <button mat-button class="create-button approved" routerLink="create-job">Create Job</button>
     </div>
@@ -76,5 +75,5 @@
         [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
         [pageIndex]="pageIndex" aria-label="Select page">
     </mat-paginator>
-    <mcu-mobile-jobs-list *ngIf="isMobile" [jobList]="jobData"></mcu-mobile-jobs-list>
+    <mcu-mobile-jobs-list *ngIf="isMobile"></mcu-mobile-jobs-list>
 </div>

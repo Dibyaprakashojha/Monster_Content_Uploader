@@ -12,7 +12,8 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $content-upload-primary: mat.define-palette($md-primary-pallette, A800);
-$content-upload-accent: mat.define-palette($md-accent-pallette);
+$content-upload-accent: mat.define-palette($md-primary-pallette, A200);
+$content-upload-warn: mat.define-palette($md-primary-pallette, A400);
 
 // The warn palette is optional (defaults to red).
 // $audit-request-management-warn: mat.define-palette(mat.$red-palette);
@@ -24,7 +25,7 @@ $content-upload-theme: mat.define-light-theme(
     color: (
       primary: $content-upload-primary,
       accent: $content-upload-accent,
-      // warn: $content-upload-warn,
+      warn: $content-upload-warn,
     ),
   )
 );
