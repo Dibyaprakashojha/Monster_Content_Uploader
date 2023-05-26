@@ -216,6 +216,7 @@
 
   <mat-sidenav-content [ngStyle]="{ 'margin-left': contentMargin + '%' }">
     <div ngClass="route-content">
+      <h3 *ngIf="!isMobile" class="menu-name">{{menuName}}</h3>
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

@@ -126,6 +126,152 @@ const jobDetails: any[] = [
     _version_: 1765684935185662000,
   },
   {
+    ID: '540711',
+    CONTENT_TYPE: 'CONTENT_UPLOAD',
+    JOB_ID: '540711',
+    JOB_NAME: 'hjbkbk',
+    OTMM_FOLDER_ID: '7ebb1df9ddeda44da47e06ae78a2035c524eb566',
+    JOB_STATUS: 'INREVIEW',
+    ALBUM_NAME: 'hjbkbk',
+    THIRD_PARTY_APPROVAL: false,
+    IS_MUSIC_NEEDED: false,
+    BRAND_ID: '44',
+    BRAND_NAME: '10',
+    BRAND_DISPLAY_NAME: 'Monster',
+    COUNTRY_ID: '16386',
+    COUNTRY_NAME: 'AF',
+    COUNTRY_DISPLAY_NAME: 'Afghanistan',
+    PRODUCT_LINE_ID: '1',
+    PRODUCT_LINE_NAME: 'Rehab',
+    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
+    DEPARTMENT_ID: '1',
+    DEPARTMENT_NAME: 'Graphics',
+    DEPARTMENT_DISPLAY_NAME: 'Creative',
+    DEPARTMENT_CODE: '10',
+    CREATED_USER_ID: 'Susan',
+    CREATED_USER_IDENTITY_ID: '16483',
+    CREATED_USER_NAME: 'Susan',
+    CREATED_DATE: '2023-05-12T17:46:01.683+0000',
+    _version_: 1765684935185662000,
+  },
+  {
+    ID: '540711',
+    CONTENT_TYPE: 'CONTENT_UPLOAD',
+    JOB_ID: '540711',
+    JOB_NAME: 'hjbkbk',
+    OTMM_FOLDER_ID: '7ebb1df9ddeda44da47e06ae78a2035c524eb566',
+    JOB_STATUS: 'INREVIEW',
+    ALBUM_NAME: 'hjbkbk',
+    THIRD_PARTY_APPROVAL: false,
+    IS_MUSIC_NEEDED: false,
+    BRAND_ID: '44',
+    BRAND_NAME: '10',
+    BRAND_DISPLAY_NAME: 'Monster',
+    COUNTRY_ID: '16386',
+    COUNTRY_NAME: 'AF',
+    COUNTRY_DISPLAY_NAME: 'Afghanistan',
+    PRODUCT_LINE_ID: '1',
+    PRODUCT_LINE_NAME: 'Rehab',
+    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
+    DEPARTMENT_ID: '1',
+    DEPARTMENT_NAME: 'Graphics',
+    DEPARTMENT_DISPLAY_NAME: 'Creative',
+    DEPARTMENT_CODE: '10',
+    CREATED_USER_ID: 'Susan',
+    CREATED_USER_IDENTITY_ID: '16483',
+    CREATED_USER_NAME: 'Susan',
+    CREATED_DATE: '2023-05-12T17:46:01.683+0000',
+    _version_: 1765684935185662000,
+  },
+  {
+    ID: '540711',
+    CONTENT_TYPE: 'CONTENT_UPLOAD',
+    JOB_ID: '540711',
+    JOB_NAME: 'hjbkbk',
+    OTMM_FOLDER_ID: '7ebb1df9ddeda44da47e06ae78a2035c524eb566',
+    JOB_STATUS: 'INREVIEW',
+    ALBUM_NAME: 'hjbkbk',
+    THIRD_PARTY_APPROVAL: false,
+    IS_MUSIC_NEEDED: false,
+    BRAND_ID: '44',
+    BRAND_NAME: '10',
+    BRAND_DISPLAY_NAME: 'Monster',
+    COUNTRY_ID: '16386',
+    COUNTRY_NAME: 'AF',
+    COUNTRY_DISPLAY_NAME: 'Afghanistan',
+    PRODUCT_LINE_ID: '1',
+    PRODUCT_LINE_NAME: 'Rehab',
+    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
+    DEPARTMENT_ID: '1',
+    DEPARTMENT_NAME: 'Graphics',
+    DEPARTMENT_DISPLAY_NAME: 'Creative',
+    DEPARTMENT_CODE: '10',
+    CREATED_USER_ID: 'Susan',
+    CREATED_USER_IDENTITY_ID: '16483',
+    CREATED_USER_NAME: 'Susan',
+    CREATED_DATE: '2023-05-12T17:46:01.683+0000',
+    _version_: 1765684935185662000,
+  },
+  {
+    ID: '540711',
+    CONTENT_TYPE: 'CONTENT_UPLOAD',
+    JOB_ID: '540711',
+    JOB_NAME: 'hjbkbk',
+    OTMM_FOLDER_ID: '7ebb1df9ddeda44da47e06ae78a2035c524eb566',
+    JOB_STATUS: 'INREVIEW',
+    ALBUM_NAME: 'hjbkbk',
+    THIRD_PARTY_APPROVAL: false,
+    IS_MUSIC_NEEDED: false,
+    BRAND_ID: '44',
+    BRAND_NAME: '10',
+    BRAND_DISPLAY_NAME: 'Monster',
+    COUNTRY_ID: '16386',
+    COUNTRY_NAME: 'AF',
+    COUNTRY_DISPLAY_NAME: 'Afghanistan',
+    PRODUCT_LINE_ID: '1',
+    PRODUCT_LINE_NAME: 'Rehab',
+    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
+    DEPARTMENT_ID: '1',
+    DEPARTMENT_NAME: 'Graphics',
+    DEPARTMENT_DISPLAY_NAME: 'Creative',
+    DEPARTMENT_CODE: '10',
+    CREATED_USER_ID: 'Susan',
+    CREATED_USER_IDENTITY_ID: '16483',
+    CREATED_USER_NAME: 'Susan',
+    CREATED_DATE: '2023-05-12T17:46:01.683+0000',
+    _version_: 1765684935185662000,
+  },
+  {
+    ID: '540711',
+    CONTENT_TYPE: 'CONTENT_UPLOAD',
+    JOB_ID: '540711',
+    JOB_NAME: 'hjbkbk',
+    OTMM_FOLDER_ID: '7ebb1df9ddeda44da47e06ae78a2035c524eb566',
+    JOB_STATUS: 'INREVIEW',
+    ALBUM_NAME: 'hjbkbk',
+    THIRD_PARTY_APPROVAL: false,
+    IS_MUSIC_NEEDED: false,
+    BRAND_ID: '44',
+    BRAND_NAME: '10',
+    BRAND_DISPLAY_NAME: 'Monster',
+    COUNTRY_ID: '16386',
+    COUNTRY_NAME: 'AF',
+    COUNTRY_DISPLAY_NAME: 'Afghanistan',
+    PRODUCT_LINE_ID: '1',
+    PRODUCT_LINE_NAME: 'Rehab',
+    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
+    DEPARTMENT_ID: '1',
+    DEPARTMENT_NAME: 'Graphics',
+    DEPARTMENT_DISPLAY_NAME: 'Creative',
+    DEPARTMENT_CODE: '10',
+    CREATED_USER_ID: 'Susan',
+    CREATED_USER_IDENTITY_ID: '16483',
+    CREATED_USER_NAME: 'Susan',
+    CREATED_DATE: '2023-05-12T17:46:01.683+0000',
+    _version_: 1765684935185662000,
+  },
+
+  {
     ID: '540707',
     CONTENT_TYPE: 'CONTENT_UPLOAD',
     JOB_ID: '540707',
@@ -263,42 +409,42 @@ export class JobsTableComponent implements OnInit, AfterViewInit {
 
   offset!: number;
 
-  handlePageEvent(e: PageEvent) {
-    this.offset = e.pageIndex;
-    this.pageSize = e.pageSize;
-    console.log(this.offset + '...' + this.pageSize);
-    this.sortwithPagination();
-  }
+  // handlePageEvent(e: PageEvent) {
+  //   this.offset = e.pageIndex;
+  //   this.pageSize = e.pageSize;
+  //   console.log(this.offset + '...' + this.pageSize);
+  //   this.sortwithPagination();
+  // }
 
   active!: string;
   direction!: string;
-  sortData(sort: Sort) {
-    this.active = sort.active;
-    this.direction = sort.direction;
-    this.sortwithPagination();
-  }
+  // sortData(sort: Sort) {
+  //   this.active = sort.active;
+  //   this.direction = sort.direction;
+  //   this.sortwithPagination();
+  // }
 
-  sortwithPagination() {
-    this.contentUploadService
-      .getJobsWithSortingAndPagination(
-        this.offset,
-        this.pageSize,
-        this.active,
-        this.direction
-      )
-      .subscribe({
-        next: (data) => {
-          this.dataSource.data = data;
-          this.jobData = data;
-        },
-        error: (error) => {
-          console.log(error);
-        },
-        complete: () => {
-          console.log('Sorting with Pagination Completed');
-        },
-      });
-  }
+  // sortwithPagination() {
+  //   this.contentUploadService
+  //     .getJobsWithSortingAndPagination(
+  //       this.offset,
+  //       this.pageSize,
+  //       this.active,
+  //       this.direction
+  //     )
+  //     .subscribe({
+  //       next: (data) => {
+  //         this.dataSource.data = data;
+  //         this.jobData = data;
+  //       },
+  //       error: (error) => {
+  //         console.log(error);
+  //       },
+  //       complete: () => {
+  //         console.log('Sorting with Pagination Completed');
+  //       },
+  //     });
+  // }
 
   isDesktop!: boolean;
   isTablet!: boolean;

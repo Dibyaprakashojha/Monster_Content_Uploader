@@ -4,12 +4,11 @@ import { MaterialModule } from '../material/material.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { PaginationComponent } from './components/pagination/pagination.component';
+import { PaginatorDirective } from './directives/paginator.directive';
+// import { CustomPaginatorDirective } from './directives/custom-paginator.directive';
 
 @NgModule({
-  declarations: [
-    PaginationComponent
-  ],
+  declarations: [PaginatorDirective],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -17,6 +16,11 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     ReactiveFormsModule,
     MaterialModule,
   ],
-  exports: [MaterialModule,FormsModule,ReactiveFormsModule],
+  exports: [
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    PaginatorDirective,
+  ],
 })
 export class SharedModule {}

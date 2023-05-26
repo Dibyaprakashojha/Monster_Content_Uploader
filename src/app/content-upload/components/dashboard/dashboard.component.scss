@@ -122,6 +122,16 @@ mat-sidenav {
   padding: 0px 0px 0px 16px;
 }
 
+.menu-name {
+  font-size: 30px;
+  font-family: $font-family;
+  color: white;
+  letter-spacing: 5px;
+  text-decoration: underline white;
+  margin: 0px 0px 10px 0px;
+  padding: 2px;
+}
+
 /*mobile-view  css*/
 
 .mb-nav-item {

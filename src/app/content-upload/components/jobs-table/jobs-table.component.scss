@@ -127,6 +127,17 @@ button {
     color: $background !important;
     opacity: 1 !important;
   }
+
+  .mat-mdc-paginator-range-label {
+    margin: 0px !important;
+    min-width: 150px !important;
+  }
+
+  .mat-mdc-paginator-outer-container {
+    display: flex;
+    background-color: #303030;
+    border-top: 2px solid black;
+  }
 }
 
 @media screen and (((min-width: 600px) and (max-width: 839.98px) and (orientation: portrait)) or

@@ -23,7 +23,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 export class DashboardComponent implements OnInit, AfterViewInit {
   isMenuOpen = false;
   contentMargin = 10;
-
+  menuName: string = '';
   @ViewChild('mobileSideNav') mobileSideNav!: MatSidenav;
 
   onToolbarMenuToggle() {
@@ -59,16 +59,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   activeMenuCompare() {
     if (this.router.url.includes('my-jobs')) {
       this.menu = 'my-jobs';
+      this.menuName = 'MY JOBS';
     } else if (this.router.url.includes('all-jobs')) {
       this.menu = 'all-jobs';
+      this.menuName = 'ALL JOBS';
     } else if (this.router.url.includes('my-workflows')) {
       this.menu = 'my-workflows';
+      this.menuName = 'MY WORKFLOWS';
     } else if (this.router.url.includes('my-tasks')) {
       this.menu = 'my-tasks';
+      this.menuName = 'MY TASKS';
     } else if (this.router.url.includes('content-manager')) {
       this.menu = 'content-manager';
+      this.menuName = 'CONTENT MANAGER';
     } else if (this.router.url.includes('assets-team')) {
       this.menu = 'assets-team';
+      this.menuName = 'ASSETS TEAM';
     }
   }
 
