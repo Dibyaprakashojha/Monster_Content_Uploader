@@ -91,7 +91,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   isTablet!: boolean;
   ngOnInit(): void {
     this.breakpointObserver
-      .observe([Breakpoints.Handset])
+      .observe([Breakpoints.XSmall])
       .subscribe((result) => {
         if (result.matches) {
           this.isMobile = true;
@@ -109,7 +109,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
     });
     this.breakpointObserver
-      .observe([Breakpoints.Tablet])
+      .observe([Breakpoints.Tablet, Breakpoints.Small])
       .subscribe((result) => {
         if (result.matches) {
           this.isMobile = false;

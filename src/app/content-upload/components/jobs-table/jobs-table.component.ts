@@ -73,21 +73,13 @@ export class JobsTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.searchService
-    //   .getAllJobDeatils(this.startIndex, this.endIndex, this.totalPageNumber)
-    //   .subscribe((solrData: SorlResponse) => {
-    //     console.log(solrData.data);
-    //     this.dataSource = new MatTableDataSource<JobDetails>(solrData.data);
-    //     this.dataSource.paginator = this.paginator;
-    //   });
-
     this.getJobDetails(this.startIndex, this.endIndex).subscribe((solrData) => {
       this.dataSource.data = solrData.data;
       this.totalPageNumber = solrData.cursor.total_records;
     });
 
     this.breakpointObserver
-      .observe([Breakpoints.Handset])
+      .observe([Breakpoints.XSmall])
       .subscribe((result) => {
         console.log(`result`, result);
         if (result.matches) {
@@ -100,10 +92,13 @@ export class JobsTableComponent implements OnInit {
       }
     });
     this.breakpointObserver
-      .observe([Breakpoints.Tablet])
+      .observe([Breakpoints.Tablet, Breakpoints.Small])
       .subscribe((result) => {
+        console.log(`tablet`, result);
+
         if (result.matches) {
           this.isTablet = true;
+
           console.log(`tablet`, result);
         }
       });
@@ -118,10 +113,17 @@ export class JobsTableComponent implements OnInit {
   };
   pageIndexValue = 1;
   totalPageNumber = 0;
+  sortDirection: string = 'asc';
+
+  sortData(event: any) {
+    this.sortDirection = event.direction;
+    console.log(`event sort`, this.sortDirection);
+  }
 
   onPageChange(pageEvent: PageEvent) {
     // this.calculateTotalPageSize();
     // this.startIndex = this.page.pageIndex * this.page.pageSize;
+    console.log(`pageIndex`, pageEvent.pageIndex);
     this.startIndex = pageEvent.pageIndex * pageEvent.pageSize;
     console.log(`pageSizeOptions`, this.pageEvent);
     // this.endIndex = this.page.pageSize;
@@ -129,10 +131,12 @@ export class JobsTableComponent implements OnInit {
     // this.totalPageNumber = Math.ceil(this.page.length / this.page.pageSize);
     this.totalPageNumber = Math.ceil(pageEvent.length / pageEvent.pageSize);
 
+    console.log(this.startIndex, this.endIndex, this.totalPageNumber);
+
     this.searchService
       .getAllJobDeatils(this.startIndex, this.endIndex, this.totalPageNumber)
       .subscribe((solrData: SorlResponse) => {
-        console.log(solrData.data);
+        console.log('page cgne', solrData.data);
         this.dataSource.data = solrData.data;
       });
   }

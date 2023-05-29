@@ -10,9 +10,11 @@
         </div>
         <button mat-button class="create-button approved" routerLink="create-job">Create Job</button>
     </div>
-    <table mat-table matSort *ngIf="!isMobile" [dataSource]="dataSource " class="mat-elevation-z8">
+    <table mat-table matSort (matSortChange)="sortData($event)" *ngIf="!isMobile" [dataSource]="dataSource "
+        class="mat-elevation-z8">
         <ng-container matColumnDef="job_id">
-            <th ngClass="decorate" mat-sort-header mat-header-cell *matHeaderCellDef> JOB ID</th>
+            <th ngClass="decorate" mat-sort-header mat-header-cell *matHeaderCellDef>
+                JOB ID</th>
             <td mat-cell *matCellDef="let element"> {{element.job_id}} </td>
         </ng-container>
 
