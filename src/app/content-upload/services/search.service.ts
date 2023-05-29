@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
+import { SorlResponse } from 'src/app/shared/models/jobDetails';
 
 @Injectable({
   providedIn: 'root',
@@ -215,9 +216,24 @@ export class SearchService {
     },
   ];
 
+  base_url = 'http://localhost:8081/monster-mcu/';
   constructor(private httpClient: HttpClient) {}
+  jobList: any;
 
-  getAllJobDeatils() {
+  getAllJobDeatils(
+    pageIndex: any,
+    pageSize: any,
+    totalRecords?: any
+  ): Observable<SorlResponse> {
+    let url = this.base_url.concat('search');
+    return this.httpClient.post<SorlResponse>(url, {
+      page_index: pageIndex,
+      page_size: pageSize,
+      total_records: totalRecords,
+    });
+  }
+
+  getAllJobDeatiLSmOBILE() {
     return of(this.jobDetails);
   }
 

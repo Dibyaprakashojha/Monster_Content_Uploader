@@ -10,69 +10,73 @@
         </div>
         <button mat-button class="create-button approved" routerLink="create-job">Create Job</button>
     </div>
-    <table mat-table matSort *ngIf="!isMobile" [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container matColumnDef="JOB_ID">
+    <table mat-table matSort *ngIf="!isMobile" [dataSource]="dataSource " class="mat-elevation-z8">
+        <ng-container matColumnDef="job_id">
             <th ngClass="decorate" mat-sort-header mat-header-cell *matHeaderCellDef> JOB ID</th>
-            <td mat-cell *matCellDef="let element"> {{element.JOB_ID}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.job_id}} </td>
         </ng-container>
 
 
-        <ng-container matColumnDef="JOB_NAME">
+        <ng-container matColumnDef="job_name">
             <th mat-header-cell *matHeaderCellDef> JOB NAME </th>
-            <td mat-cell *matCellDef="let element"> {{element.JOB_NAME}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.job_name}} </td>
         </ng-container>
 
 
-        <ng-container matColumnDef="BRAND_DISPLAY_NAME">
+        <ng-container matColumnDef="brand">
             <th mat-header-cell *matHeaderCellDef> BRAND NAME </th>
-            <td mat-cell *matCellDef="let element"> {{element.BRAND_DISPLAY_NAME}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.brand}} </td>
         </ng-container>
 
 
-        <ng-container matColumnDef="COUNTRY_DISPLAY_NAME">
+        <ng-container matColumnDef="country">
             <th mat-header-cell *matHeaderCellDef> COUNTRY NAME </th>
-            <td mat-cell *matCellDef="let element"> {{element.COUNTRY_DISPLAY_NAME}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.country}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="DEPARTMENT_NAME">
+        <ng-container matColumnDef="department_name">
             <th mat-header-cell *matHeaderCellDef> DEPARTMENT NAME </th>
-            <td mat-cell *matCellDef="let element"> {{element.DEPARTMENT_NAME}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.department_name}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="PRODUCT_LINE_NAME">
+        <ng-container matColumnDef="product_line">
             <th mat-header-cell *matHeaderCellDef> PRODUCT LINE </th>
-            <td mat-cell *matCellDef="let element"> {{element.PRODUCT_LINE_NAME}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.product_line}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="JOB_STATUS">
+        <ng-container matColumnDef="job_status">
             <th mat-header-cell *matHeaderCellDef> JOB STATUS </th>
             <td mat-cell *matCellDef="let element">
                 <button [ngClass]="{
-                    'status approved':element.JOB_STATUS==='APPROVED',
-                    'status draft':element.JOB_STATUS==='DRAFT',
-                    'status inReview':element.JOB_STATUS==='INREVIEW',
-                }" class="button-slanted">{{element.JOB_STATUS}}</button>
+                    'status approved':element.job_status.toUpperCase()==='APPROVED',
+                    'status draft':element.job_status.toUpperCase()==='DRAFT',
+                    'status inReview':element.job_status.toUpperCase()==='INREVIEW',
+                }" class="button-slanted">{{element.job_status}}</button>
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="CREATED_DATE">
+        <ng-container matColumnDef="created_date">
             <th mat-header-cell *matHeaderCellDef> CREATED DATE </th>
-            <td mat-cell *matCellDef="let element"> {{element.CREATED_DATE|date:'shortDate'}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.created_date|date:'shortDate'}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="ACTIONS">
+
+
+        <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef> ACTIONS </th>
             <td mat-cell *matCellDef="let element">
                 <button><img src="assets/images/edit.png"></button>
                 <button><img src="assets/images/preview.png"></button>
             </td>
         </ng-container>
+
+
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></tr>
         <tr mat-row [ngStyle]="{'margin-bottom':'10px'}" *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator *ngIf="!isMobile" mcuPaginator [length]="dataSource.data.length" [pageSize]="3" showFirstLastButtons
-        [pageSizeOptions]="[5,10,15]" aria-label="Select page">
+    <mat-paginator #paginator *ngIf="!isMobile" (page)="onPageChange($event)" [length]="6" [pageSize]="3"
+        showFirstLastButtons="true" [pageSizeOptions]="pageSizeOptions" aria-label="Select page">
     </mat-paginator>
-    <!-- (page)="handlePageEvent($event)" -->
     <mcu-mobile-jobs-list *ngIf="isMobile"></mcu-mobile-jobs-list>
 </div>

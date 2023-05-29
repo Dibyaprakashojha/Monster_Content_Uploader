@@ -1,3 +1,4 @@
+import { SearchService } from './../../services/search.service';
 import { ContentUploadService } from './../../services/content-upload.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AfterViewInit, DoCheck, OnInit } from '@angular/core';
@@ -5,401 +6,46 @@ import { Component, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { filter } from 'rxjs';
+import { catchError, filter, map, of, startWith, switchMap } from 'rxjs';
+import { JobDetails, SorlResponse } from 'src/app/shared/models/jobDetails';
 
-const jobDetails: any[] = [
-  {
-    ID: '557061',
-    CONTENT_TYPE: 'CONTENT_UPLOAD',
-    JOB_ID: '557061',
-    JOB_NAME: 'ASD',
-    OTMM_FOLDER_ID: 'd01f61bfbdb153c3b6cb32c7c5c3aab1b8730af2',
-    JOB_STATUS: 'DRAFT',
-    ALBUM_NAME: 'ASD',
-    THIRD_PARTY_APPROVAL: false,
-    IS_MUSIC_NEEDED: false,
-    BRAND_ID: '44',
-    BRAND_NAME: '10',
-    BRAND_DISPLAY_NAME: 'Monster',
-    COUNTRY_ID: '16425',
-    COUNTRY_NAME: 'FI',
-    COUNTRY_DISPLAY_NAME: 'Finland',
-    PRODUCT_LINE_ID: '1',
-    PRODUCT_LINE_NAME: 'Rehab',
-    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
-    DEPARTMENT_ID: '4',
-    DEPARTMENT_NAME: 'Sales OPS',
-    DEPARTMENT_DISPLAY_NAME: 'Sales OPS',
-    DEPARTMENT_CODE: '16',
-    CREATED_USER_ID: 'Susan',
-    CREATED_USER_IDENTITY_ID: '16483',
-    CREATED_USER_NAME: 'Susan',
-    CREATED_DATE: '2023-05-15T20:20:31.113+0000',
-    _version_: 1765966546012733400,
-  },
-  {
-    ID: '557061',
-    CONTENT_TYPE: 'CONTENT_UPLOAD',
-    JOB_ID: '557061',
-    JOB_NAME: 'ASD',
-    OTMM_FOLDER_ID: 'd01f61bfbdb153c3b6cb32c7c5c3aab1b8730af2',
-    JOB_STATUS: 'APPROVED',
-    ALBUM_NAME: 'ASD',
-    THIRD_PARTY_APPROVAL: false,
-    IS_MUSIC_NEEDED: false,
-    BRAND_ID: '44',
-    BRAND_NAME: '10',
-    BRAND_DISPLAY_NAME: 'Monster',
-    COUNTRY_ID: '16425',
-    COUNTRY_NAME: 'FI',
-    COUNTRY_DISPLAY_NAME: 'Finland',
-    PRODUCT_LINE_ID: '1',
-    PRODUCT_LINE_NAME: 'Rehab',
-    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
-    DEPARTMENT_ID: '4',
-    DEPARTMENT_NAME: 'Sales OPS',
-    DEPARTMENT_DISPLAY_NAME: 'Sales OPS',
-    DEPARTMENT_CODE: '16',
-    CREATED_USER_ID: 'Susan',
-    CREATED_USER_IDENTITY_ID: '16483',
-    CREATED_USER_NAME: 'Susan',
-    CREATED_DATE: '2023-05-15T20:20:31.113+0000',
-    _version_: 1765966546012733400,
-  },
-  {
-    ID: '557061',
-    CONTENT_TYPE: 'CONTENT_UPLOAD',
-    JOB_ID: '557061',
-    JOB_NAME: 'ASD',
-    OTMM_FOLDER_ID: 'd01f61bfbdb153c3b6cb32c7c5c3aab1b8730af2',
-    JOB_STATUS: 'INREVIEW',
-    ALBUM_NAME: 'ASD',
-    THIRD_PARTY_APPROVAL: false,
-    IS_MUSIC_NEEDED: false,
-    BRAND_ID: '44',
-    BRAND_NAME: '10',
-    BRAND_DISPLAY_NAME: 'Monster',
-    COUNTRY_ID: '16425',
-    COUNTRY_NAME: 'FI',
-    COUNTRY_DISPLAY_NAME: 'Finland',
-    PRODUCT_LINE_ID: '1',
-    PRODUCT_LINE_NAME: 'Rehab',
-    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
-    DEPARTMENT_ID: '4',
-    DEPARTMENT_NAME: 'Sales OPS',
-    DEPARTMENT_DISPLAY_NAME: 'Sales OPS',
-    DEPARTMENT_CODE: '16',
-    CREATED_USER_ID: 'Susan',
-    CREATED_USER_IDENTITY_ID: '16483',
-    CREATED_USER_NAME: 'Susan',
-    CREATED_DATE: '2023-05-15T20:20:31.113+0000',
-    _version_: 1765966546012733400,
-  },
-
-  {
-    ID: '540711',
-    CONTENT_TYPE: 'CONTENT_UPLOAD',
-    JOB_ID: '540711',
-    JOB_NAME: 'hjbkbk',
-    OTMM_FOLDER_ID: '7ebb1df9ddeda44da47e06ae78a2035c524eb566',
-    JOB_STATUS: 'INREVIEW',
-    ALBUM_NAME: 'hjbkbk',
-    THIRD_PARTY_APPROVAL: false,
-    IS_MUSIC_NEEDED: false,
-    BRAND_ID: '44',
-    BRAND_NAME: '10',
-    BRAND_DISPLAY_NAME: 'Monster',
-    COUNTRY_ID: '16386',
-    COUNTRY_NAME: 'AF',
-    COUNTRY_DISPLAY_NAME: 'Afghanistan',
-    PRODUCT_LINE_ID: '1',
-    PRODUCT_LINE_NAME: 'Rehab',
-    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
-    DEPARTMENT_ID: '1',
-    DEPARTMENT_NAME: 'Graphics',
-    DEPARTMENT_DISPLAY_NAME: 'Creative',
-    DEPARTMENT_CODE: '10',
-    CREATED_USER_ID: 'Susan',
-    CREATED_USER_IDENTITY_ID: '16483',
-    CREATED_USER_NAME: 'Susan',
-    CREATED_DATE: '2023-05-12T17:46:01.683+0000',
-    _version_: 1765684935185662000,
-  },
-  {
-    ID: '540711',
-    CONTENT_TYPE: 'CONTENT_UPLOAD',
-    JOB_ID: '540711',
-    JOB_NAME: 'hjbkbk',
-    OTMM_FOLDER_ID: '7ebb1df9ddeda44da47e06ae78a2035c524eb566',
-    JOB_STATUS: 'INREVIEW',
-    ALBUM_NAME: 'hjbkbk',
-    THIRD_PARTY_APPROVAL: false,
-    IS_MUSIC_NEEDED: false,
-    BRAND_ID: '44',
-    BRAND_NAME: '10',
-    BRAND_DISPLAY_NAME: 'Monster',
-    COUNTRY_ID: '16386',
-    COUNTRY_NAME: 'AF',
-    COUNTRY_DISPLAY_NAME: 'Afghanistan',
-    PRODUCT_LINE_ID: '1',
-    PRODUCT_LINE_NAME: 'Rehab',
-    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
-    DEPARTMENT_ID: '1',
-    DEPARTMENT_NAME: 'Graphics',
-    DEPARTMENT_DISPLAY_NAME: 'Creative',
-    DEPARTMENT_CODE: '10',
-    CREATED_USER_ID: 'Susan',
-    CREATED_USER_IDENTITY_ID: '16483',
-    CREATED_USER_NAME: 'Susan',
-    CREATED_DATE: '2023-05-12T17:46:01.683+0000',
-    _version_: 1765684935185662000,
-  },
-  {
-    ID: '540711',
-    CONTENT_TYPE: 'CONTENT_UPLOAD',
-    JOB_ID: '540711',
-    JOB_NAME: 'hjbkbk',
-    OTMM_FOLDER_ID: '7ebb1df9ddeda44da47e06ae78a2035c524eb566',
-    JOB_STATUS: 'INREVIEW',
-    ALBUM_NAME: 'hjbkbk',
-    THIRD_PARTY_APPROVAL: false,
-    IS_MUSIC_NEEDED: false,
-    BRAND_ID: '44',
-    BRAND_NAME: '10',
-    BRAND_DISPLAY_NAME: 'Monster',
-    COUNTRY_ID: '16386',
-    COUNTRY_NAME: 'AF',
-    COUNTRY_DISPLAY_NAME: 'Afghanistan',
-    PRODUCT_LINE_ID: '1',
-    PRODUCT_LINE_NAME: 'Rehab',
-    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
-    DEPARTMENT_ID: '1',
-    DEPARTMENT_NAME: 'Graphics',
-    DEPARTMENT_DISPLAY_NAME: 'Creative',
-    DEPARTMENT_CODE: '10',
-    CREATED_USER_ID: 'Susan',
-    CREATED_USER_IDENTITY_ID: '16483',
-    CREATED_USER_NAME: 'Susan',
-    CREATED_DATE: '2023-05-12T17:46:01.683+0000',
-    _version_: 1765684935185662000,
-  },
-  {
-    ID: '540711',
-    CONTENT_TYPE: 'CONTENT_UPLOAD',
-    JOB_ID: '540711',
-    JOB_NAME: 'hjbkbk',
-    OTMM_FOLDER_ID: '7ebb1df9ddeda44da47e06ae78a2035c524eb566',
-    JOB_STATUS: 'INREVIEW',
-    ALBUM_NAME: 'hjbkbk',
-    THIRD_PARTY_APPROVAL: false,
-    IS_MUSIC_NEEDED: false,
-    BRAND_ID: '44',
-    BRAND_NAME: '10',
-    BRAND_DISPLAY_NAME: 'Monster',
-    COUNTRY_ID: '16386',
-    COUNTRY_NAME: 'AF',
-    COUNTRY_DISPLAY_NAME: 'Afghanistan',
-    PRODUCT_LINE_ID: '1',
-    PRODUCT_LINE_NAME: 'Rehab',
-    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
-    DEPARTMENT_ID: '1',
-    DEPARTMENT_NAME: 'Graphics',
-    DEPARTMENT_DISPLAY_NAME: 'Creative',
-    DEPARTMENT_CODE: '10',
-    CREATED_USER_ID: 'Susan',
-    CREATED_USER_IDENTITY_ID: '16483',
-    CREATED_USER_NAME: 'Susan',
-    CREATED_DATE: '2023-05-12T17:46:01.683+0000',
-    _version_: 1765684935185662000,
-  },
-  {
-    ID: '540711',
-    CONTENT_TYPE: 'CONTENT_UPLOAD',
-    JOB_ID: '540711',
-    JOB_NAME: 'hjbkbk',
-    OTMM_FOLDER_ID: '7ebb1df9ddeda44da47e06ae78a2035c524eb566',
-    JOB_STATUS: 'INREVIEW',
-    ALBUM_NAME: 'hjbkbk',
-    THIRD_PARTY_APPROVAL: false,
-    IS_MUSIC_NEEDED: false,
-    BRAND_ID: '44',
-    BRAND_NAME: '10',
-    BRAND_DISPLAY_NAME: 'Monster',
-    COUNTRY_ID: '16386',
-    COUNTRY_NAME: 'AF',
-    COUNTRY_DISPLAY_NAME: 'Afghanistan',
-    PRODUCT_LINE_ID: '1',
-    PRODUCT_LINE_NAME: 'Rehab',
-    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
-    DEPARTMENT_ID: '1',
-    DEPARTMENT_NAME: 'Graphics',
-    DEPARTMENT_DISPLAY_NAME: 'Creative',
-    DEPARTMENT_CODE: '10',
-    CREATED_USER_ID: 'Susan',
-    CREATED_USER_IDENTITY_ID: '16483',
-    CREATED_USER_NAME: 'Susan',
-    CREATED_DATE: '2023-05-12T17:46:01.683+0000',
-    _version_: 1765684935185662000,
-  },
-  {
-    ID: '540711',
-    CONTENT_TYPE: 'CONTENT_UPLOAD',
-    JOB_ID: '540711',
-    JOB_NAME: 'hjbkbk',
-    OTMM_FOLDER_ID: '7ebb1df9ddeda44da47e06ae78a2035c524eb566',
-    JOB_STATUS: 'INREVIEW',
-    ALBUM_NAME: 'hjbkbk',
-    THIRD_PARTY_APPROVAL: false,
-    IS_MUSIC_NEEDED: false,
-    BRAND_ID: '44',
-    BRAND_NAME: '10',
-    BRAND_DISPLAY_NAME: 'Monster',
-    COUNTRY_ID: '16386',
-    COUNTRY_NAME: 'AF',
-    COUNTRY_DISPLAY_NAME: 'Afghanistan',
-    PRODUCT_LINE_ID: '1',
-    PRODUCT_LINE_NAME: 'Rehab',
-    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
-    DEPARTMENT_ID: '1',
-    DEPARTMENT_NAME: 'Graphics',
-    DEPARTMENT_DISPLAY_NAME: 'Creative',
-    DEPARTMENT_CODE: '10',
-    CREATED_USER_ID: 'Susan',
-    CREATED_USER_IDENTITY_ID: '16483',
-    CREATED_USER_NAME: 'Susan',
-    CREATED_DATE: '2023-05-12T17:46:01.683+0000',
-    _version_: 1765684935185662000,
-  },
-
-  {
-    ID: '540707',
-    CONTENT_TYPE: 'CONTENT_UPLOAD',
-    JOB_ID: '540707',
-    JOB_NAME: 'dwdwdewdwd',
-    OTMM_FOLDER_ID: '0fec0ac173c6c2d38c7779cf7c7cd8fe58a7a147',
-    JOB_STATUS: 'DRAFT',
-    ALBUM_NAME: 'dwdwdewdwd',
-    CREDITS: 'bdubwihd',
-    SAP_MATERIAL_NUMBER: '847646',
-    THIRD_PARTY_APPROVAL: false,
-    IS_MUSIC_NEEDED: false,
-    BRAND_ID: '44',
-    BRAND_NAME: '10',
-    BRAND_DISPLAY_NAME: 'Monster',
-    COUNTRY_ID: '16392',
-    COUNTRY_NAME: 'AR',
-    COUNTRY_DISPLAY_NAME: 'Argentina',
-    PRODUCT_LINE_ID: '1',
-    PRODUCT_LINE_NAME: 'Rehab',
-    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
-    DEPARTMENT_ID: '4',
-    DEPARTMENT_NAME: 'Sales OPS',
-    DEPARTMENT_DISPLAY_NAME: 'Sales OPS',
-    DEPARTMENT_CODE: '16',
-    CREATED_USER_ID: 'Susan',
-    CREATED_USER_IDENTITY_ID: '16483',
-    CREATED_USER_NAME: 'Susan',
-    CREATED_DATE: '2023-05-11T17:43:38.227+0000',
-    _version_: 1765594912886096000,
-  },
-  {
-    ID: '540706',
-    CONTENT_TYPE: 'CONTENT_UPLOAD',
-    JOB_ID: '540706',
-    JOB_NAME: 'b',
-    OTMM_FOLDER_ID: '662b920026169d88b32faa4b0bf7259b832e0b44',
-    JOB_STATUS: 'APPROVED',
-    ALBUM_NAME: 'b',
-    THIRD_PARTY_APPROVAL: false,
-    IS_MUSIC_NEEDED: false,
-    BRAND_ID: '44',
-    BRAND_NAME: '10',
-    BRAND_DISPLAY_NAME: 'Monster',
-    COUNTRY_ID: '1',
-    COUNTRY_NAME: 'US',
-    COUNTRY_DISPLAY_NAME: 'USA',
-    PRODUCT_LINE_ID: '1',
-    PRODUCT_LINE_NAME: 'Rehab',
-    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
-    DEPARTMENT_ID: '1',
-    DEPARTMENT_NAME: 'Graphics',
-    DEPARTMENT_DISPLAY_NAME: 'Creative',
-    DEPARTMENT_CODE: '10',
-    CREATED_USER_ID: 'Susan',
-    CREATED_USER_IDENTITY_ID: '16483',
-    CREATED_USER_NAME: 'Susan',
-    CREATED_DATE: '2023-05-11T12:23:27.080+0000',
-    _version_: 1765574086058049500,
-  },
-  {
-    ID: '540704',
-    CONTENT_TYPE: 'CONTENT_UPLOAD',
-    JOB_ID: '540704',
-    JOB_NAME: 'test',
-    OTMM_FOLDER_ID: 'a84555a58133cecca2c5641cef1b8089f5a6d76f',
-    JOB_STATUS: 'APPROVED',
-    ALBUM_NAME: 'test',
-    THIRD_PARTY_APPROVAL: false,
-    IS_MUSIC_NEEDED: false,
-    BRAND_ID: '44',
-    BRAND_NAME: '10',
-    BRAND_DISPLAY_NAME: 'Monster',
-    COUNTRY_ID: '1',
-    COUNTRY_NAME: 'US',
-    COUNTRY_DISPLAY_NAME: 'USA',
-    PRODUCT_LINE_ID: '1',
-    PRODUCT_LINE_NAME: 'Rehab',
-    PRODUCT_LINE_DISPLAY_NAME: 'Rehab',
-    DEPARTMENT_ID: '1',
-    DEPARTMENT_NAME: 'Graphics',
-    DEPARTMENT_DISPLAY_NAME: 'Creative',
-    DEPARTMENT_CODE: '10',
-    CREATED_USER_ID: 'Susan',
-    CREATED_USER_IDENTITY_ID: '16483',
-    CREATED_USER_NAME: 'Susan',
-    CREATED_DATE: '2023-05-08T17:18:34.040+0000',
-    _version_: 1765320841984213000,
-  },
-];
 @Component({
   selector: 'mcu-jobs-table',
   templateUrl: './jobs-table.component.html',
   styleUrls: ['./jobs-table.component.scss'],
 })
-export class JobsTableComponent implements OnInit, AfterViewInit {
-  length = 50;
-  pageSize = 10;
-  pageIndex = 0;
-  pageSizeOptions = [5, 10, 25];
+export class JobsTableComponent implements OnInit {
+  // length = 50;
+  // pageSize = 3;
+  // pageIndex = 0;
+  pageSizeOptions = [3, 5, 7];
   hidePageSize = false;
   showPageSizeOptions = true;
   showFirstLastButtons = true;
   disabled = false;
 
-  jobData = jobDetails;
-
   pageEvent!: PageEvent;
 
   displayedColumns: string[] = [
-    'JOB_ID',
-    'JOB_NAME',
-    'BRAND_DISPLAY_NAME',
-    'COUNTRY_DISPLAY_NAME',
-    'DEPARTMENT_NAME',
-    'PRODUCT_LINE_NAME',
-    'JOB_STATUS',
-    'CREATED_DATE',
-    'ACTIONS',
+    'job_id',
+    'job_name',
+    'brand',
+    'country',
+    'department_name',
+    'product_line',
+    'job_status',
+    'created_date',
+    'actions',
   ];
 
   isMobile!: boolean;
-  dataSource!: MatTableDataSource<any>;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  dataSource = new MatTableDataSource<JobDetails>();
+  @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private contentUploadService: ContentUploadService
+    private searchService: SearchService
   ) {}
 
   applyFilter(event: Event) {
@@ -407,48 +53,39 @@ export class JobsTableComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  offset!: number;
+  // offset!: number;
 
   // handlePageEvent(e: PageEvent) {
   //   this.offset = e.pageIndex;
   //   this.pageSize = e.pageSize;
   //   console.log(this.offset + '...' + this.pageSize);
-  //   this.sortwithPagination();
+  //   // this.sortwithPagination();
   // }
 
   active!: string;
   direction!: string;
-  // sortData(sort: Sort) {
-  //   this.active = sort.active;
-  //   this.direction = sort.direction;
-  //   this.sortwithPagination();
-  // }
-
-  // sortwithPagination() {
-  //   this.contentUploadService
-  //     .getJobsWithSortingAndPagination(
-  //       this.offset,
-  //       this.pageSize,
-  //       this.active,
-  //       this.direction
-  //     )
-  //     .subscribe({
-  //       next: (data) => {
-  //         this.dataSource.data = data;
-  //         this.jobData = data;
-  //       },
-  //       error: (error) => {
-  //         console.log(error);
-  //       },
-  //       complete: () => {
-  //         console.log('Sorting with Pagination Completed');
-  //       },
-  //     });
-  // }
 
   isDesktop!: boolean;
   isTablet!: boolean;
+
+  getJobDetails(start: any, end: any) {
+    return this.searchService.getAllJobDeatils(start, end, 300);
+  }
+
   ngOnInit(): void {
+    // this.searchService
+    //   .getAllJobDeatils(this.startIndex, this.endIndex, this.totalPageNumber)
+    //   .subscribe((solrData: SorlResponse) => {
+    //     console.log(solrData.data);
+    //     this.dataSource = new MatTableDataSource<JobDetails>(solrData.data);
+    //     this.dataSource.paginator = this.paginator;
+    //   });
+
+    this.getJobDetails(this.startIndex, this.endIndex).subscribe((solrData) => {
+      this.dataSource.data = solrData.data;
+      this.totalPageNumber = solrData.cursor.total_records;
+    });
+
     this.breakpointObserver
       .observe([Breakpoints.Handset])
       .subscribe((result) => {
@@ -470,11 +107,84 @@ export class JobsTableComponent implements OnInit, AfterViewInit {
           console.log(`tablet`, result);
         }
       });
-    this.dataSource = new MatTableDataSource(jobDetails);
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  startIndex = 0;
+  endIndex = 3;
+  page = {
+    length: 0,
+    pageSize: 3,
+    pageIndex: 0,
+  };
+  pageIndexValue = 1;
+  totalPageNumber = 0;
+
+  onPageChange(pageEvent: PageEvent) {
+    // this.calculateTotalPageSize();
+    // this.startIndex = this.page.pageIndex * this.page.pageSize;
+    this.startIndex = pageEvent.pageIndex * pageEvent.pageSize;
+    console.log(`pageSizeOptions`, this.pageEvent);
+    // this.endIndex = this.page.pageSize;
+    this.endIndex = pageEvent.pageSize;
+    // this.totalPageNumber = Math.ceil(this.page.length / this.page.pageSize);
+    this.totalPageNumber = Math.ceil(pageEvent.length / pageEvent.pageSize);
+
+    this.searchService
+      .getAllJobDeatils(this.startIndex, this.endIndex, this.totalPageNumber)
+      .subscribe((solrData: SorlResponse) => {
+        console.log(solrData.data);
+        this.dataSource.data = solrData.data;
+      });
   }
+
+  // calculateTotalPageSize() {
+  //   if (this.page.length < this.paginator.pageSize * this.paginator.pageIndex) {
+  //     this.paginator.pageIndex = 0;
+  //   }
+  //   if (this.paginator.pageSize >= 0 && this.paginator.pageIndex >= 0) {
+  //     this.page = {
+  //       length: this.page.length,
+  //       pageSize: this.paginator.pageSize,
+  //       pageIndex: this.paginator.pageIndex,
+  //     };
+  //   } else {
+  //     this.page = {
+  //       length: this.page.length,
+  //       pageSize: this.page.pageSize,
+  //       pageIndex: this.page.pageIndex,
+  //     };
+  //   }
+  //   this.pageIndexValue = this.page.pageIndex + 1;
+  // }
+
+  // jobDetailsArray: JobDetails[] = [];
+  // totalRecords: number = 0;
+
+  // ngAfterViewInit(): void {
+  //   this.dataSource.paginator = this.paginator;
+
+  //   this.paginator.page
+  //     .pipe(
+  //       startWith({}),
+  //       switchMap(() => {
+  //         return this.getJobDetails(
+  //           this.paginator.pageIndex + 1,
+  //           this.paginator.pageSize
+  //         ).pipe(catchError(() => of(null)));
+  //       }),
+  //       map((jobData) => {
+  //         if (jobData == null) return [];
+  //         this.totalRecords = jobData.cursor.total_records;
+  //         console.log(`jobData`, jobData);
+  //         return jobData.data;
+  //       })
+  //     )
+  //     .subscribe((empData) => {
+  //       this.jobDetailsArray = empData;
+  //       console.log(`jobDetials`, empData);
+  //       this.dataSource = new MatTableDataSource(this.jobDetailsArray);
+  //       console.log(`oa`, this.paginator);
+  //       console.log(`data sote`, this.dataSource);
+  //     });
+  // }
 }

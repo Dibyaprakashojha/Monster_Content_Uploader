@@ -4,6 +4,7 @@ import {
   DoCheck,
   Host,
   Input,
+  OnInit,
   Optional,
   Renderer2,
   Self,
@@ -22,7 +23,7 @@ interface PageObject {
 @Directive({
   selector: '[mcuPaginator]',
 })
-export class PaginatorDirective implements AfterViewInit {
+export class PaginatorDirective implements OnInit, AfterViewInit {
   private _pageGapTxt = '...';
   private _rangeStart: any;
   private _rangeEnd: any;
@@ -257,6 +258,13 @@ export class PaginatorDirective implements AfterViewInit {
     this.matPag['_emitPageEvent'](previousPageIndex);
     this.initPageRange();
   }
+
+  ngOnInit(): void {
+    this._rangeStart = 0;
+    this._rangeEnd = this._showTotalPages - 1;
+    this.initPageRange();
+  }
+
   //Initialize default state after view init
   public ngAfterViewInit() {
     this._rangeStart = 0;
