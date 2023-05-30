@@ -1,3 +1,4 @@
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { SearchService } from './../../services/search.service';
 import { ContentUploadService } from './../../services/content-upload.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -15,9 +16,6 @@ import { JobDetails, SorlResponse } from 'src/app/shared/models/jobDetails';
   styleUrls: ['./jobs-table.component.scss'],
 })
 export class JobsTableComponent implements OnInit {
-  // length = 50;
-  // pageSize = 3;
-  // pageIndex = 0;
   pageSizeOptions = [3, 5, 7];
   hidePageSize = false;
   showPageSizeOptions = true;
@@ -45,7 +43,8 @@ export class JobsTableComponent implements OnInit {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private router: Router
   ) {}
 
   applyFilter(event: Event) {
@@ -53,30 +52,42 @@ export class JobsTableComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  // offset!: number;
-
-  // handlePageEvent(e: PageEvent) {
-  //   this.offset = e.pageIndex;
-  //   this.pageSize = e.pageSize;
-  //   console.log(this.offset + '...' + this.pageSize);
-  //   // this.sortwithPagination();
-  // }
-
   active!: string;
   direction!: string;
 
   isDesktop!: boolean;
   isTablet!: boolean;
 
-  getJobDetails(start: any, end: any) {
-    return this.searchService.getAllJobDeatils(start, end, 300);
-  }
-
   ngOnInit(): void {
-    this.getJobDetails(this.startIndex, this.endIndex).subscribe((solrData) => {
-      this.dataSource.data = solrData.data;
-      this.totalPageNumber = solrData.cursor.total_records;
-    });
+    if (this.router.url.includes('my-jobs')) {
+      console.log(`sdfghj`, this.totalPageNumber);
+      this.searchService
+        .getMyJobDetails(
+          this.startIndex,
+          this.endIndex,
+          this.totalPageNumber,
+          this.sortDirection,
+          1
+        )
+        .subscribe((solrData) => {
+          this.totalPageNumber = 0;
+          this.dataSource.data = solrData.data;
+          console.log(`myjobs`, solrData.cursor.total_records);
+          this.totalPageNumber = solrData.cursor.total_records;
+        });
+    } else if (this.router.url.includes('all-jobs')) {
+      this.searchService
+        .getAllJobDeatils(
+          this.startIndex,
+          this.endIndex,
+          this.totalPageNumber,
+          this.sortDirection
+        )
+        .subscribe((solrData) => {
+          this.dataSource.data = solrData.data;
+          this.totalPageNumber = solrData.cursor.total_records;
+        });
+    }
 
     this.breakpointObserver
       .observe([Breakpoints.XSmall])
@@ -118,77 +129,100 @@ export class JobsTableComponent implements OnInit {
   sortData(event: any) {
     this.sortDirection = event.direction;
     console.log(`event sort`, this.sortDirection);
+
+    if (this.router.url.includes('my-jobs')) {
+      this.searchService
+        .getMyJobDetails(
+          this.startIndex,
+          this.endIndex,
+          this.totalPageNumber,
+          this.sortDirection,
+          1
+        )
+        .subscribe((solrData) => {
+          this.dataSource.data = solrData.data;
+          this.totalPageNumber = solrData.cursor.total_records;
+        });
+    } else if (this.router.url.includes('all-jobs')) {
+      this.searchService
+        .getAllJobDeatils(
+          this.startIndex,
+          this.endIndex,
+          this.totalPageNumber,
+          this.sortDirection
+        )
+        .subscribe((solrData: SorlResponse) => {
+          this.dataSource.data = solrData.data;
+          this.totalPageNumber = solrData.cursor.total_records;
+          console.log(`all`, solrData);
+        });
+    }
+  }
+
+  refresh() {
+    if (this.router.url.includes('my-jobs')) {
+      this.searchService
+        .getMyJobDetails(
+          this.startIndex,
+          this.endIndex,
+          this.totalPageNumber,
+          this.sortDirection,
+          1
+        )
+        .subscribe((solrData) => {
+          this.dataSource.data = solrData.data;
+          this.totalPageNumber = solrData.cursor.total_records;
+        });
+    } else if (this.router.url.includes('all-jobs')) {
+      this.searchService
+        .getAllJobDeatils(
+          this.startIndex,
+          this.endIndex,
+          this.totalPageNumber,
+          this.sortDirection
+        )
+        .subscribe((solrData: SorlResponse) => {
+          this.dataSource.data = solrData.data;
+          this.totalPageNumber = solrData.cursor.total_records;
+          console.log(`all`, solrData);
+        });
+    }
   }
 
   onPageChange(pageEvent: PageEvent) {
-    // this.calculateTotalPageSize();
-    // this.startIndex = this.page.pageIndex * this.page.pageSize;
     console.log(`pageIndex`, pageEvent.pageIndex);
     this.startIndex = pageEvent.pageIndex * pageEvent.pageSize;
     console.log(`pageSizeOptions`, this.pageEvent);
-    // this.endIndex = this.page.pageSize;
     this.endIndex = pageEvent.pageSize;
-    // this.totalPageNumber = Math.ceil(this.page.length / this.page.pageSize);
     this.totalPageNumber = Math.ceil(pageEvent.length / pageEvent.pageSize);
 
     console.log(this.startIndex, this.endIndex, this.totalPageNumber);
 
-    this.searchService
-      .getAllJobDeatils(this.startIndex, this.endIndex, this.totalPageNumber)
-      .subscribe((solrData: SorlResponse) => {
-        console.log('page cgne', solrData.data);
-        this.dataSource.data = solrData.data;
-      });
+    if (this.router.url.includes('my-jobs')) {
+      this.searchService
+        .getMyJobDetails(
+          this.startIndex,
+          this.endIndex,
+          this.totalPageNumber,
+          this.sortDirection,
+          1
+        )
+        .subscribe((solrData) => {
+          this.dataSource.data = solrData.data;
+          this.totalPageNumber = solrData.cursor.total_records;
+        });
+    } else if (this.router.url.includes('all-jobs')) {
+      this.searchService
+        .getAllJobDeatils(
+          this.startIndex,
+          this.endIndex,
+          this.totalPageNumber,
+          this.sortDirection
+        )
+        .subscribe((solrData: SorlResponse) => {
+          this.dataSource.data = solrData.data;
+          this.totalPageNumber = solrData.cursor.total_records;
+        });
+    }
   }
-
-  // calculateTotalPageSize() {
-  //   if (this.page.length < this.paginator.pageSize * this.paginator.pageIndex) {
-  //     this.paginator.pageIndex = 0;
-  //   }
-  //   if (this.paginator.pageSize >= 0 && this.paginator.pageIndex >= 0) {
-  //     this.page = {
-  //       length: this.page.length,
-  //       pageSize: this.paginator.pageSize,
-  //       pageIndex: this.paginator.pageIndex,
-  //     };
-  //   } else {
-  //     this.page = {
-  //       length: this.page.length,
-  //       pageSize: this.page.pageSize,
-  //       pageIndex: this.page.pageIndex,
-  //     };
-  //   }
-  //   this.pageIndexValue = this.page.pageIndex + 1;
-  // }
-
-  // jobDetailsArray: JobDetails[] = [];
-  // totalRecords: number = 0;
-
-  // ngAfterViewInit(): void {
-  //   this.dataSource.paginator = this.paginator;
-
-  //   this.paginator.page
-  //     .pipe(
-  //       startWith({}),
-  //       switchMap(() => {
-  //         return this.getJobDetails(
-  //           this.paginator.pageIndex + 1,
-  //           this.paginator.pageSize
-  //         ).pipe(catchError(() => of(null)));
-  //       }),
-  //       map((jobData) => {
-  //         if (jobData == null) return [];
-  //         this.totalRecords = jobData.cursor.total_records;
-  //         console.log(`jobData`, jobData);
-  //         return jobData.data;
-  //       })
-  //     )
-  //     .subscribe((empData) => {
-  //       this.jobDetailsArray = empData;
-  //       console.log(`jobDetials`, empData);
-  //       this.dataSource = new MatTableDataSource(this.jobDetailsArray);
-  //       console.log(`oa`, this.paginator);
-  //       console.log(`data sote`, this.dataSource);
-  //     });
-  // }
 }

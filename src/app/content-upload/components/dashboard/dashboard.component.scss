@@ -56,7 +56,7 @@ mat-sidenav {
   background-color: transparent;
   border-width: 0px;
   padding: 0px;
-  top: 12px;
+  top: 10px;
   height: 100%;
 }
 
@@ -114,10 +114,6 @@ mat-sidenav {
   width: 30px;
 }
 
-// .mat-mdc-list-item,
-// .mdc-list-item,
-// .listitem,
-// .mat-mdc-list-item-single-line,
 .mdc-list-item--with-one-line {
   padding: 0px 0px 0px 16px;
 }
@@ -133,54 +129,64 @@ mat-sidenav {
 }
 
 /*mobile-view  css*/
+@media screen and (max-width: 599.98px) {
+  .mb-nav-item {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
 
-.mb-nav-item {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-}
+  .mb-nav-item-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.mb-nav-item-2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .mb-menu-image {
+    width: 40px;
+    height: 30px;
+    margin-right: 15px;
+    // transform: scale(0.5);
+  }
+  .mb-menu-image-left {
+    width: 30px;
+    height: 30px;
+    margin-left: 15px;
+    top: 2px;
+    // transform: scale(0.5);
+  }
 
-.mb-menu-image {
-  width: 40px;
-  height: 30px;
-  margin-right: 15px;
-  // transform: scale(0.5);
-}
-.mb-menu-image-left {
-  width: 30px;
-  height: 30px;
-  margin-right: 15px;
-  top: 2px;
-  // transform: scale(0.5);
-}
+  .menu-button-1 {
+    background-color: transparent;
+    border-width: 0px;
+    padding: 0px;
+    top: 10px;
+    height: 100%;
+  }
 
-.mb-menu-image-left-1 {
-  width: 30px;
-  height: 30px;
-  margin-right: 15px;
-  transform: scale(0.9);
-}
+  .menu-button {
+    background-color: transparent;
+    border-width: 0px;
+    padding: 0px;
+    // top: 15px;
+    height: 100%;
+    margin-top: 15px;
+  }
 
-.mb-logo {
-  height: 30px;
-}
+  .mb-menu-image-left-1 {
+    transform: scale(0.8);
+  }
 
-// @media screen and (max-width: 599.98px) {
-//   .menu-button {
-//     background-color: transparent;
-//     border-width: 0px;
-//     margin-top: 15px;
-//   }
-//   // mat-table {
-//   //   transform: scale(0.8);
-//   // }
-// }
+  .mb-notification-button {
+    background-color: transparent;
+    height: 15px;
+    border-width: 0px;
+    padding: 0px;
+  }
+  .mb-logo {
+    height: 30px;
+  }
+}
 
 @media screen and (((min-width: 600px) and (max-width: 839.98px) and (orientation: portrait)) or
 ((min-width: 960px) and (max-width: 1279.98px) and (orientation: landscape))) {
@@ -205,11 +211,4 @@ mat-sidenav {
   .menu-text {
     font-size: 15px;
   }
-}
-
-.mb-notification-button {
-  background-color: transparent;
-  height: 15px;
-  border-width: 0px;
-  padding: 0px;
 }

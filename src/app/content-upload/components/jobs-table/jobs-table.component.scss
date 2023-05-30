@@ -51,17 +51,17 @@ button {
 }
 
 .button-slanted {
-  -ms-transform: skewX(-20deg);
-  -webkit-transform: skewX(-20deg);
-  transform: skewX(-20deg);
+  -ms-transform: skewX(-10deg);
+  -webkit-transform: skewX(-10deg);
+  transform: skewX(-10deg);
   border-radius: 5px;
   width: 100%;
   font-family: $font-family;
-  font-size: 15px;
+  font-size: 18px;
   color: white;
-  font-weight: bold;
-  word-spacing: 2%;
-  letter-spacing: 2px;
+  font-weight: 600;
+  // word-spacing: 2%;
+  letter-spacing: 4px;
 }
 .create-button {
   border-radius: 4px;
@@ -74,9 +74,9 @@ button {
   height: 40px;
   width: 150px;
   letter-spacing: 2px;
-  -ms-transform: skewX(-20deg);
-  -webkit-transform: skewX(-20deg);
-  transform: skewX(-20deg);
+  -ms-transform: skewX(-10deg);
+  -webkit-transform: skewX(-10deg);
+  transform: skewX(-10deg);
 }
 
 .reload {
@@ -137,6 +137,14 @@ button {
     display: flex;
     background-color: #303030;
     border-top: 2px solid black;
+  }
+
+  .mat-mdc-paginator {
+    color: white;
+  }
+
+  .mat-mdc-icon-button {
+    --mat-mdc-button-persistent-ripple-color: white;
   }
 }
 

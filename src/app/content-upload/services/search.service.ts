@@ -223,18 +223,58 @@ export class SearchService {
   getAllJobDeatils(
     pageIndex: any,
     pageSize: any,
-    totalRecords?: any
+    totalRecords: any,
+    sortDirection: any
   ): Observable<SorlResponse> {
     let url = this.base_url.concat('search');
     return this.httpClient.post<SorlResponse>(url, {
       page_index: pageIndex,
       page_size: pageSize,
       total_records: totalRecords,
+      sort_direction: sortDirection,
     });
   }
 
-  getAllJobDeatiLSmOBILE() {
-    return of(this.jobDetails);
+  getMyJobDetails(
+    pageIndex: any,
+    pageSize: any,
+    totalRecords: any,
+    sortDirection: any,
+    userId: any
+  ): Observable<SorlResponse> {
+    let url = this.base_url.concat('my-jobs');
+    return this.httpClient.post<SorlResponse>(url, {
+      page_index: pageIndex,
+      page_size: pageSize,
+      total_records: totalRecords,
+      sort_direction: sortDirection,
+      user_id: userId,
+    });
+  }
+
+  getAllJobsForMobile(
+    pageIndex: any,
+    sortType?: string
+  ): Observable<SorlResponse> {
+    let url = this.base_url.concat('search');
+
+    return this.httpClient.post<SorlResponse>(url, {
+      page_index: pageIndex,
+      page_size: 3,
+      total_records: 0,
+      sort_direction: 'asc',
+    });
+  }
+
+  getMyJobsForMobile(pageIndex: any, userId: number): Observable<SorlResponse> {
+    let url = this.base_url.concat('my-jobs');
+    return this.httpClient.post<SorlResponse>(url, {
+      page_index: pageIndex,
+      page_size: 3,
+      total_records: 0,
+      sort_direction: 'asc',
+      user_id: userId,
+    });
   }
 
   refinedjobDetails: any[] = [];
@@ -244,14 +284,5 @@ export class SearchService {
         (jobDetail: any) => jobDetail.COUNTRY_DISPLAY_NAME === keyword
       )
     );
-  }
-
-  SortByJobId(sortType: boolean) {
-    if (sortType === true) {
-      this.jobDetails.sort((a, b) => (a.JOB_ID < b.JOB_ID ? 1 : -1));
-    } else {
-      this.jobDetails.sort((a, b) => (a.JOB_ID > b.JOB_ID ? 1 : -1));
-    }
-    return of(this.jobDetails);
   }
 }

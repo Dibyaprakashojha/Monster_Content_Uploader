@@ -42,3 +42,9 @@ mat-mdc-paginator-outer-container {
   margin-left: 15px;
   letter-spacing: 5px;
 }
+
+::ng-deep {
+  .mat-mdc-paginator-page-size-label {
+    color: white !important;
+  }
+}

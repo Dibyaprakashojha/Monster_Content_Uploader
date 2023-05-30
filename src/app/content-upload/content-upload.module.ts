@@ -10,6 +10,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MobileJobsListComponent } from './components/mobile-view-components/mobile-jobs-list/mobile-jobs-list.component';
 import { CardViewComponent } from './components/mobile-view-components/card-view/card-view.component';
 import { HttpClientModule } from '@angular/common/http';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
     ContentUploadRoutingModule,
     SharedModule,
     HttpClientModule,
+    InfiniteScrollModule,
   ],
+  exports: [],
 })
 export class ContentUploadModule {}

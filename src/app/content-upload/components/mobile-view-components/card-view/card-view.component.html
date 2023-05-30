@@ -2,38 +2,38 @@
     <div ngClass="Job">
         <div>
             <label>JObID</label>
-            <p>{{job.ID}}</p>
+            <p>{{job.job_id}}</p>
         </div>
         <div>
             <label>JOB NAME</label>
-            <p>{{job.JOB_NAME}}</p>
+            <p>{{job.job_name}}</p>
         </div>
         <div>
             <label>BRAND</label>
-            <p>{{job.BRAND_NAME}}</p>
+            <p>{{job.brand}}</p>
         </div>
         <div>
             <label>DEPARTMENT</label>
-            <p>{{job.DEPARTMENT_NAME}}</p>
+            <p>{{job.department_name}}</p>
         </div>
 
     </div>
     <div ngClass="status-container">
         <div>
             <label>COUNTRY</label>
-            <p>{{job.COUNTRY_DISPLAY_NAME}}</p>
+            <p>{{job.country}}</p>
         </div>
         <div>
             <label>CREATED DATE</label>
-            <p>{{job.CREATED_DATE|date:'shortDate'}}</p>
+            <p>{{job.created_date|date:'shortDate'}}</p>
         </div>
         <div>
             <label>JOB STATUS</label>
             <p [ngClass]="{
-                'approved':job.JOB_STATUS==='APPROVED',
-                'draft':job.JOB_STATUS==='DRAFT',
-                'inReview':job.JOB_STATUS==='INREVIEW',
-            }" class="status">{{job.JOB_STATUS}}</p>
+                'approved':job.job_status ==='APPROVED',
+                'draft':job.job_status ==='DRAFT',
+                'inReview':job.job_status ==='INREVIEW',
+            }" class="status">{{job.job_status}}</p>
         </div>
     </div>
     <div ngClass="actions">

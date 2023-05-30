@@ -48,8 +48,8 @@
       </button>
     </div>
     <div ngClass="mb-nav-item-2">
-      <button class="menu-button" matBadge="3" matBadgeColor="warn" matBadgeOverlap="tr
-      " matBadgePosition="before">
+      <button class="menu-button-1" matBadge="3" matBadgeColor="warn" matBadgeOverlap="true" matBadgeSize="small"
+        matBadgePosition="after">
         <img class="mb-menu-image-left-1" src=" assets/images/bell.png" />
       </button>
       <button class="menu-button">
@@ -127,7 +127,7 @@
       </mat-list-item>
       <img class="underline" *ngIf="checkMenu('my-workflows')" src="assets/images/underline-lg.png" />
 
-      <mat-list *ngIf="menu === 'my-workflows' || 'content-manager' || 'assets-team'">
+      <mat-list *ngIf="checkMenu('my-workflows')||checkMenu('content-manager')||checkMenu('assets-team')">
         <mat-list-item>
           <button routerLink="content-manager" class="menu-button-expanded">
             <p class="menu-text">Conent Manager</p>

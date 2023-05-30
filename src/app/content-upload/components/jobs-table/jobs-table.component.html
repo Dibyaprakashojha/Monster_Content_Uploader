@@ -1,7 +1,8 @@
 <div ngClass="table-container">
     <div *ngIf="!isMobile" class="flex-row">
         <div class="reload-cont">
-            <button mat-button class="reload approved">
+            <button (click)="refresh()" mat-button class="reload approved">
+                <!--  -->
                 <mat-icon>autorenew</mat-icon>
             </button>
             <div class="search">
@@ -10,8 +11,9 @@
         </div>
         <button mat-button class="create-button approved" routerLink="create-job">Create Job</button>
     </div>
-    <table mat-table matSort (matSortChange)="sortData($event)" *ngIf="!isMobile" [dataSource]="dataSource "
-        class="mat-elevation-z8">
+
+    <table mat-table matSort matSortDisableClear (matSortChange)="sortData($event)" *ngIf="!isMobile"
+        [dataSource]="dataSource " class="mat-elevation-z8">
         <ng-container matColumnDef="job_id">
             <th ngClass="decorate" mat-sort-header mat-header-cell *matHeaderCellDef>
                 JOB ID</th>
@@ -71,14 +73,11 @@
                 <button><img src="assets/images/preview.png"></button>
             </td>
         </ng-container>
-
-
-
         <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></tr>
         <tr mat-row [ngStyle]="{'margin-bottom':'10px'}" *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator #paginator *ngIf="!isMobile" (page)="onPageChange($event)" [length]="6" [pageSize]="3"
-        showFirstLastButtons="true" [pageSizeOptions]="pageSizeOptions" aria-label="Select page">
+    <mat-paginator #paginator mcuPaginator *ngIf="!isMobile" (page)="onPageChange($event)" [length]="totalPageNumber"
+        [pageSize]="3" showFirstLastButtons="true" [pageSizeOptions]="pageSizeOptions" aria-label="Select page">
     </mat-paginator>
     <mcu-mobile-jobs-list *ngIf="isMobile"></mcu-mobile-jobs-list>
 </div>

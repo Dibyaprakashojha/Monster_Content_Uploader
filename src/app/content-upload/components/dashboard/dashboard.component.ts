@@ -93,6 +93,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.breakpointObserver
       .observe([Breakpoints.XSmall])
       .subscribe((result) => {
+        console.log('xsmall', result);
         if (result.matches) {
           this.isMobile = true;
           this.isTablet = false;
@@ -101,6 +102,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         }
       });
     this.breakpointObserver.observe([Breakpoints.Web]).subscribe((result) => {
+      console.log(`web`, result);
       if (result.matches) {
         this.isMobile = false;
         this.isTablet = false;
@@ -111,6 +113,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.breakpointObserver
       .observe([Breakpoints.Tablet, Breakpoints.Small])
       .subscribe((result) => {
+        console.log(`tab`, result);
         if (result.matches) {
           this.isMobile = false;
           this.isTablet = true;
