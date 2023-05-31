@@ -20,10 +20,10 @@
 }
 
 #sidenav.menu-close {
-  width: 5%;
+  width: 4%;
 }
 #sidenav.menu-open {
-  width: 15%;
+  width: 10%;
 }
 
 .mat-sidenav-container {
@@ -112,7 +112,7 @@ mat-sidenav {
 
 .login-name {
   color: $text-color;
-  font-size: 30px;
+  font-size: 20px;
   font-family: $font-family;
 }
 
@@ -129,7 +129,7 @@ mat-sidenav {
   font-size: 30px;
   font-family: $font-family;
   color: white;
-  letter-spacing: 5px;
+  letter-spacing: 2px;
   text-decoration: underline white;
   margin: 0px 0px 10px 0px;
   padding: 2px;
@@ -141,10 +141,11 @@ mat-sidenav {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-start;
-  height: 50%;
-  margin-left: 15px;
+  justify-content: center;
+  height: auto;
+  margin-left: 5px;
   border-color: #22bb39 2px;
+  // transform: scale(0.9);
 }
 
 .menu-container {
@@ -156,9 +157,6 @@ mat-sidenav {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  // border-bottom: solid 3px;
-  // border-color: #49c732;
-  // border-bottom-width: 5px;
 }
 
 /* Vector 1 */
@@ -174,6 +172,33 @@ mat-sidenav {
     #51ca31 68.99%,
     #22bb39 100.79%
   );
+}
+
+.selected-menu-expanded {
+  width: 130px;
+  height: 6px;
+  left: 12px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background: linear-gradient(
+    270deg,
+    #bfec1d -4.72%,
+    #51ca31 68.99%,
+    #22bb39 100.79%
+  );
+  .mb-selected-menu-expanded {
+    width: 70px;
+    height: 6px;
+    left: 12px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: linear-gradient(
+      270deg,
+      #bfec1d -4.72%,
+      #51ca31 68.99%,
+      #22bb39 100.79%
+    );
+  }
 }
 
 .unselected-menu {

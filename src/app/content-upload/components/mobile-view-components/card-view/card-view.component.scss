@@ -45,14 +45,15 @@ label {
 
 .status {
   border-radius: 5px;
-  font-family: $font-family;
+  font-family: Teko;
   font-size: 15px;
   color: white;
   font-weight: 200;
   word-spacing: 2%;
-  letter-spacing: px;
+  letter-spacing: 2px;
   text-align: center;
   width: 100%;
+  border: 0px;
 }
 .approved {
   background: linear-gradient(270deg, #49c732 -4.72%, #248512 100.79%);

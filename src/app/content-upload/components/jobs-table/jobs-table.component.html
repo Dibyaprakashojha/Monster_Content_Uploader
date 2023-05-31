@@ -1,7 +1,7 @@
 <div ngClass="table-container">
     <div *ngIf="!isMobile" class="flex-row">
         <div class="reload-cont">
-            <button (click)="refresh()" mat-button class="reload approved">
+            <button mat-button (click)="refresh()" class="reload approved">
                 <!--  -->
                 <mat-icon>autorenew</mat-icon>
             </button>
@@ -52,16 +52,16 @@
             <th mat-header-cell *matHeaderCellDef> JOB STATUS </th>
             <td mat-cell *matCellDef="let element">
                 <button [ngClass]="{
-                    'status approved':element.job_status.toUpperCase()==='APPROVED',
-                    'status draft':element.job_status.toUpperCase()==='DRAFT',
-                    'status inReview':element.job_status.toUpperCase()==='INREVIEW',
-                }" class="button-slanted">{{element.job_status}}</button>
+                    'approved':element.job_status.toUpperCase()==='APPROVED',
+                    'draft':element.job_status.toUpperCase()==='DRAFT',
+                    'inReview':element.job_status.toUpperCase()==='INREVIEW',
+                }" class="button-slanted">{{element.job_status.toUpperCase()}}</button>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="created_date">
             <th mat-header-cell *matHeaderCellDef> CREATED DATE </th>
-            <td mat-cell *matCellDef="let element"> {{element.created_date|date:'shortDate'}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.created_date | uTCToLocalPipe:'short'}} </td>
         </ng-container>
 
 

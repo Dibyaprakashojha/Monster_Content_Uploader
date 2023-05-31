@@ -27,16 +27,16 @@
             <label>CREATED DATE</label>
             <p>{{job.created_date|date:'shortDate'}}</p>
         </div>
-        <div>
+        <div class="status-container">
             <label>JOB STATUS</label>
-            <p [ngClass]="{
-                'approved':job.job_status ==='APPROVED',
-                'draft':job.job_status ==='DRAFT',
-                'inReview':job.job_status ==='INREVIEW',
-            }" class="status">{{job.job_status}}</p>
+            <button mat-button [ngClass]="{
+                'status approved':job.job_status.toUpperCase() ==='APPROVED',
+                'status draft':job.job_status.toUpperCase() ==='DRAFT',
+                'status inReview':job.job_status.toUpperCase() ==='INREVIEW',
+            }" ngClass="status">{{job.job_status}}</button>
         </div>
     </div>
-    <div ngClass="actions">
+    <div ngClass=" actions">
         <button class="reload-button">
             <img class="reload-image" src="assets/images/preview.png" />
         </button>

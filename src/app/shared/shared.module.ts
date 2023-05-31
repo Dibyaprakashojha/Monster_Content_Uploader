@@ -5,10 +5,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PaginatorDirective } from './directives/paginator.directive';
+import { UTCToLocalPipePipe } from './pipes/utcto-local-pipe.pipe';
 // import { CustomPaginatorDirective } from './directives/custom-paginator.directive';
 
 @NgModule({
-  declarations: [PaginatorDirective],
+  declarations: [PaginatorDirective, UTCToLocalPipePipe],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -21,6 +22,7 @@ import { PaginatorDirective } from './directives/paginator.directive';
     FormsModule,
     ReactiveFormsModule,
     PaginatorDirective,
+    UTCToLocalPipePipe,
   ],
 })
 export class SharedModule {}

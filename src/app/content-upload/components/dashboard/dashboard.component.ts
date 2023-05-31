@@ -32,9 +32,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     console.log('On toolbar toggled', this.isMenuOpen);
 
     if (this.isMenuOpen === false) {
-      this.contentMargin = 5;
+      this.contentMargin = 4;
     } else {
-      this.contentMargin = 15;
+      this.contentMargin = 10;
     }
   }
 

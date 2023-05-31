@@ -4,6 +4,10 @@
   width: 100%;
   max-height: 80%;
 }
+
+.mat-mdc-table {
+  margin-top: 10px;
+}
 .reload-cont {
   display: flex;
   justify-content: space-between;
@@ -15,12 +19,12 @@
 }
 th {
   background-color: black !important;
-  color: $text-color;
+  color: #8cc63f;
   border-bottom: 2px solid black;
-  font-family: $font-family;
-  font-size: 20px;
+  font-family: Teko;
+  font-size: 18px;
   text-align: center;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 ::ng-deep {
   mat-header-cell,
@@ -35,9 +39,10 @@ td {
   border-bottom: 2px solid black;
   margin-top: 5px;
   font-family: $font-family;
-  font-size: 20px;
+  font-size: 17px;
   text-align: center;
-  // letter-spacing: 1px;
+  font-weight: lighter;
+  letter-spacing: 1px;
 }
 
 img {
@@ -54,25 +59,26 @@ button {
   -ms-transform: skewX(-10deg);
   -webkit-transform: skewX(-10deg);
   transform: skewX(-10deg);
-  border-radius: 5px;
-  width: 100%;
+  border-radius: 3px;
+  width: 90%;
   font-family: $font-family;
-  font-size: 18px;
+  font-size: auto;
   color: white;
   font-weight: 600;
+  height: 25px;
   // word-spacing: 2%;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
 }
 .create-button {
   border-radius: 4px;
   font-family: $font-family;
-  font-size: 30px;
+  font-size: 20px;
   color: white;
   font-weight: bold;
   word-spacing: 2%;
   margin-right: 30px;
-  height: 40px;
-  width: 150px;
+  height: 35px;
+  width: 123px;
   letter-spacing: 2px;
   -ms-transform: skewX(-10deg);
   -webkit-transform: skewX(-10deg);
@@ -86,13 +92,14 @@ button {
   color: white;
   font-weight: bold;
   word-spacing: 2%;
-  height: 40px;
-  width: 60px;
+  height: 30px;
+  width: 30px;
   letter-spacing: 2px;
   -ms-transform: skewX(-10deg);
   -webkit-transform: skewX(-10deg);
   transform: skewX(-10deg);
   margin-right: 15px;
+  text-align: center;
   align-self: flex-end;
 }
 
