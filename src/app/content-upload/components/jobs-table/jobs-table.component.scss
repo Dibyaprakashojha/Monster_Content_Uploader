@@ -100,8 +100,8 @@ button {
   width: 150px;
   height: 30px;
   align-self: center;
-  border-radius: 6px;
-  background-color: #303030;
+  border: 0px;
+  background-color: transparent;
   border-right: 0px;
   border-bottom: 2px solid white;
   color: white;
@@ -133,12 +133,6 @@ button {
     min-width: 150px !important;
   }
 
-  .mat-mdc-paginator-outer-container {
-    display: flex;
-    background-color: #303030;
-    border-top: 2px solid black;
-  }
-
   .mat-mdc-paginator {
     color: white;
   }
@@ -146,6 +140,27 @@ button {
   .mat-mdc-icon-button {
     --mat-mdc-button-persistent-ripple-color: white;
   }
+}
+
+::ng-deep .mat-mdc-paginator-outer-container {
+  display: flex;
+  background-color: #303030;
+  border-top: 2px solid black;
+  color: #ffffff;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: white;
+}
+
+.mat-paginator .mat-paginator-range-label,
+.mat-paginator .mat-paginator-page-size,
+.mat-paginator .mat-paginator-page-size-label,
+.mat-paginator .mat-paginator-navigation-button,
+.mat-paginator .mat-paginator-navigation-button:hover,
+.mat-paginator .mat-paginator-navigation-button:active,
+.mat-paginator .mat-paginator-navigation-button-disabled {
+  color: white;
 }
 
 @media screen and (((min-width: 600px) and (max-width: 839.98px) and (orientation: portrait)) or
