@@ -36,12 +36,32 @@ export class MobileJobsListComponent implements OnInit {
     }
   }
 
+  filteredJobList: any[] = [];
+  searchValue: any;
   search(event: any) {
-    // this.searchService.searchByKeyWord(event.target.value).subscribe((data) => {
-    //   console.log((event.target as HTMLInputElement).value);
-    //   this.jobList = data;
-    // });
-    // this.jobList.
+    // let value = event.target.value.toString();
+    this.jobList.forEach((each) => {
+      if (each.job_id == event.target.value) {
+        this.filteredJobList.push(each);
+      }
+    });
+    this.jobList = [...this.filteredJobList];
+    if (event.target.value == '') {
+      if (this.router.url.includes('all-jobs')) {
+        this.searchService
+          .getAllJobsForMobile(this.documentIndex)
+          .subscribe((solrData) => {
+            this.jobList = solrData.data;
+            console.log(`jobList`, this.jobList);
+          });
+      } else if (this.router.url.includes('my-jobs')) {
+        this.searchService
+          .getMyJobsForMobile(this.documentIndex, 1)
+          .subscribe((solrData) => {
+            this.jobList = solrData.data;
+          });
+      }
+    }
   }
 
   sortType = true;

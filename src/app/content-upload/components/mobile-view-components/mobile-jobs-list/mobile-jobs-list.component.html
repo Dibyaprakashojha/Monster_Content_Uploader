@@ -8,8 +8,8 @@
         <button (click)="toggleSearch()" class="reload-button">
             <img class="reload-image" src=" assets/images/save.png" />
         </button>
-        <input *ngIf="showSearchBar" mat-Input class="input" placeholder="Search" (keydown.enter)="search($event)"
-            type="text">
+        <input #value *ngIf="showSearchBar" mat-Input class="input" placeholder="Search"
+            (keyDown.enter)="search($event)" type="text">
         <button (click)="sortTheData()" class="reload-button">
             <img class="reload-image" src="assets/images/refresh.png" />
         </button>

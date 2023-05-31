@@ -38,13 +38,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  mobileMenuOpen = false;
-  onMobileToolBarToggle() {
+  mobileMenuOpen: boolean = false;
+  isMobileMenuOpen = false;
+  onMobileToolBarToggle(value: boolean) {
     this.mobileMenuOpen = !this.mobileMenuOpen;
-    if (this.mobileMenuOpen) {
+    console.log(`mobileMenu open`, this.mobileMenuOpen);
+    if (!value) {
       this.mobileSideNav.close();
-    } else {
+      this.isMobileMenuOpen = false;
+    } else if (value) {
       this.mobileSideNav.open();
+      this.isMobileMenuOpen = true;
     }
   }
 

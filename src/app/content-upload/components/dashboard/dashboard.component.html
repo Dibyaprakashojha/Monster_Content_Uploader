@@ -11,15 +11,8 @@
     </div>
     <div ngClass="nav-item">
       <button class="notification-button" matBadgeColor="warn" matBadge="4" matBadgeSize="small" matBadgeOverlap="true">
-        <mat-icon color="accent">notifications </mat-icon>
+        <mat-icon>notifications </mat-icon>
       </button>
-      <!-- 
-      <button class="notification-button">
-        <img class="tool-bar-image" src="assets/images/qds.png">
-      </button>
-      <button class="notification-button">
-        <img class="tool-bar-image-2" src="assets/images/up-down.png">
-      </button> -->
 
       <button mat-button>
         <i class="fa-solid fa-user fa-2x" style="color: #8cc63f"></i>
@@ -34,10 +27,10 @@
 <mat-toolbar *ngIf="isMobile" color="primary">
   <div ngClass="nav-contents">
     <div class="mb-nav-item">
-      <button class="menu-button" *ngIf="!isMenuOpen" (click)="onMobileToolBarToggle()">
+      <button class="menu-button" *ngIf="!isMobileMenuOpen" (click)="onMobileToolBarToggle(true)">
         <img class="mb-menu-image" src="assets/images/hamburger.png" />
       </button>
-      <button class="menu-button" *ngIf="isMenuOpen" (click)="onMobileToolBarToggle()">
+      <button class="menu-button" *ngIf="isMobileMenuOpen" (click)="onMobileToolBarToggle(false)">
         <img class="mb-menu-image" src="assets/images/close.png" />
       </button>
       <button class="menu-button">
@@ -65,7 +58,7 @@
     [class.menu-close]="!isMenuOpen" opened>
     <ul class="menu-items-container" *ngIf="!isMenuOpen" role="list">
 
-      <li class="menu-container" matBadge="3" matBadgeOverlap="true" matbadgeSize="small" matBadgeColor="accent"
+      <li class="menu-container-mini" matBadge="3" matBadgeOverlap="true" matbadgeSize="small" matBadgeColor="accent"
         matBadgePosition="after">
         <button routerLink="my-jobs" class="menu-button" routerLink="my-jobs">
           <img class="menu-image" src="assets/images/myjobgs.png">
@@ -74,29 +67,25 @@
         </span>
       </li>
 
-      <li class="menu-container" role="listitem" matBadge="3" matBadgeOverlap="true" matbadgeSize="medium"
+      <li class="menu-container-mini" role="listitem" matBadge="3" matBadgeOverlap="true" matbadgeSize="medium"
         matBadgeColor="accent" matBadgePosition="after">
         <button routerLink="all-jobs" class="menu-button">
           <img class="menu-image" src="assets/images/alljobs.png" />
         </button>
         <span [ngClass]="checkMenu('all-jobs')?'selected-menu':'unselected-menu'">
         </span>
-
-        <!-- <img class="underline" *ngIf="checkMenu('all-jobs')" src="assets/images/underline-sm.png" /> -->
-
       </li>
 
 
-      <li class="menu-container" role="listitem">
+      <li class="menu-container-mini" role="listitem">
         <button routerLink="my-workflows" class="menu-button">
           <img class="menu-image" src="assets/images/myworkflows.png" />
         </button>
         <span [ngClass]="checkMenu('my-workflows')?'selected-menu':'unselected-menu'">
         </span>
-        <!-- <img class="underline" *ngIf="checkMenu('my-workflows')" src="assets/images/underline-sm.png" /> -->
       </li>
 
-      <li class="menu-container" role="listitem">
+      <li class="menu-container-mini" role="listitem">
         <button routerLink="my-tasks" class="menu-button">
           <img class="menu-image" src="assets/images/mytasks.png" />
         </button>
@@ -115,9 +104,10 @@
           <p class="menu-text" matBadge="3" matBadgeOverlap="true" matbadgeSize="small" matBadgeColor="accent"
             matBadgePosition="after">My Jobs</p>
         </button>
+        <span [ngClass]="checkMenu('my-jobs')?'selected-menu-expanded':'unselected-menu'">
+        </span>
       </li>
-      <span [ngClass]="checkMenu('my-jobs')?'selected-menu-expanded':'unselected-menu'">
-      </span>
+
 
       <li class="menu-container">
         <button routerLink="all-jobs" class="menu-button-expanded">
@@ -128,52 +118,56 @@
         <span [ngClass]="checkMenu('all-jobs')?'selected-menu':'unselected-menu'">
         </span>
       </li>
-      <span [ngClass]="checkMenu('all-jobs')?'selected-menu-expanded':'unselected-menu'">
-      </span>
+      <!-- <span [ngClass]="checkMenu('all-jobs')?'selected-menu-expanded':'unselected-menu'">
+      </span> -->
       <li class="menu-container">
         <button routerLink="my-workflows" class="menu-button-expanded">
           <img class="menu-image" src="assets/images/myworkflows-2.png" />
           <p class="menu-text">My WorkFlows</p>
         </button>
+        <span [ngClass]="checkMenu('my-workflows')?'selected-menu-expanded':'unselected-menu'">
+        </span>
       </li>
-      <span [ngClass]="checkMenu('my-workflows')?'selected-menu-expanded':'unselected-menu'">
-      </span>
+
 
       <li class="menu-container"
         *ngIf="checkMenu('my-workflows')||checkMenu('content-manager')||checkMenu('assets-team')">
         <button routerLink="content-manager" class="menu-button-expanded">
           <p class="menu-text">Conent Manager</p>
         </button>
-        <span [ngClass]="checkMenu('content-manager')?'selected-menu-expanded':'unselected-menu'">
+        <!-- <span [ngClass]="checkMenu('content-manager')?'selected-menu-expanded':'unselected-menu'">
+        </span> -->
+        <span *ngIf="checkMenu('my-workflows')||checkMenu('content-manager')||checkMenu('assets-team')"
+          [ngClass]="checkMenu('content-manager')?'selected-menu-expanded':'unselected-menu'">
         </span>
       </li>
-      <span *ngIf="checkMenu('my-workflows')||checkMenu('content-manager')||checkMenu('assets-team')"
-        [ngClass]="checkMenu('content-manager')?'selected-menu-expanded':'unselected-menu'">
-      </span>
+
 
       <li class="menu-container"
         *ngIf="checkMenu('my-workflows')||checkMenu('content-manager')||checkMenu('assets-team')">
         <button routerLink="assets-team" class="menu-button-expanded">
           <p class="menu-text">Media Assets Team</p>
         </button>
+        <span *ngIf="checkMenu('my-workflows')||checkMenu('content-manager')||checkMenu('assets-team')"
+          [ngClass]="checkMenu('assets-team')?'selected-menu-expanded':'unselected-menu'">
+        </span>
       </li>
-      <span *ngIf="checkMenu('my-workflows')||checkMenu('content-manager')||checkMenu('assets-team')"
-        [ngClass]="checkMenu('assets-team')?'selected-menu-expanded':'unselected-menu'">
-      </span>
+
 
       <li class="menu-container">
         <button routerLink="my-tasks" class="menu-button-expanded">
           <img class="menu-image" src="assets/images/mytasks-2.png" />
           <p class="menu-text">My Tasks</p>
         </button>
+        <span [ngClass]="checkMenu('my-tasks')?'selected-menu-expanded':'unselected-menu'">
+        </span>
       </li>
-      <span [ngClass]="checkMenu('my-tasks')?'selected-menu-expanded':'unselected-menu'">
-      </span>
+
 
     </ul>
   </mat-sidenav>
 
-  <mat-sidenav *ngIf="isMobile" mode="side" #mobileSideNav>
+  <mat-sidenav *ngIf="isMobile" mode="over" #mobileSideNav>
     <ul class="menu-items-container">
       <li class="menu-container" role="listitem">
         <button routerLink="my-jobs" class="menu-button-expanded">
