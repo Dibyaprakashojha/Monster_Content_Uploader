@@ -130,6 +130,23 @@ button {
 }
 
 ::ng-deep {
+  .mat-mdc-icon-button svg {
+    fill: rgb(255 255 255);
+  }
+  .mat-mdc-icon-button[disabled] .mat-mdc-paginator-icon {
+    fill: rgb(255 255 255 / 12%);
+  }
+  .mat-mdc-form-field {
+    background-color: $background-color-paginator;
+    border: 1px solid white;
+    border-radius: 5px;
+    span {
+      color: white;
+    }
+    .mat-mdc-select-arrow svg {
+      color: white;
+    }
+  }
   .mat-sort-header-arrow {
     color: $background !important;
     opacity: 1 !important;
