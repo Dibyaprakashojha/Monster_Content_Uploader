@@ -5,7 +5,7 @@
 
 $content-upload-primary: mat.define-palette($md-primary-pallette, A800);
 $content-upload-accent: mat.define-palette($md-primary-pallette, A200);
-$content-upload-warn: mat.define-palette($md-primary-pallette, 700);
+$content-upload-warn: mat.define-palette($md-primary-pallette, A700);
 
 $content-upload-theme: mat.define-light-theme(
   (

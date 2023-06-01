@@ -87,22 +87,26 @@ button {
 
 .reload {
   border-radius: 4px;
-  font-family: $font-family;
+  font-family: Teko;
   font-size: 30px;
   color: white;
   font-weight: bold;
   word-spacing: 2%;
-  height: 30px;
-  width: 30px;
+  height: 32px;
+  width: 53px;
   letter-spacing: 2px;
-  -ms-transform: skewX(-10deg);
-  -webkit-transform: skewX(-10deg);
   transform: skewX(-10deg);
   margin-right: 15px;
-  text-align: center;
+  // text-align: center;
   align-self: flex-end;
 }
 
+.search {
+  display: flex;
+  align-items: center;
+  border-bottom: 3px solid #303030;
+  color: white;
+}
 .input {
   width: 150px;
   height: 30px;
@@ -110,10 +114,10 @@ button {
   border: 0px;
   background-color: transparent;
   border-right: 0px;
-  border-bottom: 2px solid white;
-  color: white;
 }
-
+.input:focus {
+  outline: none;
+}
 .approved {
   background: linear-gradient(270deg, #49c732 -4.72%, #248512 100.79%);
 }
