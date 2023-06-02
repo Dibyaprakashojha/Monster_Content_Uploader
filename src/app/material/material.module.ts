@@ -15,6 +15,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
 const modules = [
   CdkTableModule,
   MatToolbarModule,
@@ -32,6 +33,7 @@ const modules = [
   MatFormFieldModule,
   MatSortModule,
   MatBadgeModule,
+  MatSelectModule,
 ];
 @NgModule({
   declarations: [],

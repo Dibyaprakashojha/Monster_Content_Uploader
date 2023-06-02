@@ -1,15 +1,15 @@
 <div ngClass="table-container">
   <div *ngIf="!isMobile" class="flex-row">
     <div class="reload-cont">
-      <button (click)="refresh()" class="reload approved">
-        <mat-icon>autorenew</mat-icon>
+      <button mat-button (click)="refresh()" class="reload approved">
+        <mat-icon>refresh</mat-icon>
       </button>
       <div class="search">
         <mat-icon [ngStyle]="{'color':'#E0E0E0'}">search</mat-icon>
         <input (keyup)="applyFilter($event)" class="input" type="input" placeholder="Search" />
       </div>
     </div>
-    <button mat-button class="create-button approved" routerLink="create-job">
+    <button mat-button class="create-button approved" (click)="navigateToContentDetail()">
       Create Job
     </button>
   </div>

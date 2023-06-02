@@ -217,6 +217,7 @@ export class SearchService {
   ];
 
   base_url = 'http://localhost:8081/monster-mcu/';
+  // base_url = 'http://localhost:8081/muc/api/v1/';
   constructor(private httpClient: HttpClient) {}
   jobList: any;
 

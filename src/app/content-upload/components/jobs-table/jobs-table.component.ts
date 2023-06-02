@@ -9,11 +9,18 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { catchError, filter, map, of, startWith, switchMap } from 'rxjs';
 import { JobDetails, SorlResponse } from 'src/app/shared/models/jobDetails';
+import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 
 @Component({
   selector: 'mcu-jobs-table',
   templateUrl: './jobs-table.component.html',
   styleUrls: ['./jobs-table.component.scss'],
+  providers: [
+    {
+      provide: MAT_RADIO_DEFAULT_OPTIONS,
+      useValue: { color: 'warn' },
+    },
+  ],
 })
 export class JobsTableComponent implements OnInit {
   pageSizeOptions = [3, 5, 7];
@@ -224,5 +231,9 @@ export class JobsTableComponent implements OnInit {
           this.totalPageNumber = solrData.cursor.total_records;
         });
     }
+  }
+
+  navigateToContentDetail() {
+    this.router.navigateByUrl('apps/content-upload');
   }
 }

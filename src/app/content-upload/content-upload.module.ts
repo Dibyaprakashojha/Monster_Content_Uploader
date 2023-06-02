@@ -11,7 +11,8 @@ import { MobileJobsListComponent } from './components/mobile-view-components/mob
 import { CardViewComponent } from './components/mobile-view-components/card-view/card-view.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-
+import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -25,9 +26,12 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     LayoutModule,
     ContentUploadRoutingModule,
     SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     InfiniteScrollModule,
   ],
   exports: [],
+  providers: [],
 })
 export class ContentUploadModule {}

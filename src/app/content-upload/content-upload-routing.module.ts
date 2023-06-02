@@ -15,6 +15,7 @@ const routes: Routes = [
       { path: 'content-manager', component: JobsTableComponent },
       { path: 'assets-team', component: JobsTableComponent },
       { path: 'my-tasks', component: ContentUploadFormComponent },
+      { path: 'content-upload', component: ContentUploadFormComponent },
       { path: '', redirectTo: 'my-jobs', pathMatch: 'full' },
     ],
   },

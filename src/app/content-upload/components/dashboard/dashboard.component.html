@@ -100,7 +100,6 @@
           ">
         </span>
 
-        <!-- <img class="underline" *ngIf="checkMenu('all-jobs')" src="assets/images/underline-sm.png" /> -->
       </li>
 
       <li class="menu-container" role="listitem">
@@ -113,7 +112,7 @@
         </span>
       </li>
 
-      <li class="menu-container-mini" role="listitem">
+      <li class="menu-container" role="listitem">
         <button routerLink="my-tasks" class="menu-button">
           <img class="menu-image" src="assets/images/mytasks.png" />
         </button>
@@ -121,11 +120,10 @@
             checkMenu('my-tasks') ? 'selected-menu' : 'unselected-menu'
           ">
         </span>
-        <!-- <img class="underline" *ngIf="checkMenu('my-tasks')" src="assets/images/underline-sm.png" /> -->
       </li>
     </ul>
     <ul class="menu-items-container" *ngIf="isMenuOpen">
-      <li class="menu-container">
+      <li class="menu-container-small">
         <button routerLink="my-jobs" class="menu-button-expanded">
           <img class="menu-image" src="assets/images/myjobs-2.png" />
           <p class="menu-text" matBadge="3" matBadgeOverlap="true" matbadgeSize="small" matBadgeColor="accent"
@@ -139,7 +137,7 @@
         ">
       </span>
 
-      <li class="menu-container">
+      <li class="menu-container-small">
         <button routerLink="all-jobs" class="menu-button-expanded">
           <img class="menu-image" src="assets/images/alljobs-2.png" />
           <p class="menu-text" matBadge="3" matBadgeOverlap="true" matbadgeSize="small" matBadgeColor="accent"
@@ -152,7 +150,7 @@
           checkMenu('all-jobs') ? 'selected-menu-expanded' : 'unselected-menu'
         ">
       </span>
-      <li class="menu-container">
+      <li class="menu-container-small">
         <button routerLink="my-workflows" class="menu-button-expanded">
           <img class="menu-image" src="assets/images/myworkflows-2.png" />
           <p class="menu-text">My WorkFlows</p>
@@ -165,7 +163,7 @@
         ">
       </span>
 
-      <li class="menu-container" *ngIf="
+      <li class="menu-container-small" *ngIf="
           checkMenu('my-workflows') ||
           checkMenu('content-manager') ||
           checkMenu('assets-team')
@@ -186,7 +184,7 @@
         ">
       </span>
 
-      <li class="menu-container" *ngIf="
+      <li class="menu-container-small" *ngIf="
           checkMenu('my-workflows') ||
           checkMenu('content-manager') ||
           checkMenu('assets-team')
@@ -206,7 +204,7 @@
         ">
       </span>
 
-      <li class="menu-container">
+      <li class="menu-container-small">
         <button routerLink="my-tasks" class="menu-button-expanded">
           <img class="menu-image" src="assets/images/mytasks-2.png" />
           <p class="menu-text">My Tasks</p>

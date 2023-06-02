@@ -1,1 +1,51 @@
-
+.header {
+  h1 {
+    color: white;
+    font-weight: 500;
+  }
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+.grid-child-left {
+  display: flex;
+  flex-direction: column;
+}
+.grid-child-right {
+  display: flex;
+  flex-direction: column;
+  margin: 1em 0 0 0;
+  color: white;
+  ::ng-deep {
+    .mat-mdc-radio-button .mdc-form-field {
+      color: var(
+        --mdc-theme-text-primary-on-background,
+        rgba(255, 255, 255, 1)
+      );
+    }
+    .mat-mdc-radio-button
+      .mdc-radio
+      .mdc-radio__native-control:enabled:not(:checked)
+      + .mdc-radio__background
+      .mdc-radio__outer-circle {
+      border-color: rgb(255 255 255);
+    }
+  }
+}
+.mat-mdc-form-field {
+  margin: 0 0 3em 0;
+}
+.action-buttons {
+  margin: 20rem 0 0 0;
+  ::ng-deep {
+    .mat-mdc-raised-button[disabled][disabled] {
+      --mdc-protected-button-disabled-container-color: rgb(255 255 255 / 12%);
+      --mdc-protected-button-disabled-label-text-color: rgba(0, 0, 0, 0.38);
+      --mdc-protected-button-container-color: rgba(0, 0, 0, 0.12);
+      --mdc-protected-button-label-text-color: rgba(0, 0, 0, 0.38);
+      --mdc-protected-button-container-elevation: 0;
+    }
+  }
+}
