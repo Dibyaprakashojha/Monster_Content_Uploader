@@ -76,7 +76,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row [ngStyle]="{ 'margin-bottom': '10px' }" *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-  <mat-paginator #paginator *ngIf="!isMobile" (page)="onPageChange($event)" [length]="totalPageNumber" [pageSize]="5"
+  <mat-paginator #paginator *ngIf="!isMobile" (page)="onPageChange($event)" [length]="totalPageNumber"
     showFirstLastButtons="true" [pageSizeOptions]="pageSizeOptions" aria-label="Select page">
   </mat-paginator>
   <mcu-mobile-jobs-list *ngIf="isMobile"></mcu-mobile-jobs-list>

@@ -1,7 +1,7 @@
 import { FormService } from './../../services/form.service';
 import { SearchService } from './../../services/search.service';
 import { Route, Router } from '@angular/router';
-import { EventEmitter, Input, Output } from '@angular/core';
+import { EventEmitter, Input, NgZone, Output } from '@angular/core';
 import { Component } from '@angular/core';
 import {
   FormGroup,
@@ -22,7 +22,8 @@ export class BasicFormComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private formService: FormService
+    private formService: FormService,
+    private zone: NgZone
   ) {
     this.jobDetails = this.fb.group({
       brand: [''],
@@ -169,7 +170,13 @@ export class BasicFormComponent {
   submitForm() {
     console.log(`form`, this.jobDetails.value);
     this.showCreative = true;
-    this.formService.createJob(this.jobDetails.value).subscribe();
-    // this.router.navigateByUrl('apps/creative-form');
+    this.formService.createJob(this.jobDetails.value).subscribe((data) => {
+      if (data) {
+        this.zone.run(() => {
+          // Your router is here
+          this.router.navigate(['apps/creative']);
+        });
+      }
+    });
   }
 }

@@ -1,14 +1,14 @@
 import { SearchService } from './../../../services/search.service';
 import { Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'mcu-mobile-jobs-list',
   templateUrl: './mobile-jobs-list.component.html',
   styleUrls: ['./mobile-jobs-list.component.scss'],
 })
-export class MobileJobsListComponent implements OnInit {
+export class MobileJobsListComponent implements OnInit, OnDestroy {
   isMobile!: boolean;
   jobList: any[] = [];
 
@@ -87,12 +87,14 @@ export class MobileJobsListComponent implements OnInit {
         .subscribe((solrData) => {
           this.jobList = solrData.data;
         });
+      console.log(`joblist`, this.jobList);
     } else if (this.router.url.includes('my-jobs')) {
       this.searchService
         .getMyJobsForMobile(this.documentIndex, 1)
         .subscribe((solrData) => {
           this.jobList = solrData.data;
         });
+      console.log(`joblist`, this.jobList);
     }
 
     this.menuNameIdentifier();
@@ -101,32 +103,28 @@ export class MobileJobsListComponent implements OnInit {
   onScroll(): void {
     if (this.router.url.includes('all-jobs')) {
       this.searchService
-        .getAllJobsForMobile(this.documentIndex + 1, 'ASC')
+        .getAllJobsForMobile(this.documentIndex + 3, 'ASC')
         .subscribe((solrData) => {
           solrData.data.map((each) => {
-            var index = this.jobList.findIndex(
-              (job) => each.job_id == job.job_id
-            );
-            if (index === -1) {
-              this.jobList.push(each);
-            }
+            this.jobList.push(each);
           });
+          console.log(this.jobList);
         });
       console.log(`joblist`, this.jobList);
-    } else if (this.router.url.includes('my-jobs')) {
+    } else if (this.router.url.includes('all-jobs')) {
       this.searchService
-        .getMyJobsForMobile(this.documentIndex + 1, 1)
+        .getMyJobsForMobile(this.documentIndex + 3, 1)
         .subscribe((solrData) => {
           solrData.data.map((each) => {
-            var index = this.jobList.findIndex(
-              (job) => each.job_id == job.job_id
-            );
-            if (index === -1) {
-              this.jobList.push(each);
-            }
+            this.jobList.push(each);
+            console.log(this.jobList);
           });
         });
     }
+  }
+
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
   }
 
   scrollUpDistance: number = 2;

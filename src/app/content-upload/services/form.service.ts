@@ -22,34 +22,35 @@ export class FormService {
     let brandId;
     this.getAllBrands().subscribe((brands) => {
       brands.map((brand: any) => {
-        if (brand.brandName === job.brandName) {
+        if (brand.brandName === job.brand) {
           brandId = brand.brandId;
         }
       });
     });
+    console.log(job);
     let url = 'api/v1/job-details';
     let jobDetails = {
       albumName: job.albumName,
       assetSubType: {
-        assetSubtypeId: null,
+        assetSubtypeId: 2,
       },
       assetType: {
-        assetTypeId: null,
+        assetTypeId: 2,
       },
       brand: {
-        brandId: brandId,
+        brandId: 1,
       },
       businessId: null,
       comments: null,
       country: {
-        countryId: job.countryId,
+        countryId: job.country,
       },
       createdBy: {
         psDetailsId: 2,
       },
       createdDate: new Date(),
       department: {
-        dptId: job.departMent,
+        dptId: job.department,
       },
       eventDateTime: new Date(),
       jobName: null,
@@ -61,14 +62,14 @@ export class FormService {
       },
       lastModifiedDate: new Date(),
       productLine: {
-        prdLineId: 2,
+        prdLineId: job.productLine,
       },
       sapMaterialNumber: null,
       useCase: {
-        useCaseId: null,
+        useCaseId: 1,
       },
     };
     console.log(`jopb`, jobDetails);
-    return this._http.post(url, jobDetails);
+    return this._http.post(url, jobDetails, { responseType: 'text' });
   }
 }

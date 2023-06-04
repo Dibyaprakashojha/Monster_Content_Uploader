@@ -54,3 +54,8 @@ hr {
 // .infinite-scroll {
 //   height: 1000px;
 // }
+
+.infinite-scroll {
+  min-height: 800px;
+  overflow: auto;
+}

@@ -126,7 +126,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         }
       });
   }
-  // navigateToContentDetail() {
-  //   this.router.navigateByUrl('apps/content-upload');
-  // }
+
+  navigateTO() {
+    this.router.navigateByUrl('apps/content-upload');
+    this.menuName = '';
+    this.menu = '';
+  }
 }

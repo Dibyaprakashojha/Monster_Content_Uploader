@@ -15,8 +15,7 @@
         </button>
     </div>
 </div>
-<div class="infinite-scroll" infinite-scroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="1000"
-    (scrolled)="onScroll()">
+<div class="infinite-scroll" infinite-scroll [scrollWindow]="false" (scrolled)="onScroll()">
     <ng-container *ngFor="let job of jobList">
         <mcu-card-view [job]="job"></mcu-card-view>
     </ng-container>

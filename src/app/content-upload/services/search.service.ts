@@ -7,8 +7,6 @@ import { SorlResponse } from 'src/app/shared/models/jobDetails';
   providedIn: 'root',
 })
 export class SearchService {
-  // base_url = 'http://localhost:8081/monster-mcu/';
-
   base_url = '/api/v1/';
   constructor(private httpClient: HttpClient) {}
   jobList: any;
@@ -60,7 +58,7 @@ export class SearchService {
     pageIndex: any,
     sortType?: string
   ): Observable<SorlResponse> {
-    let url = this.base_url.concat('search');
+    let url = this.base_url.concat('/search/mobile-view');
 
     return this.httpClient.post<SorlResponse>(url, {
       keyword: '*',
@@ -77,7 +75,7 @@ export class SearchService {
   }
 
   getMyJobsForMobile(pageIndex: any, userId: number): Observable<SorlResponse> {
-    let url = this.base_url.concat('my-jobs');
+    let url = this.base_url.concat('search');
     return this.httpClient.post<SorlResponse>(url, {
       keyword: '*',
       cursor: {

@@ -122,10 +122,10 @@ export class JobsTableComponent implements OnInit {
   }
 
   startIndex = 0;
-  endIndex = 3;
+  endIndex = 5;
   page = {
     length: 0,
-    pageSize: 3,
+    pageSize: 5,
     pageIndex: 0,
   };
   pageIndexValue = 1;
