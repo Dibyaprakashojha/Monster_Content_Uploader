@@ -1,6 +1,5 @@
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { SearchService } from './../../services/search.service';
-import { ContentUploadService } from './../../services/content-upload.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AfterViewInit, DoCheck, OnInit } from '@angular/core';
 import { Component, ViewChild } from '@angular/core';
@@ -23,7 +22,7 @@ import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
   ],
 })
 export class JobsTableComponent implements OnInit {
-  pageSizeOptions = [3, 5, 7];
+  pageSizeOptions = [5, 10];
   hidePageSize = false;
   showPageSizeOptions = true;
   showFirstLastButtons = true;
@@ -231,9 +230,5 @@ export class JobsTableComponent implements OnInit {
           this.totalPageNumber = solrData.cursor.total_records;
         });
     }
-  }
-
-  navigateToContentDetail() {
-    this.router.navigateByUrl('apps/content-upload');
   }
 }

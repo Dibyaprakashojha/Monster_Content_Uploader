@@ -9,9 +9,7 @@
         <input (keyup)="applyFilter($event)" class="input" type="input" placeholder="Search" />
       </div>
     </div>
-    <button mat-button class="create-button approved" (click)="navigateToContentDetail()">
-      Create Job
-    </button>
+
   </div>
 
   <table mat-table matSort matSortDisableClear (matSortChange)="sortData($event)" *ngIf="!isMobile"
@@ -78,7 +76,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row [ngStyle]="{ 'margin-bottom': '10px' }" *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-  <mat-paginator #paginator *ngIf="!isMobile" (page)="onPageChange($event)" [length]="totalPageNumber" [pageSize]="3"
+  <mat-paginator #paginator *ngIf="!isMobile" (page)="onPageChange($event)" [length]="totalPageNumber" [pageSize]="5"
     showFirstLastButtons="true" [pageSizeOptions]="pageSizeOptions" aria-label="Select page">
   </mat-paginator>
   <mcu-mobile-jobs-list *ngIf="isMobile"></mcu-mobile-jobs-list>

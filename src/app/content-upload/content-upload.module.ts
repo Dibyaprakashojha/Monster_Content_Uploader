@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BasicFormComponent } from './components/basic-form/basic-form.component';
+import { CreativeFormComponent } from './components/creative-form/creative-form.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -20,6 +22,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ContentUploadFormComponent,
     MobileJobsListComponent,
     CardViewComponent,
+    BasicFormComponent,
+    CreativeFormComponent,
   ],
   imports: [
     CommonModule,

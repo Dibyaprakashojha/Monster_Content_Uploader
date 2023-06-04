@@ -46,6 +46,12 @@ mat-icon {
   color: black;
 }
 
+.menu-name-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 mat-sidenav {
   background-color: #171717;
   height: 100vh;
@@ -325,6 +331,25 @@ mat-sidenav {
   .menu-text {
     font-size: 15px;
   }
+}
+
+.create-button {
+  border-radius: 4px;
+  font-family: $font-family;
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  word-spacing: 2%;
+  margin-right: 30px;
+  height: 35px;
+  width: 123px;
+  letter-spacing: 2px;
+  -ms-transform: skewX(-10deg);
+  -webkit-transform: skewX(-10deg);
+  transform: skewX(-10deg);
+}
+.approved {
+  background: linear-gradient(270deg, #bfec1d -4.72%, #22bb39 100.79%);
 }
 
 // @media screen and ((max-width: 599.98px)) {

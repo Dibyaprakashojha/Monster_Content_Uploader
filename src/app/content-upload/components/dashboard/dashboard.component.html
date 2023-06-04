@@ -312,7 +312,14 @@
 
   <mat-sidenav-content [ngStyle]="{ 'margin-left': { contentMargin } + '%' }">
     <div ngClass="route-content">
-      <h3 *ngIf="!isMobile" class="menu-name">{{ menuName }}</h3>
+      <div ngClass="menu-name-container">
+        <h3 *ngIf="!isMobile" class="menu-name">{{ menuName }}</h3>
+        <button *ngIf="checkMenu('my-jobs')||checkMenu('my-jobs')||checkMenu('my-jobs')" mat-button
+          class="create-button approved" routerLink="content-upload">
+          Create Job
+        </button>
+      </div>
+
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

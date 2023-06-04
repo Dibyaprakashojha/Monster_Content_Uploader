@@ -1,5 +1,5 @@
 import { SearchService } from './../../../services/search.service';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnInit } from '@angular/core';
 
@@ -101,7 +101,7 @@ export class MobileJobsListComponent implements OnInit {
   onScroll(): void {
     if (this.router.url.includes('all-jobs')) {
       this.searchService
-        .getAllJobsForMobile(this.documentIndex + 3)
+        .getAllJobsForMobile(this.documentIndex + 1, 'ASC')
         .subscribe((solrData) => {
           solrData.data.map((each) => {
             var index = this.jobList.findIndex(
@@ -115,7 +115,7 @@ export class MobileJobsListComponent implements OnInit {
       console.log(`joblist`, this.jobList);
     } else if (this.router.url.includes('my-jobs')) {
       this.searchService
-        .getMyJobsForMobile(this.documentIndex + 3, 1)
+        .getMyJobsForMobile(this.documentIndex + 1, 1)
         .subscribe((solrData) => {
           solrData.data.map((each) => {
             var index = this.jobList.findIndex(

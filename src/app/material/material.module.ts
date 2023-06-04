@@ -14,8 +14,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
+import { MatNativeDateModule } from '@angular/material/core';
 const modules = [
   CdkTableModule,
   MatToolbarModule,
@@ -34,6 +36,8 @@ const modules = [
   MatSortModule,
   MatBadgeModule,
   MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
 ];
 @NgModule({
   declarations: [],

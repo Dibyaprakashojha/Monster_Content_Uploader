@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { JobsTableComponent } from './components/jobs-table/jobs-table.component';
 import { ContentUploadFormComponent } from './components/content-upload-form/content-upload-form.component';
+import { CreativeFormComponent } from './components/creative-form/creative-form.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,8 @@ const routes: Routes = [
       { path: 'assets-team', component: JobsTableComponent },
       { path: 'my-tasks', component: ContentUploadFormComponent },
       { path: 'content-upload', component: ContentUploadFormComponent },
+      { path: 'creative-form', component: CreativeFormComponent },
+
       { path: '', redirectTo: 'my-jobs', pathMatch: 'full' },
     ],
   },
