@@ -63,49 +63,48 @@ export class BasicFormComponent {
   brands: any = [];
   products = [];
   countries = [];
-  filteredBrands: any = [];
-  filteredProductLine: any = [];
-  filterCountries: any = [];
+  filteredBrands: Array<any> = [];
+  filteredProductLine: Array<any> = [];
+  filterCountries: Array<any> = [];
   selectedBrand: any;
 
   ngOnInit() {
     this.formService.getAllBrands().subscribe(
       (eachBrand) => {
         this.brands = eachBrand;
+        this.filteredBrands = this.brands;
         console.log(`brands `, this.brands);
       },
       (err) => {}
     );
 
-    this.filteredBrands = this.jobDetails.controls['brand'].valueChanges.pipe(
+    this.jobDetails.controls['brand'].valueChanges.pipe(
       startWith(''),
       debounceTime(200),
       distinctUntilChanged(),
       map((value) => {
         const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._filterBrand(name as string) : this.brands.slice();
+        this.filteredBrands = name
+          ? this._filterBrand(name as string)
+          : this.brands.slice();
       })
     );
-    this.filteredProductLine = this.jobDetails.controls[
-      'productLine'
-    ].valueChanges.pipe(
+    this.jobDetails.controls['productLine'].valueChanges.pipe(
       startWith(''),
       map((value) => {
         console.log(value);
         const name = typeof value === 'string' ? value : value?.name;
         console.log(this._filterProductLine(name as string));
-        return name
+        this.filteredProductLine = name
           ? this._filterProductLine(name as string)
           : this.products.slice();
       })
     );
-    this.filterCountries = this.jobDetails.controls[
-      'country'
-    ].valueChanges.pipe(
+    this.jobDetails.controls['country'].valueChanges.pipe(
       startWith(''),
       map((value) => {
         const name = typeof value === 'string' ? value : value?.name;
-        return name
+        this.filterCountries = name
           ? this._filterCountries(name as string)
           : this.countries.slice();
       })
@@ -123,6 +122,8 @@ export class BasicFormComponent {
           console.log(eachBrand);
           this.products = eachBrand.productLines;
           this.countries = eachBrand.countries;
+          this.filterCountries = this.countries;
+          this.filteredProductLine = this.products;
           console.log(`brands `, this.brands);
         });
       }

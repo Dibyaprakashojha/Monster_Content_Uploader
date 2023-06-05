@@ -9,7 +9,7 @@
                     <mat-label>Brand</mat-label>
                     <input matInput type="input" formControlName="brand" [matAutocomplete]="auto" required />
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor=" let option of filteredBrands | async" [value]="option.brandName"
+                        <mat-option *ngFor=" let option of filteredBrands " [value]="option.brandName"
                             (onSelectionChange)="updateSelectedBrand($event)">
                             {{option.brandDsName}}
                         </mat-option>
@@ -23,7 +23,7 @@
                     <input matInput type="input" formControlName="productLine" [matAutocomplete]="productLineAuto"
                         required />
                     <mat-autocomplete #productLineAuto="matAutocomplete" [displayWith]="getProductLine.bind(this)">
-                        <mat-option *ngFor="let option of (filteredProductLine | async)" [value]="option.prdLineId">
+                        <mat-option *ngFor="let option of (filteredProductLine)" [value]="option.prdLineId">
                             {{option.prdLineDsName}}
                         </mat-option>
                     </mat-autocomplete>
@@ -35,7 +35,7 @@
                     <mat-label>Country</mat-label>
                     <input matInput type="input" formControlName="country" [matAutocomplete]="country" required />
                     <mat-autocomplete #country="matAutocomplete" [displayWith]="getCountry.bind(this)">
-                        <mat-option *ngFor="let option of filterCountries | async" [value]="option.countryId">
+                        <mat-option *ngFor="let option of filterCountries " [value]="option.countryId">
                             {{option.countryDsName}}
                         </mat-option>
                     </mat-autocomplete>

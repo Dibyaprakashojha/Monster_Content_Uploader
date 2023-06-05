@@ -30,35 +30,40 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     this.formService.getJobdetailsByJobId(id).subscribe((data: any) => {
       console.log(data);
       // this.ngOnInit();
-      this.setTheFormVlaues(data);
+      this.formService
+        .getByBrandId(data.brand.brandId)
+        .subscribe((eachBrand) => {
+          console.log(eachBrand);
+          this.producs = eachBrand.productLines;
+          this.filteredProductLine = this.producs;
+          this.countries = eachBrand.countries;
+          this.filterCountries = this.countries;
+          console.log(`brands `, this.brands);
+          this.setTheFormVlaues(data);
+        });
     });
   }
 
   setTheFormVlaues(jobData: any) {
     this.jobDetails.controls['brand'].setValue(jobData.brand.brandId);
     this.jobDetails.controls['productLine'].setValue(
-      jobData.productLine.prdLineName
+      jobData.productLine.prdLineId
     );
-    this.jobDetails.controls['country'].setValue(jobData.country.countryName);
+    this.jobDetails.controls['country'].setValue(jobData.country.countryId);
     this.jobDetails.controls['albumName'].setValue(jobData.albumName);
     this.jobDetails.controls['department'].setValue(jobData.department.dptId);
 
-    this.formService
-      .getByBrandId(jobData.brand.brandId)
-      .subscribe((eachBrand) => {
-        console.log(eachBrand);
-        this.producs = eachBrand.productLines;
-        this.countries = eachBrand.countries;
-        console.log(`brands `, this.brands);
-      });
+    this.getAllAssets();
+    this.getAllUseCase();
+    this.getAllSubAssetTypes();
   }
 
   jobDetails!: FormGroup;
   constructor(private fb: FormBuilder, private formService: FormService) {
     this.jobDetails = this.fb.group({
       brand: [''],
-      productLine: [''],
-      country: [''],
+      productLine: [null],
+      country: [null],
       albumName: [''],
       department: [''],
       assetType: [''],
@@ -77,11 +82,11 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   assetsSubType: any = [];
   useCase = [];
   filteredBrands: any = [];
-  filteredProductLine: any = [];
-  filterCountries: any = [];
-  filterAssetTypes: any = [];
-  filterAssetSubTypes: any = [];
-  useCaseTypes: any = [];
+  filteredProductLine: Array<any> = [];
+  filterCountries: Array<any> = [];
+  filterAssetTypes: Array<any> = [];
+  filterAssetSubTypes: Array<any> = [];
+  useCaseTypes: Array<any> = [];
   selectedBrand: any;
 
   ngOnInit() {
@@ -94,8 +99,6 @@ export class CreativeFormComponent implements OnInit, OnChanges {
       (err) => {}
     );
 
-    this.getAllAssets();
-    this.getAllUseCase();
     this.filteredBrands = this.jobDetails.controls['brand'].valueChanges.pipe(
       startWith(''),
       map((value) => {
@@ -103,53 +106,49 @@ export class CreativeFormComponent implements OnInit, OnChanges {
         return name ? this._filterBrand(name as string) : this.brands.slice();
       })
     );
-    this.filteredProductLine = this.jobDetails.controls[
-      'productLine'
-    ].valueChanges.pipe(
+    this.jobDetails.controls['productLine'].valueChanges.pipe(
       startWith(''),
       map((value) => {
         const name = typeof value === 'string' ? value : value?.name;
-        return name
+        this.filteredProductLine = name
           ? this._filterProductLine(name as string, this.brandId)
           : this.producs.slice();
       })
     );
-    this.filterCountries = this.jobDetails.controls[
-      'country'
-    ].valueChanges.pipe(
+    this.jobDetails.controls['country'].valueChanges.pipe(
       startWith(''),
       map((value) => {
         const name = typeof value === 'string' ? value : value?.name;
-        return name
+        this.filterCountries = name
           ? this._filterCountries(name as string)
           : this.countries.slice();
       })
     );
-    this.filterAssetTypes = this.jobDetails.controls[
-      'assetType'
-    ].valueChanges.pipe(
+    this.jobDetails.controls['assetType'].valueChanges.pipe(
       startWith(''),
       map((value) => {
         const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._filterAssets(name as string) : this.assets.slice();
+        this.filterAssetTypes = name
+          ? this._filterAssets(name as string)
+          : this.assets.slice();
       })
     );
-    this.filterAssetSubTypes = this.jobDetails.controls[
-      'assetSubType'
-    ].valueChanges.pipe(
+    this.jobDetails.controls['assetSubType'].valueChanges.pipe(
       startWith(''),
       map((value) => {
         const name = typeof value === 'string' ? value : value?.name;
-        return name
+        this.filterAssetSubTypes = name
           ? this._filterSubAssets(name as string)
           : this.assetsSubType.slice();
       })
     );
-    this.useCaseTypes = this.jobDetails.controls['useCase'].valueChanges.pipe(
+    this.jobDetails.controls['useCase'].valueChanges.pipe(
       startWith(''),
       map((value) => {
         const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._useCase(name as string) : this.useCase.slice();
+        this.useCaseTypes = name
+          ? this._useCase(name as string)
+          : this.useCase.slice();
       })
     );
   }
@@ -243,6 +242,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   getAllUseCase(): any {
     this.formService.getAllUseCase().subscribe((data: any) => {
       this.useCase = data;
+      this.useCaseTypes = data;
     });
     console.log(`thisuse case`, this.useCase);
   }
@@ -250,19 +250,23 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   selectedAsset: any;
   assetName: any;
   updateSelectedAsset(selectedValue: any) {
-    this.selectedAsset = selectedValue.source.value;
-    console.log(this.selectedAsset);
-    this.formService.getAllSubAssetTypes().subscribe((assetSubTypes: any) => {
-      console.log(`assestsubTypes`, assetSubTypes);
-      assetSubTypes.map((each: any) => {
-        if (each.assetType.assetTypeName === this.selectedAsset) {
-          this.assetsSubType.push(each);
-        }
-      });
-    });
-    console.log(this.assetsSubType);
+    console.log(selectedValue);
+    this.filterAssetSubTypes = [];
+    // this.selectedAsset = selectedValue.source.value;
+
+    this.filterAssetSubTypes = this.allAssetSubTypes.filter(
+      (x) => x.assetType.assetTypeId == selectedValue.source.value
+    );
+    console.log(this.filterAssetSubTypes);
   }
 
+  public allAssetSubTypes: Array<any> = [];
+  public getAllSubAssetTypes() {
+    this.formService.getAllSubAssetTypes().subscribe((assetSubTypes: any) => {
+      console.log(`assestsubTypes`, assetSubTypes);
+      this.allAssetSubTypes = assetSubTypes;
+    });
+  }
   private _filterSubAssets(name: string): any[] {
     const filterAssetSubAsset = name.toLowerCase();
     return this.assetsSubType.filter((option: any) =>
@@ -280,6 +284,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   getAllAssets() {
     this.formService.getAllAssetTypes().subscribe((data: any) => {
       this.assets = data;
+      this.filterAssetTypes = data;
       console.log(`assets`, this.assets);
     });
   }
