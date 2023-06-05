@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { map, startWith } from 'rxjs';
+import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'mcu-creative-form',
@@ -18,17 +19,48 @@ export class CreativeFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(`jonbId in cretaive`, this.jobId);
+    // this.formService.getJobdetailsByJobId(this.jobId).subscribe((data: any) => {
+    //   console.log(data);
+    //   this.ngOnInit();
+    //   this.setTheFormVlaues(data);
+    // });
+  }
+
+  public getData(id: any) {
+    this.formService.getJobdetailsByJobId(id).subscribe((data: any) => {
+      console.log(data);
+      // this.ngOnInit();
+      this.setTheFormVlaues(data);
+    });
+  }
+
+  setTheFormVlaues(jobData: any) {
+    this.jobDetails.controls['brand'].setValue(jobData.brand.brandId);
+    this.jobDetails.controls['productLine'].setValue(
+      jobData.productLine.prdLineName
+    );
+    this.jobDetails.controls['country'].setValue(jobData.country.countryName);
+    this.jobDetails.controls['albumName'].setValue(jobData.albumName);
+    this.jobDetails.controls['department'].setValue(jobData.department.dptId);
+
+    this.formService
+      .getByBrandId(jobData.brand.brandId)
+      .subscribe((eachBrand) => {
+        console.log(eachBrand);
+        this.producs = eachBrand.productLines;
+        this.countries = eachBrand.countries;
+        console.log(`brands `, this.brands);
+      });
   }
 
   jobDetails!: FormGroup;
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private formService: FormService) {
     this.jobDetails = this.fb.group({
-      brand: ['monster'],
-      productLine: ['ultra'],
-      country: ['India'],
-      albumName: ['xyz'],
-      department: ['creative'],
-
+      brand: [''],
+      productLine: [''],
+      country: [''],
+      albumName: [''],
+      department: [''],
       assetType: [''],
       assetSubType: [''],
       year: [''],
@@ -38,23 +70,12 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     });
   }
 
-  // jobDetailsArray(): FormArray {
-  //   return this.jobDetails.get('departMentFormArray') as FormArray;
-  // }
-
-  creativeDepartMent() {
-    return this.fb.group({
-      name: [''],
-    });
-  }
-
   brands = [];
   producs = [];
   countries = [];
   assets = [];
-  assetsSubType = [];
+  assetsSubType: any = [];
   useCase = [];
-
   filteredBrands: any = [];
   filteredProductLine: any = [];
   filterCountries: any = [];
@@ -64,6 +85,17 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   selectedBrand: any;
 
   ngOnInit() {
+    console.log(`jonbId in onint`, this.jobId);
+    this.formService.getAllBrands().subscribe(
+      (eachBrand) => {
+        this.brands = eachBrand;
+        console.log(`brands `, this.brands);
+      },
+      (err) => {}
+    );
+
+    this.getAllAssets();
+    this.getAllUseCase();
     this.filteredBrands = this.jobDetails.controls['brand'].valueChanges.pipe(
       startWith(''),
       map((value) => {
@@ -117,9 +149,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
       startWith(''),
       map((value) => {
         const name = typeof value === 'string' ? value : value?.name;
-        return name
-          ? this._filterSubAssets(name as string)
-          : this.useCase.slice();
+        return name ? this._useCase(name as string) : this.useCase.slice();
       })
     );
   }
@@ -158,34 +188,105 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   }
 
   private _filterAssets(name: string): any[] {
+    console.log(name);
     const filterAsset = name.toLowerCase();
+    console.log(this.assets);
     return this.assets.filter((option: any) =>
-      option.name.toLowerCase().includes(filterAsset)
+      option.assetTypeName.toLowerCase().includes(filterAsset)
     );
+  }
+
+  getBrand(brandId: any): any {
+    let element = this.brands.find((e: any) => e.brandId == brandId);
+    if (element) {
+      return element['brandName'];
+    }
+  }
+
+  getProductLine(prdLineId: any): any {
+    let element = this.producs.find((e: any) => e.prdLineId == prdLineId);
+    if (element) {
+      return element['prdLineName'];
+    }
+  }
+
+  getCountry(countryId: any): any {
+    let element = this.countries.find((e: any) => e.countryId == countryId);
+    if (element) {
+      return element['countryName'];
+    }
+  }
+
+  getUseCase(useCaseId: any): any {
+    let element = this.useCase.find((e: any) => e.useCaseId == useCaseId);
+    if (element) {
+      return element['useCaseName'];
+    }
+  }
+
+  getAssetType(assetId: any): any {
+    let element = this.assets.find((e: any) => e.assetTypeId == assetId);
+    if (element) {
+      return element['assetTypeName'];
+    }
+  }
+
+  getAssetSubType(assetSubType: any): any {
+    let element = this.assetsSubType.find(
+      (e: any) => e.assetSubtypeId == assetSubType
+    );
+    if (element) {
+      return element['assetSubtypeName'];
+    }
+  }
+
+  getAllUseCase(): any {
+    this.formService.getAllUseCase().subscribe((data: any) => {
+      this.useCase = data;
+    });
+    console.log(`thisuse case`, this.useCase);
+  }
+
+  selectedAsset: any;
+  assetName: any;
+  updateSelectedAsset(selectedValue: any) {
+    this.selectedAsset = selectedValue.source.value;
+    console.log(this.selectedAsset);
+    this.formService.getAllSubAssetTypes().subscribe((assetSubTypes: any) => {
+      console.log(`assestsubTypes`, assetSubTypes);
+      assetSubTypes.map((each: any) => {
+        if (each.assetType.assetTypeName === this.selectedAsset) {
+          this.assetsSubType.push(each);
+        }
+      });
+    });
+    console.log(this.assetsSubType);
   }
 
   private _filterSubAssets(name: string): any[] {
     const filterAssetSubAsset = name.toLowerCase();
-    return this.assets.filter((option: any) =>
-      option.name.toLowerCase().includes(filterAssetSubAsset)
+    return this.assetsSubType.filter((option: any) =>
+      option.assetSubtypeName.toLowerCase().includes(filterAssetSubAsset)
     );
   }
 
   private _useCase(name: string): any[] {
     const useCaseValue = name.toLowerCase();
     return this.useCase.filter((option: any) =>
-      option.name.toLowerCase().includes(useCaseValue)
+      option.useCaseName.toLowerCase().includes(useCaseValue)
     );
   }
 
-  hasChange: boolean = false;
-  onCreateGroupFormValueChange() {}
+  getAllAssets() {
+    this.formService.getAllAssetTypes().subscribe((data: any) => {
+      this.assets = data;
+      console.log(`assets`, this.assets);
+    });
+  }
 
   showCreative!: boolean;
   submitForm() {
     console.log(`form`, this.jobDetails);
-    // this.showSubForms.emit(true);
-
     this.showCreative = true;
   }
 }

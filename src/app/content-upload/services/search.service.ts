@@ -17,7 +17,7 @@ export class SearchService {
     totalRecords: any,
     sortDirection: any
   ): Observable<SorlResponse> {
-    let url = this.base_url.concat('search');
+    let url = this.base_url.concat('all-jobs/search');
     return this.httpClient.post<SorlResponse>(url, {
       keyword: '*',
       cursor: {
@@ -39,7 +39,7 @@ export class SearchService {
     sortDirection: any,
     userId: any
   ): Observable<SorlResponse> {
-    let url = this.base_url.concat('search');
+    let url = this.base_url.concat('my-jobs/search');
     return this.httpClient.post<SorlResponse>(url, {
       keyword: '*',
       cursor: {

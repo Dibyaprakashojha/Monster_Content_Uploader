@@ -1,7 +1,7 @@
 import { FormService } from './../../services/form.service';
 import { SearchService } from './../../services/search.service';
 import { Route, Router } from '@angular/router';
-import { EventEmitter, Input, NgZone, Output } from '@angular/core';
+import { EventEmitter, Input, NgZone, Output, ViewChild } from '@angular/core';
 import { Component } from '@angular/core';
 
 import {
@@ -18,12 +18,16 @@ import {
   switchMap,
   map,
 } from 'rxjs/operators';
+import { CreativeFormComponent } from '../creative-form/creative-form.component';
 @Component({
   selector: 'mcu-basic-form',
   templateUrl: './basic-form.component.html',
   styleUrls: ['./basic-form.component.scss'],
 })
 export class BasicFormComponent {
+  @ViewChild('mcucomponent', { static: false }) mcucomponent:
+    | CreativeFormComponent
+    | undefined;
   jobDetails!: FormGroup;
 
   constructor(
@@ -65,10 +69,13 @@ export class BasicFormComponent {
   selectedBrand: any;
 
   ngOnInit() {
-    this.formService.getAllBrands().subscribe((eachBrand) => {
-      this.brands = eachBrand;
-      console.log(`brands `, this.brands);
-    });
+    this.formService.getAllBrands().subscribe(
+      (eachBrand) => {
+        this.brands = eachBrand;
+        console.log(`brands `, this.brands);
+      },
+      (err) => {}
+    );
 
     this.filteredBrands = this.jobDetails.controls['brand'].valueChanges.pipe(
       startWith(''),
@@ -84,7 +91,9 @@ export class BasicFormComponent {
     ].valueChanges.pipe(
       startWith(''),
       map((value) => {
+        console.log(value);
         const name = typeof value === 'string' ? value : value?.name;
+        console.log(this._filterProductLine(name as string));
         return name
           ? this._filterProductLine(name as string)
           : this.products.slice();
@@ -111,6 +120,7 @@ export class BasicFormComponent {
       if (brand.brandName === this.selectedBrand) {
         this.brandId = brand.brandId;
         this.formService.getByBrandId(this.brandId).subscribe((eachBrand) => {
+          console.log(eachBrand);
           this.products = eachBrand.productLines;
           this.countries = eachBrand.countries;
           console.log(`brands `, this.brands);
@@ -129,20 +139,10 @@ export class BasicFormComponent {
   filteredArray: any[] = [];
   private _filterProductLine(name: string): any[] {
     const filterValue = name.toLowerCase();
-    // this.filteredArray = this.producs.filter(
-    //   (option: any) => option.brandId === this.brandId
-    // );
-    return this.filteredArray.filter(
-      (option: any) => option.prdLineName.toLowerCase().includes(filterValue)
-      // && option.brandId === this.brandId
+    return this.products.filter((option: any) =>
+      option.prdLineName.toLowerCase().includes(filterValue)
     );
   }
-
-  // productLineArray() {
-  //   return this.products.filter(
-  //     (productLine) => productLine.brandId === this.brandId
-  //   );
-  // }
 
   private _filterCountries(name: string): any[] {
     const countryName = name.toLowerCase();
@@ -193,6 +193,7 @@ export class BasicFormComponent {
       let details = JSON.parse(data);
       this.jobId = details.jobId;
       console.log(`jobId`, details.jobId);
+      this.mcucomponent?.getData(details.jobId);
     });
   }
 }

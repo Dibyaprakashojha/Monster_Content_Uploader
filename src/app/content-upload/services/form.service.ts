@@ -13,6 +13,26 @@ export class FormService {
     return this._http.get(url);
   }
 
+  getAllAssetTypes(): Observable<any> {
+    let url = '/api/v1/asset-type/';
+    return this._http.get(url);
+  }
+
+  getAllSubAssetTypes(): Observable<any> {
+    let url = '/api/v1/asset-subtype/';
+    return this._http.get(url);
+  }
+
+  getAllUseCase(): Observable<any> {
+    let url = '/api/v1/use-case/';
+    return this._http.get(url);
+  }
+
+  getJobdetailsByJobId(jobId: any): Observable<any> {
+    let url = '/api/v1/job-details/';
+    return this._http.get(url.concat(jobId));
+  }
+
   getByBrandId(brandId: any): Observable<any> {
     let url = '/api/v1/brand/';
     return this._http.get(url.concat(brandId));

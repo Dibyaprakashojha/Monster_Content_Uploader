@@ -8,10 +8,10 @@
                 <mat-form-field>
                     <mat-label>Brand</mat-label>
                     <input matInput type="input" formControlName="brand" [matAutocomplete]="auto" required />
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredBrands | async" [value]="option.name"
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="getBrand.bind(this)">
+                        <mat-option *ngFor="let option of filteredBrands | async" [value]="option.brandName"
                             (onSelectionChange)="updateSelectedBrand($event)">
-                            {{option.name}}
+                            {{option.brandDsName}}
                         </mat-option>
                     </mat-autocomplete>
                     <mat-error *ngIf="jobDetails?.get('brand')?.invalid && jobDetails?.get('brand')?.touched
@@ -23,9 +23,9 @@
                     <mat-label>Product Line</mat-label>
                     <input matInput type="input" formControlName="productLine" [matAutocomplete]="productLineAuto"
                         required />
-                    <mat-autocomplete #productLineAuto="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredProductLine | async" [value]="option.name">
-                            {{option.name}}
+                    <mat-autocomplete #productLineAuto="matAutocomplete" [displayWith]="getProductLine.bind(this)">
+                        <mat-option *ngFor="let option of filteredProductLine | async" [value]="option.prdLineId">
+                            {{option.prdLineDsName}}
                         </mat-option>
                     </mat-autocomplete>
                     <mat-error *ngIf="
@@ -38,9 +38,9 @@
                 <mat-form-field>
                     <mat-label>Country</mat-label>
                     <input matInput type="input" formControlName="country" [matAutocomplete]="country" required />
-                    <mat-autocomplete #country="matAutocomplete">
-                        <mat-option *ngFor="let option of filterCountries | async" [value]="option.name">
-                            {{option.name}}
+                    <mat-autocomplete #country="matAutocomplete" [displayWith]="getCountry.bind(this)">
+                        <mat-option *ngFor="let option of filterCountries | async" [value]="option.countryId">
+                            {{option.countryDsName}}
                         </mat-option>
                     </mat-autocomplete>
                     <mat-error *ngIf="
@@ -75,8 +75,9 @@
                     <input matInput type="input" formControlName="assetType" [matAutocomplete]="assetTypeAuto"
                         required />
                     <mat-autocomplete #assetTypeAuto="matAutocomplete">
-                        <mat-option *ngFor="let option of filterAssetTypes | async" [value]="option.name">
-                            {{option.name}}
+                        <mat-option *ngFor="let option of filterAssetTypes | async" [value]="option.assetTypeName"
+                            (onSelectionChange)="updateSelectedAsset($event)">
+                            {{option.assetTypeName}}
                         </mat-option>
                     </mat-autocomplete>
                     <mat-error *ngIf="
@@ -90,9 +91,9 @@
                     <mat-label>Asset Sub Type</mat-label>
                     <input matInput type="input" formControlName="assetSubType" [matAutocomplete]="assetSubType"
                         required />
-                    <mat-autocomplete #assetSubType="matAutocomplete">
-                        <mat-option *ngFor="let option of filterAssetSubTypes | async" [value]="option.name">
-                            {{option.name}}
+                    <mat-autocomplete #assetSubType="matAutocomplete" [displayWith]="getAssetSubType.bind(this)">
+                        <mat-option *ngFor="let option of filterAssetSubTypes | async" [value]="option.assetSubtypeId">
+                            {{option.assetSubtypeName}}
                         </mat-option>
                     </mat-autocomplete>
                     <mat-error *ngIf="
@@ -105,14 +106,14 @@
                 <mat-form-field>
                     <mat-label>Use Case</mat-label>
                     <input matInput type="input" formControlName="useCase" [matAutocomplete]="use" required />
-                    <mat-autocomplete #use="matAutocomplete">
-                        <mat-option *ngFor="let option of useCaseTypes | async" [value]="option.name">
-                            {{option.name}}
+                    <mat-autocomplete #use="matAutocomplete" [displayWith]="getUseCase.bind(this)">
+                        <mat-option *ngFor="let option of useCaseTypes | async" [value]="option.useCaseId">
+                            {{option.useCaseName}}
                         </mat-option>
                     </mat-autocomplete>
                     <mat-error *ngIf="
-                    jobDetails.get('assetType')?.invalid && jobDetails.get('assetType')?.touched">
-                        Please enter AssetType
+                    jobDetails.get('useCase')?.invalid && jobDetails.get('useCase')?.touched">
+                        Please enter UseCase
                     </mat-error>
                 </mat-form-field>
 
