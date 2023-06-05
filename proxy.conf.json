@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://localhost:8081/mcu",
+    "target": "https://micromm.acheron-tech.com/mcu",
     "secure": false
   }
 }

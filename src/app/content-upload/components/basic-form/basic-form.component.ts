@@ -3,14 +3,21 @@ import { SearchService } from './../../services/search.service';
 import { Route, Router } from '@angular/router';
 import { EventEmitter, Input, NgZone, Output } from '@angular/core';
 import { Component } from '@angular/core';
+
 import {
   FormGroup,
   FormBuilder,
   FormArray,
   FormGroupDirective,
 } from '@angular/forms';
-import { map, of, startWith } from 'rxjs';
-
+import {
+  tap,
+  startWith,
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  map,
+} from 'rxjs/operators';
 @Component({
   selector: 'mcu-basic-form',
   templateUrl: './basic-form.component.html',
@@ -65,6 +72,8 @@ export class BasicFormComponent {
 
     this.filteredBrands = this.jobDetails.controls['brand'].valueChanges.pipe(
       startWith(''),
+      debounceTime(200),
+      distinctUntilChanged(),
       map((value) => {
         const name = typeof value === 'string' ? value : value?.name;
         return name ? this._filterBrand(name as string) : this.brands.slice();
@@ -152,6 +161,11 @@ export class BasicFormComponent {
     }
   }
 
+  getBrandbyName(name: any) {
+    let element = this.brands.find((e: any) => e.brandName == name);
+    return element['brandId'];
+  }
+
   getCountry(countryId: any): any {
     let element = this.countries.find((e: any) => e.countryId == countryId);
     if (element) {
@@ -166,17 +180,19 @@ export class BasicFormComponent {
     }
   }
 
-  showCreative!: boolean;
+  showCreative: boolean = false;
+  jobId: any;
   submitForm() {
     console.log(`form`, this.jobDetails.value);
     this.showCreative = true;
+    this.jobDetails.controls['brand'].setValue(
+      this.getBrandbyName(this.jobDetails.controls['brand'].getRawValue())
+    );
     this.formService.createJob(this.jobDetails.value).subscribe((data) => {
-      if (data) {
-        this.zone.run(() => {
-          // Your router is here
-          this.router.navigate(['apps/creative']);
-        });
-      }
+      this.showCreative = true;
+      let details = JSON.parse(data);
+      this.jobId = details.jobId;
+      console.log(`jobId`, details.jobId);
     });
   }
 }

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { JobsTableComponent } from './components/jobs-table/jobs-table.component';
-import { ContentUploadFormComponent } from './components/content-upload-form/content-upload-form.component';
 import { CreativeFormComponent } from './components/creative-form/creative-form.component';
+import { BasicFormComponent } from './components/basic-form/basic-form.component';
 
 const routes: Routes = [
   {
@@ -15,8 +15,7 @@ const routes: Routes = [
       { path: 'my-workflows', component: JobsTableComponent },
       { path: 'content-manager', component: JobsTableComponent },
       { path: 'assets-team', component: JobsTableComponent },
-      { path: 'content-upload', component: ContentUploadFormComponent },
-      { path: 'creative-form', component: CreativeFormComponent },
+      { path: 'basic-form', component: BasicFormComponent },
       { path: '', redirectTo: 'my-jobs', pathMatch: 'full' },
     ],
   },

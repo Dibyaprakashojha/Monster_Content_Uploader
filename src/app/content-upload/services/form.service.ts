@@ -27,7 +27,6 @@ export class FormService {
         }
       });
     });
-    console.log(job);
     let url = 'api/v1/job-details';
     let jobDetails = {
       albumName: job.albumName,
@@ -38,7 +37,7 @@ export class FormService {
         assetTypeId: 2,
       },
       brand: {
-        brandId: 1,
+        brandId: job.brand,
       },
       businessId: null,
       comments: null,

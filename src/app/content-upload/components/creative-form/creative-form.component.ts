@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { map, startWith } from 'rxjs';
 
@@ -7,7 +13,13 @@ import { map, startWith } from 'rxjs';
   templateUrl: './creative-form.component.html',
   styleUrls: ['./creative-form.component.scss'],
 })
-export class CreativeFormComponent {
+export class CreativeFormComponent implements OnInit, OnChanges {
+  @Input() jobId: any;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(`jonbId in cretaive`, this.jobId);
+  }
+
   jobDetails!: FormGroup;
   constructor(private fb: FormBuilder) {
     this.jobDetails = this.fb.group({
@@ -36,43 +48,12 @@ export class CreativeFormComponent {
     });
   }
 
-  departMent!: string;
-
-  brands = [
-    { name: 'monster', brandId: 1 },
-    { name: 'core', brandId: 2 },
-  ];
-  producs = [
-    { name: 'ultra', brandId: 1 },
-    { name: 'rehab', brandId: 1 },
-    { name: 'pink', brandId: 2 },
-    { name: 'blue', brandId: 2 },
-  ];
-  countries = [
-    { name: 'India', countryId: 1 },
-    { name: 'USA', countryId: 2 },
-    { name: 'Australia', countryId: 3 },
-  ];
-
-  assets = [
-    { name: 'can', assetId: 1 },
-    { name: 'bottle', assetId: 2 },
-    { name: 'bike', assetId: 3 },
-    { name: 'bmx', assetId: 4 },
-  ];
-
-  assetsSubType = [
-    { name: 'pinkCan', assetId: 1 },
-    { name: 'greenbottle', assetId: 1 },
-    { name: 'bike', assetId: 3 },
-    { name: 'bmx', assetId: 4 },
-  ];
-
-  useCase = [
-    { name: 'round', useCaseId: 1 },
-    { name: 'canSahpe', useCaseId: 2 },
-    { name: 'straight', useCaseId: 3 },
-  ];
+  brands = [];
+  producs = [];
+  countries = [];
+  assets = [];
+  assetsSubType = [];
+  useCase = [];
 
   filteredBrands: any = [];
   filteredProductLine: any = [];

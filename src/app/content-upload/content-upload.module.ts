@@ -5,7 +5,6 @@ import { MaterialModule } from '../material/material.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { JobsTableComponent } from './components/jobs-table/jobs-table.component';
-import { ContentUploadFormComponent } from './components/content-upload-form/content-upload-form.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MobileJobsListComponent } from './components/mobile-view-components/mobile-jobs-list/mobile-jobs-list.component';
 import { CardViewComponent } from './components/mobile-view-components/card-view/card-view.component';
@@ -19,7 +18,6 @@ import { CreativeFormComponent } from './components/creative-form/creative-form.
   declarations: [
     DashboardComponent,
     JobsTableComponent,
-    ContentUploadFormComponent,
     MobileJobsListComponent,
     CardViewComponent,
     BasicFormComponent,

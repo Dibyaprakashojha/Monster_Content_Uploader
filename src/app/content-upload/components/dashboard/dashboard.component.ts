@@ -128,7 +128,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   navigateTO() {
-    this.router.navigateByUrl('apps/content-upload');
+    this.router.navigateByUrl('apps/basic-form');
     this.menuName = '';
     this.menu = '';
   }

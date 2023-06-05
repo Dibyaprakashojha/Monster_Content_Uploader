@@ -1,4 +1,4 @@
-<div class="content-upload-form">
+<div *ngIf="!showCreative" class="content-upload-form">
     <div class="header">
         <h1>CONTENT DETAILS</h1>
     </div>
@@ -9,7 +9,7 @@
                     <mat-label>Brand</mat-label>
                     <input matInput type="input" formControlName="brand" [matAutocomplete]="auto" required />
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredBrands | async" [value]="option.brandName"
+                        <mat-option *ngFor=" let option of filteredBrands | async" [value]="option.brandName"
                             (onSelectionChange)="updateSelectedBrand($event)">
                             {{option.brandDsName}}
                         </mat-option>
@@ -79,3 +79,4 @@
         </div>
     </form>
 </div>
+<mcu-creative-form [jobId]="jobId" *ngIf="showCreative"></mcu-creative-form>
