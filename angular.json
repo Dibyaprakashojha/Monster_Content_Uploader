@@ -18,7 +18,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/content-upload",
+            "outputPath": "dist/mcu-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -33,13 +33,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "5kb",
+                  "maximumError": "7kb"
                 }
               ],
               "outputHashing": "all"
@@ -56,11 +56,11 @@
           "defaultConfiguration": "production"
         },
         "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "latest:angular:build",
             "port": 4500
           },
-          "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
               "browserTarget": "content-upload:build:production"

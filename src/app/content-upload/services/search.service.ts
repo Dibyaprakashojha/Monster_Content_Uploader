@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { SorlResponse } from 'src/app/shared/models/jobDetails';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
-  base_url = '/api/v1/';
+  base_url = environment.retrieveUrl;
   constructor(private httpClient: HttpClient) {}
   jobList: any;
 
@@ -17,7 +18,7 @@ export class SearchService {
     totalRecords: any,
     sortDirection: any
   ): Observable<SorlResponse> {
-    let url = this.base_url.concat('all-jobs/search');
+    let url = this.base_url.concat('all-job/search');
     return this.httpClient.post<SorlResponse>(url, {
       keyword: '*',
       cursor: {
@@ -39,7 +40,7 @@ export class SearchService {
     sortDirection: any,
     userId: any
   ): Observable<SorlResponse> {
-    let url = this.base_url.concat('my-jobs/search');
+    let url = this.base_url.concat('my-job/search');
     return this.httpClient.post<SorlResponse>(url, {
       keyword: '*',
       cursor: {
@@ -58,7 +59,7 @@ export class SearchService {
     pageIndex: any,
     sortType?: string
   ): Observable<SorlResponse> {
-    let url = this.base_url.concat('/search/mobile-view');
+    let url = this.base_url.concat('all-job/search/mobile-view');
 
     return this.httpClient.post<SorlResponse>(url, {
       keyword: '*',
@@ -75,7 +76,7 @@ export class SearchService {
   }
 
   getMyJobsForMobile(pageIndex: any, userId: number): Observable<SorlResponse> {
-    let url = this.base_url.concat('search');
+    let url = this.base_url.concat('my-job/search');
     return this.httpClient.post<SorlResponse>(url, {
       keyword: '*',
       cursor: {

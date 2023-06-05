@@ -1,40 +1,42 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormService {
   constructor(private _http: HttpClient) {}
+  base_url = environment.retrieveUrl;
 
   getAllBrands(): Observable<any> {
-    let url = '/api/v1/brand';
+    let url = `${this.base_url}brand`;
     return this._http.get(url);
   }
 
   getAllAssetTypes(): Observable<any> {
-    let url = '/api/v1/asset-type/';
+    let url = `${this.base_url}asset-type/`;
     return this._http.get(url);
   }
 
   getAllSubAssetTypes(): Observable<any> {
-    let url = '/api/v1/asset-subtype/';
+    let url = `${this.base_url}asset-subtype/`;
     return this._http.get(url);
   }
 
   getAllUseCase(): Observable<any> {
-    let url = '/api/v1/use-case/';
+    let url = `${this.base_url}use-case/`;
     return this._http.get(url);
   }
 
   getJobdetailsByJobId(jobId: any): Observable<any> {
-    let url = '/api/v1/job-details/';
+    let url = `${this.base_url}job-details/`;
     return this._http.get(url.concat(jobId));
   }
 
   getByBrandId(brandId: any): Observable<any> {
-    let url = '/api/v1/brand/';
+    let url = `${this.base_url}brand/`;
     return this._http.get(url.concat(brandId));
   }
 
@@ -47,7 +49,7 @@ export class FormService {
         }
       });
     });
-    let url = 'api/v1/job-details';
+    let url = `${this.base_url}job-details`;
     let jobDetails = {
       albumName: job.albumName,
       assetSubType: {

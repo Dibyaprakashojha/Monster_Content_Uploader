@@ -14,6 +14,8 @@ import { Component, OnInit } from '@angular/core';
 import { Output } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'mcu-dashboard',
@@ -25,6 +27,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   contentMargin = 10;
   menuName: string = '';
   @ViewChild('mobileSideNav') mobileSideNav!: MatSidenav;
+  // redirectUri: string = `${environment.baseUrl}ticketConsumer?redirectUri=${window.location.href}`;
 
   onToolbarMenuToggle() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -54,7 +57,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private loginService: LoginService
   ) {}
 
   ngAfterViewInit(): void {}
@@ -94,6 +98,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   isDesktop!: boolean;
   isTablet!: boolean;
   ngOnInit(): void {
+    // this.loginService.getTest().subscribe({
+    //   next: (res) => {
+    //     console.log(`Hello World`, res);
+    //   },
+    //   error: (err) => {
+    //     if (err.status == 401) {
+    //       this.loginService.getLoginUri(this.redirectUri).subscribe({
+    //         next: (response: any) => {
+    //           console.log(`Url: `, response);
+    //           window.location.href = response.url;
+    //         },
+    //       });
+    //     }
+    //     console.log(`error: `, err);
+    //   },
+    // });
     this.breakpointObserver
       .observe([Breakpoints.XSmall])
       .subscribe((result) => {
