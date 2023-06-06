@@ -120,21 +120,19 @@
                 <mat-form-field>
                     <input placeholder="SAP NO" matInput type="number" formControlName="sapNumber" />
                 </mat-form-field>
+
                 <mat-form-field>
                     <input placeholder="Comments" matInput type="text" formControlName="comments" />
                 </mat-form-field>
+            </div>
 
-
+            <div class="upload-container">
                 <mat-form-field>
-                    <input placeholder="date" matInput [matDatepicker]="to" formControlName="year">
+                    <input placeholder="date" matInput [matDatepicker]="to" formControlName="eventDate">
                     <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
                     <mat-datepicker #to></mat-datepicker>
-
                 </mat-form-field>
 
-
-            </div>
-            <div class="upload-container">
                 <div class="typeOfUpload final">
                     <p>final</p>
                     <p>300</p>
@@ -164,7 +162,8 @@
                     </div>
                 </div>
                 <div class="action-buttons">
-                    <button type="submit" [disabled]="jobDetails.invalid">
+                    <button mat-raised-button color="accent" (click)="deleteJob(jobId)">Delete</button>
+                    <button mat-raised-button color="accent" type="submit" [disabled]="jobDetails.invalid">
                         Submit
                     </button>
                 </div>

@@ -24,7 +24,7 @@ export class SearchService {
       cursor: {
         page_index: pageIndex,
         page_size: pageSize,
-        total_records: totalRecords,
+        // total_records: totalRecords,
       },
       sort: {
         sort_field: '*',
@@ -46,7 +46,7 @@ export class SearchService {
       cursor: {
         page_index: pageIndex,
         page_size: pageSize,
-        total_records: totalRecords,
+        // total_records: totalRecords,
       },
       sort: {
         sort_field: '*',
@@ -66,7 +66,7 @@ export class SearchService {
       cursor: {
         page_index: pageIndex,
         page_size: 3,
-        total_records: 0,
+        // total_records: 0,
       },
       sort: {
         sort_field: '*',
@@ -82,7 +82,7 @@ export class SearchService {
       cursor: {
         page_index: pageIndex,
         page_size: 3,
-        total_records: 0,
+        // total_records: 0,
       },
       sort: {
         sort_field: '*',

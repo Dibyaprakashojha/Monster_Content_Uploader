@@ -37,9 +37,7 @@
     }
   }
 }
-.mat-mdc-form-field {
-  margin: 0 0 3em 0;
-}
+
 .action-buttons {
   margin: 20rem 0 0 0;
   ::ng-deep {
@@ -59,9 +57,6 @@
   }
 }
 .grid-container {
-  // display: grid;
-  // grid-template-columns: 1fr 1fr;
-  // grid-gap: 20px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -116,7 +111,8 @@ mat-form-field {
   background-color: transparent;
 }
 .mat-mdc-form-field {
-  margin: 0 0 3em 0;
+  margin: 0 10px 7px 0;
+  height: 75px;
 }
 .action-buttons {
   margin: 0 0 0 0;
@@ -191,11 +187,8 @@ p {
   transform: skewX(-10deg);
 }
 
-@media screen and (((min-width: 600px) and (max-width: 839.98px) )) {
+@media screen and (((min-width: 600px) and (max-width: 840px) )) {
   .grid-container {
-    // display: grid;
-    // grid-template-columns: 1fr 1fr;
-    // grid-gap: 20px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -216,16 +209,20 @@ p {
   }
 }
 
-@media screen and (((max-width: 599px)  )) {
+@media screen and ((max-width: 599px)) {
   .grid-container {
-    // display: grid;
-    // grid-template-columns: 1fr 1fr;
-    // grid-gap: 20px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     width: 100%;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   mat-form-field {

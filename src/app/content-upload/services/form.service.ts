@@ -31,7 +31,7 @@ export class FormService {
   }
 
   getJobdetailsByJobId(jobId: any): Observable<any> {
-    let url = `${this.base_url}job-details/`;
+    let url = 'api/v1/job-details/';
     return this._http.get(url.concat(jobId));
   }
 
@@ -91,25 +91,29 @@ export class FormService {
       },
     };
     console.log(`jopb`, jobDetails);
-    return this._http.post(url, jobDetails, { responseType: 'text' });
+    return this._http.post(url, jobDetails, {
+      params: {
+        hardIndex: true,
+      },
+      responseType: 'text',
+    });
   }
 
-  createJobDetails(jobDetails: any): Observable<any> {
-    let url = 'api/v1/job-details';
+  createJobDetails(jobDetails: any, JobId: any): Observable<any> {
+    let url = `${this.base_url}job-details`;
     console.log(`jobdetails, final post`, jobDetails);
-
-    let jobVlalue = {
+    let jobValue = {
       albumName: jobDetails.albumName,
       assetSubType: {
-        assetSubtypeId: jobDetails.assetType,
+        assetSubtypeId: jobDetails.assetSubType,
       },
       assetType: {
-        assetTypeId: jobDetails.assetSubType,
+        assetTypeId: jobDetails.assetType,
       },
       brand: {
         brandId: jobDetails.brand,
       },
-      businessId: 1,
+      businessId: 163,
       comments: jobDetails.comments,
       country: {
         countryId: jobDetails.country,
@@ -121,7 +125,8 @@ export class FormService {
       department: {
         dptId: jobDetails.department,
       },
-      eventDateTime: new Date(),
+      eventDateTime: new Date(jobDetails.eventDate),
+      jobId: JobId,
       jobName: 'Upload',
       jobStatus: {
         jobStatusId: 3,
@@ -133,11 +138,20 @@ export class FormService {
       productLine: {
         prdLineId: jobDetails.productLine,
       },
-      sapMaterialNumber: jobDetails.jobsapNumber,
+      sapMaterialNumber: jobDetails.sapNumber,
       useCase: {
         useCaseId: 1,
       },
     };
-    return this._http.post(url, jobDetails);
+    return this._http.put(url, jobValue, {
+      params: {
+        hardIndex: true,
+      },
+    });
+  }
+
+  deleteJob(id: any) {
+    let url = `${this.base_url}job-details/`;
+    return this._http.delete(url.concat(id));
   }
 }

@@ -8,6 +8,7 @@ import {
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { map, startWith } from 'rxjs';
 import { FormService } from '../../services/form.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'mcu-creative-form',
@@ -28,11 +29,14 @@ export class CreativeFormComponent implements OnInit, OnChanges {
 
   lastModifiedBy: any;
   lastModifiedDate: any;
+
   public getData(id: any) {
     this.formService.getJobdetailsByJobId(id).subscribe((data: any) => {
       console.log(data);
+
       this.lastModifiedBy = data.createdBy.psDetailsId;
-      this.lastModifiedDate = data.this.formService
+      // this.lastModifiedDate = data.
+      this.formService
         .getByBrandId(data.brand.brandId)
         .subscribe((eachBrand: any) => {
           console.log(eachBrand);
@@ -61,7 +65,11 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   }
 
   jobDetails!: FormGroup;
-  constructor(private fb: FormBuilder, private formService: FormService) {
+  constructor(
+    private fb: FormBuilder,
+    private formService: FormService,
+    private router: Router
+  ) {
     this.jobDetails = this.fb.group({
       brand: [''],
       productLine: [null],
@@ -70,7 +78,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
       department: [''],
       assetType: [''],
       assetSubType: [''],
-      year: [''],
+      eventDate: [''],
       sapNumber: [''],
       useCase: [''],
       comments: [''],
@@ -232,9 +240,10 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     }
   }
 
-  getAssetSubType(assetSubType: any): any {
-    let element = this.assetsSubType.find(
-      (e: any) => e.assetSubtypeId == assetSubType
+  getAssetSubType(assetSubTypeId: any): any {
+    console.log(`BAABBABA`, assetSubTypeId);
+    let element = this.allAssetSubTypes.find(
+      (e: any) => e.assetSubtypeId == assetSubTypeId
     );
     if (element) {
       return element['assetSubtypeName'];
@@ -295,6 +304,14 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   submitForm() {
     console.log(`form`, this.jobDetails);
     this.showCreative = true;
-    this.formService.createJobDetails(this.jobDetails.value).subscribe();
+    this.formService
+      .createJobDetails(this.jobDetails.value, this.jobId)
+      .subscribe();
+  }
+
+  deleteJob(jobId: any) {
+    // this.formService.deleteJob(jobId).subscribe(() => {
+    this.router.navigateByUrl('apps/dashboard');
+    // });
   }
 }

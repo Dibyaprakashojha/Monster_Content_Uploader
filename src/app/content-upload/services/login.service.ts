@@ -11,14 +11,14 @@ export class LoginService {
 
   baseUrl: string = environment.baseUrl;
 
-  getLoginUri = (redirectUri: string) => {
-    return this.http.get(`${this.baseUrl}loginUri?redirectUri=${redirectUri}`);
-  };
+  // getLoginUri = (redirectUri: string) => {
+  //   return this.http.get(`${this.baseUrl}loginUri?redirectUri=${redirectUri}`);
+  // };
 
-  getTest = () => {
-    return this.http.get(`${this.baseUrl}login-test`, {
-      withCredentials: true,
-      responseType: 'text',
-    });
-  };
+  // getTest = () => {
+  //   return this.http.get(`${this.baseUrl}login-test`, {
+  //     withCredentials: true,
+  //     responseType: 'text',
+  //   });
+  // };
 }
