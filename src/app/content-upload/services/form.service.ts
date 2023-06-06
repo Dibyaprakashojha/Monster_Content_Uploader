@@ -147,6 +147,7 @@ export class FormService {
       params: {
         hardIndex: true,
       },
+      responseType: 'text',
     });
   }
 

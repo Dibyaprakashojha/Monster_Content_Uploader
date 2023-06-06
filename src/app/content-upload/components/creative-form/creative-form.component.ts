@@ -62,6 +62,34 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     this.getAllAssets();
     this.getAllUseCase();
     this.getAllSubAssetTypes();
+    this.disableFormFields();
+  }
+
+  disableFormFields() {
+    if (
+      this.jobDetails.controls['brand'].getRawValue !== null ||
+      this.jobDetails.controls['brand'].getRawValue !== undefined
+    ) {
+      this.jobDetails.controls['brand'].disable();
+    }
+    if (
+      this.jobDetails.controls['productLine'].getRawValue !== null ||
+      this.jobDetails.controls['productLine'].getRawValue !== undefined
+    ) {
+      this.jobDetails.controls['productLine'].disable();
+    }
+    if (
+      this.jobDetails.controls['country'].getRawValue !== null ||
+      this.jobDetails.controls['country'].getRawValue !== undefined
+    ) {
+      this.jobDetails.controls['country'].disable();
+    }
+    if (
+      this.jobDetails.controls['albumName'].getRawValue !== null ||
+      this.jobDetails.controls['albumName'].getRawValue !== undefined
+    ) {
+      this.jobDetails.controls['albumName'].disable();
+    }
   }
 
   jobDetails!: FormGroup;
