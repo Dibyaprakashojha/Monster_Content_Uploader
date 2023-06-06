@@ -206,12 +206,13 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
+    margin-left: 5px;
   }
 
   mat-form-field {
-    width: 70vw;
+    width: 150px;
     background-color: transparent;
   }
   .upload-container {
@@ -219,15 +220,19 @@ p {
   }
   .typeOfUpload {
     width: 70vw;
-    height: 38px;
+    height: 48px;
   }
 
   .mat-mdc-form-field-subscript-wrapper {
-    // box-sizing: border-box;
-    // width: 100%;
-    // position: relative;
     background: black;
     border: 0px;
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
   }
 }
 

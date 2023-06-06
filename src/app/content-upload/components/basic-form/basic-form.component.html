@@ -1,4 +1,4 @@
-<div *ngIf="showCreative" class="content-upload-form">
+<div *ngIf="!showCreative" class="content-upload-form">
     <div class="header">
         <h1>CONTENT DETAILS</h1>
     </div>
@@ -86,4 +86,4 @@
         </div>
     </form>
 </div>
-<mcu-creative-form #mcucomponent [jobId]="jobId" *ngIf="!showCreative"></mcu-creative-form>
+<mcu-creative-form #mcucomponent [jobId]="jobId" *ngIf="showCreative"></mcu-creative-form>
