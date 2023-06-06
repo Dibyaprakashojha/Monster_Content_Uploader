@@ -92,6 +92,14 @@
 .mat-mdc-form-field {
   margin: 0 0 2em 0;
 }
+
+.mat-mdc-form-field-subscript-wrapper {
+  // box-sizing: border-box;
+  // width: 100%;
+  // position: relative;
+  background: black;
+  border: 0px;
+}
 .action-buttons {
   margin: 20rem 3rem 0 0;
   align-self: flex-end;
@@ -132,6 +140,14 @@
     color: white;
     align-self: flex-end;
   }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    // box-sizing: border-box;
+    // width: 100%;
+    // position: relative;
+    background: black;
+    border: 0px;
+  }
 }
 
 @media screen and ((max-width: 599px)) {
@@ -159,4 +175,16 @@
     color: white;
     align-self: flex-end;
   }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    // box-sizing: border-box;
+    // width: 100%;
+    // position: relative;
+    background: black;
+    border: 0px;
+  }
+}
+
+button {
+  margin-left: 2em;
 }

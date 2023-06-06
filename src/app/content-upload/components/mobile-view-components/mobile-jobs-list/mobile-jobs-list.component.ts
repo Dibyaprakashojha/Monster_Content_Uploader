@@ -8,7 +8,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
   templateUrl: './mobile-jobs-list.component.html',
   styleUrls: ['./mobile-jobs-list.component.scss'],
 })
-export class MobileJobsListComponent implements OnInit, OnDestroy {
+export class MobileJobsListComponent implements OnInit {
   isMobile!: boolean;
   jobList: any[] = [];
 
@@ -123,9 +123,9 @@ export class MobileJobsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
+  // ngOnDestroy(): void {
+  //   throw new Error('Method not implemented.');
+  // }
 
   scrollUpDistance: number = 2;
 }

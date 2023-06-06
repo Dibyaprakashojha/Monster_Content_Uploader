@@ -16,6 +16,7 @@ import { map, startWith } from 'rxjs';
 import { FormService } from '../../services/form.service';
 import { Route, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { NotificationServiceService } from 'src/app/shared/services/notification-service.service';
 
 @Component({
   selector: 'mcu-creative-form',
@@ -69,7 +70,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     this.getAllAssets();
     this.getAllUseCase();
     this.getAllSubAssetTypes();
-    // this.disableFormFields();
+    this.disableFormFields();
   }
 
   disableRadio!: boolean;
@@ -106,12 +107,20 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     // }
   }
 
+  enableFormFields() {
+    this.jobDetails.controls['albumName'].enable();
+    this.jobDetails.controls['country'].enable();
+    this.jobDetails.controls['productLine'].enable();
+    this.jobDetails.controls['brand'].enable();
+  }
+
   jobDetails!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private formService: FormService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private notificationService: NotificationServiceService
   ) {
     this.jobDetails = this.fb.group({
       brand: ['', [Validators.required]],
@@ -382,6 +391,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
 
   showCreative!: boolean;
   submitForm() {
+    this.enableFormFields();
     console.log(`form`, this.jobDetails);
     this.showCreative = true;
     this.formService
@@ -389,9 +399,13 @@ export class CreativeFormComponent implements OnInit, OnChanges {
       .subscribe({
         next: (data) => {
           this.router.navigateByUrl('apps/dashboard');
+          this.notificationService.success('UpLoad Job has beedn submitted');
         },
         error: (err) => {
           this.router.navigateByUrl('apps/dashboard');
+          this.notificationService.success(
+            'UpLoad Job has not submitted please reinitiate Job'
+          );
         },
       });
   }
@@ -399,6 +413,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   deleteJob(jobId: any) {
     // this.formService.deleteJob(jobId).subscribe(() => {
     this.router.navigateByUrl('apps/dashboard');
+    this.notificationService.success('Job has been deleted sucessfully ');
     // });
   }
 }

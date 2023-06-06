@@ -49,8 +49,8 @@
       <button class="menu-button">
         <img class="mb-logo" src="assets/images/monster-small.png" />
       </button>
-      <button class="menu-button">
-        <img class="mb-menu-image" src=" assets/images/add.png" />
+      <button class="menu-button" (click)="navigateTO()">
+        <img class=" mb-menu-image" src=" assets/images/add.png" />
       </button>
     </div>
     <div ngClass="mb-nav-item-2">
@@ -312,7 +312,7 @@
 
   <mat-sidenav-content [ngStyle]="{ 'margin-left': { contentMargin } + '%' }">
     <div ngClass="route-content">
-      <div ngClass="menu-name-container">
+      <div ngClass="menu-name-container" *ngIf="!isMobile">
         <h3 *ngIf="!isMobile" class="menu-name">{{ menuName }}</h3>
         <button *ngIf="checkMenu('my-jobs')||checkMenu('my-jobs')||checkMenu('my-jobs')" mat-button
           class="create-button approved" (click)="navigateTO()">

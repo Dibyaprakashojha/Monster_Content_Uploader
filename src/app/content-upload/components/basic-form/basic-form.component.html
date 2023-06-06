@@ -1,4 +1,4 @@
-<div *ngIf="!showCreative" class="content-upload-form">
+<div *ngIf="showCreative" class="content-upload-form">
     <div class="header">
         <h1>CONTENT DETAILS</h1>
     </div>
@@ -75,6 +75,9 @@
                 </mat-error>
                 <mcu-creative-form *ngIf="showCreative"></mcu-creative-form>
                 <div class="action-buttons">
+                    <button mat-raised-button color="accent" [routerLink]="['apps/my-jobs']" type="submit">
+                        Delete
+                    </button>
                     <button mat-raised-button color="accent" type="submit" [disabled]="jobDetails.invalid">
                         Submit
                     </button>
@@ -83,4 +86,4 @@
         </div>
     </form>
 </div>
-<mcu-creative-form #mcucomponent [jobId]="jobId" *ngIf="showCreative"></mcu-creative-form>
+<mcu-creative-form #mcucomponent [jobId]="jobId" *ngIf="!showCreative"></mcu-creative-form>
