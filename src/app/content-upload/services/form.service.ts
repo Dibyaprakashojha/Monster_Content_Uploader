@@ -93,4 +93,51 @@ export class FormService {
     console.log(`jopb`, jobDetails);
     return this._http.post(url, jobDetails, { responseType: 'text' });
   }
+
+  createJobDetails(jobDetails: any): Observable<any> {
+    let url = 'api/v1/job-details';
+    console.log(`jobdetails, final post`, jobDetails);
+
+    let jobVlalue = {
+      albumName: jobDetails.albumName,
+      assetSubType: {
+        assetSubtypeId: jobDetails.assetType,
+      },
+      assetType: {
+        assetTypeId: jobDetails.assetSubType,
+      },
+      brand: {
+        brandId: jobDetails.brand,
+      },
+      businessId: 1,
+      comments: jobDetails.comments,
+      country: {
+        countryId: jobDetails.country,
+      },
+      createdBy: {
+        psDetailsId: 2,
+      },
+      createdDate: new Date(),
+      department: {
+        dptId: jobDetails.department,
+      },
+      eventDateTime: new Date(),
+      jobName: 'Upload',
+      jobStatus: {
+        jobStatusId: 3,
+      },
+      lastModifedBy: {
+        psDetailsId: 1,
+      },
+      lastModifiedDate: new Date(),
+      productLine: {
+        prdLineId: jobDetails.productLine,
+      },
+      sapMaterialNumber: jobDetails.jobsapNumber,
+      useCase: {
+        useCaseId: 1,
+      },
+    };
+    return this._http.post(url, jobDetails);
+  }
 }

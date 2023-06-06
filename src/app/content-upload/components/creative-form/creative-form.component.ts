@@ -26,13 +26,15 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     // });
   }
 
+  lastModifiedBy: any;
+  lastModifiedDate: any;
   public getData(id: any) {
     this.formService.getJobdetailsByJobId(id).subscribe((data: any) => {
       console.log(data);
-      // this.ngOnInit();
-      this.formService
+      this.lastModifiedBy = data.createdBy.psDetailsId;
+      this.lastModifiedDate = data.this.formService
         .getByBrandId(data.brand.brandId)
-        .subscribe((eachBrand) => {
+        .subscribe((eachBrand: any) => {
           console.log(eachBrand);
           this.producs = eachBrand.productLines;
           this.filteredProductLine = this.producs;
@@ -217,7 +219,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   }
 
   getUseCase(useCaseId: any): any {
-    let element = this.useCase.find((e: any) => e.useCaseId == useCaseId);
+    let element = this.useCaseTypes.find((e: any) => e.useCaseId == useCaseId);
     if (element) {
       return element['useCaseName'];
     }
@@ -293,5 +295,6 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   submitForm() {
     console.log(`form`, this.jobDetails);
     this.showCreative = true;
+    this.formService.createJobDetails(this.jobDetails.value).subscribe();
   }
 }
