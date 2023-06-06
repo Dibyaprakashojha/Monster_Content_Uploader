@@ -1,0 +1,19 @@
+.notification-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .icon {
+    line-height: 40px;
+    height: 40px;
+    width: 40px;
+
+    mat-icon {
+      font-size: 36px;
+      height: 36px;
+      width: 36px;
+      cursor: default;
+      color: black;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+<div class="notification-container">
+    <div class="icon">
+        <mat-icon>{{getIcon()}}</mat-icon>
+    </div>
+    <div class="data">{{data.message}}</div>
+    <div class="dismiss">
+        <button class="close-icon" [style.color]="isWarn ? 'black' : 'white' " mat-icon-button
+            (click)="snackBarRef.dismiss()">
+            <!-- <mat-icon class="close-icon" style="color:white">close</mat-icon> -->
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
