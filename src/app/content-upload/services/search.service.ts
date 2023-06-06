@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class SearchService {
   base_url = environment.retrieveUrl;
+  // base_url = '/api/v1/';
   constructor(private httpClient: HttpClient) {}
   jobList: any;
 

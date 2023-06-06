@@ -14,6 +14,7 @@ import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BasicFormComponent } from './components/basic-form/basic-form.component';
 import { CreativeFormComponent } from './components/creative-form/creative-form.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -31,9 +32,10 @@ import { CreativeFormComponent } from './components/creative-form/creative-form.
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatSnackBarModule,
     InfiniteScrollModule,
   ],
   exports: [],
-  providers: [],
+  providers: [MatSnackBarModule],
 })
 export class ContentUploadModule {}

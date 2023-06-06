@@ -1,23 +1,11 @@
+import { NotificationServiceService } from './../../../shared/services/notification-service.service';
+import { JobDetails } from 'src/app/shared/models/jobDetails';
 import { FormService } from './../../services/form.service';
-import { SearchService } from './../../services/search.service';
-import { Route, Router } from '@angular/router';
-import { EventEmitter, Input, NgZone, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { ViewChild } from '@angular/core';
 import { Component } from '@angular/core';
 
-import {
-  FormGroup,
-  FormBuilder,
-  FormArray,
-  FormGroupDirective,
-} from '@angular/forms';
-import {
-  tap,
-  startWith,
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-  map,
-} from 'rxjs/operators';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { CreativeFormComponent } from '../creative-form/creative-form.component';
 @Component({
   selector: 'mcu-basic-form',
@@ -30,12 +18,20 @@ export class BasicFormComponent {
     | undefined;
   jobDetails!: FormGroup;
 
+  brands: any = [];
+  products = [];
+  countries = [];
+  filteredBrands: any = [];
+  filteredProductLine: Array<any> = [];
+  filterCountries: Array<any> = [];
+  selectedBrand: any;
+
   constructor(
     private fb: FormBuilder,
-    private router: Router,
     private formService: FormService,
-    private zone: NgZone
+    private notificationService: NotificationServiceService
   ) {
+    this.getAllbrands();
     this.jobDetails = this.fb.group({
       brand: [''],
       productLine: [''],
@@ -45,89 +41,55 @@ export class BasicFormComponent {
     });
   }
 
-  jobDetailsArray(): FormArray {
-    return this.jobDetails.get('departMentFormArray') as FormArray;
-  }
-
-  creativeDepartMent() {
-    return this.fb.group({
-      name: [''],
+  getAllbrands() {
+    this.formService.getAllBrands().subscribe((eachBrand) => {
+      this.brands = eachBrand;
+      this.filteredBrands = this.brands;
     });
   }
 
-  departMent!: string;
-  departMentChange() {
-    this.jobDetailsArray().push(this.creativeDepartMent());
-  }
-
-  brands: any = [];
-  products = [];
-  countries = [];
-  filteredBrands: Array<any> = [];
-  filteredProductLine: Array<any> = [];
-  filterCountries: Array<any> = [];
-  selectedBrand: any;
-
-  ngOnInit() {
-    this.formService.getAllBrands().subscribe(
-      (eachBrand) => {
-        this.brands = eachBrand;
-        this.filteredBrands = this.brands;
-        console.log(`brands `, this.brands);
-      },
-      (err) => {}
-    );
-
-    this.jobDetails.controls['brand'].valueChanges.pipe(
-      startWith(''),
-      debounceTime(200),
-      distinctUntilChanged(),
-      map((value) => {
-        const name = typeof value === 'string' ? value : value?.name;
-        this.filteredBrands = name
-          ? this._filterBrand(name as string)
-          : this.brands.slice();
-      })
-    );
-    this.jobDetails.controls['productLine'].valueChanges.pipe(
-      startWith(''),
-      map((value) => {
-        console.log(value);
-        const name = typeof value === 'string' ? value : value?.name;
-        console.log(this._filterProductLine(name as string));
-        this.filteredProductLine = name
-          ? this._filterProductLine(name as string)
-          : this.products.slice();
-      })
-    );
-    this.jobDetails.controls['country'].valueChanges.pipe(
-      startWith(''),
-      map((value) => {
-        const name = typeof value === 'string' ? value : value?.name;
-        this.filterCountries = name
-          ? this._filterCountries(name as string)
-          : this.countries.slice();
-      })
-    );
+  public onSelectionChange(event: any, filterCondition: string) {
+    let value = event.target.value;
+    console.log(value);
+    if (filterCondition == 'brand') {
+      const name = typeof value === 'string' ? value : value?.name;
+      this.filteredBrands = name
+        ? this._filterBrand(name as string)
+        : this.brands;
+      // this.onControlChanges();
+    } else if ((filterCondition = 'productLine')) {
+      const name = typeof value === 'string' ? value : value?.name;
+      console.log(this._filterProductLine(name as string));
+      this.filteredProductLine = name
+        ? this._filterProductLine(name as string)
+        : this.products.slice();
+    } else if (filterCondition === 'country') {
+      const name = typeof value === 'string' ? value : value?.name;
+      this.filterCountries = name
+        ? this._filterCountries(name as string)
+        : this.countries.slice();
+    }
   }
 
   brandId: any;
   updateSelectedBrand(selectedValue: any) {
-    this.selectedBrand = selectedValue.source.value;
-    console.log(`sected brand`, this.selectedBrand);
-    this.brands.map((brand: any) => {
-      if (brand.brandName === this.selectedBrand) {
-        this.brandId = brand.brandId;
-        this.formService.getByBrandId(this.brandId).subscribe((eachBrand) => {
-          console.log(eachBrand);
-          this.products = eachBrand.productLines;
-          this.countries = eachBrand.countries;
-          this.filterCountries = this.countries;
-          this.filteredProductLine = this.products;
-          console.log(`brands `, this.brands);
-        });
-      }
-    });
+    if (selectedValue?.source.value) {
+      this.selectedBrand = selectedValue?.source.value;
+      console.log(`sected brand`, this.selectedBrand);
+      this.brands.map((brand: any) => {
+        if (brand.brandName === this.selectedBrand) {
+          this.brandId = brand.brandId;
+          this.formService.getByBrandId(this.brandId).subscribe((eachBrand) => {
+            console.log(eachBrand);
+            this.products = eachBrand.productLines;
+            this.countries = eachBrand.countries;
+            this.filterCountries = this.countries;
+            this.filteredProductLine = this.products;
+            console.log(`brands `, this.brands);
+          });
+        }
+      });
+    }
   }
 
   private _filterBrand(name: string): any[] {
@@ -152,9 +114,6 @@ export class BasicFormComponent {
     );
   }
 
-  hasChange: boolean = false;
-  onCreateGroupFormValueChange() {}
-
   getBrand(brandId: any): any {
     let element = this.brands.find((e: any) => e.brandId == brandId);
     if (element) {
@@ -164,6 +123,8 @@ export class BasicFormComponent {
 
   getBrandbyName(name: any) {
     let element = this.brands.find((e: any) => e.brandName == name);
+    console.log(`brnadIs`);
+
     return element['brandId'];
   }
 
@@ -184,17 +145,39 @@ export class BasicFormComponent {
   showCreative: boolean = false;
   jobId: any;
   submitForm() {
-    console.log(`form`, this.jobDetails.value);
+    console.log(`initialForm details`, this.jobDetails.value);
     this.showCreative = true;
     this.jobDetails.controls['brand'].setValue(
       this.getBrandbyName(this.jobDetails.controls['brand'].getRawValue())
     );
-    this.formService.createJob(this.jobDetails.value).subscribe((data) => {
-      this.showCreative = true;
-      let details = JSON.parse(data);
-      this.jobId = details.jobId;
-      console.log(`jobId`, details.jobId);
-      this.mcucomponent?.getData(details.jobId);
+    this.formService.createJob(this.jobDetails.value).subscribe(
+      (data) => {
+        this.showCreative = true;
+        let details = JSON.parse(data);
+        this.jobId = details.jobId;
+        console.log(`jobId`, details.jobId);
+        this.mcucomponent?.getData(details.jobId);
+        this.notificationService.success('UpLoad Job Initiated');
+      },
+      (error) => {
+        this.notificationService.error('Something went wrong .');
+      }
+    );
+  }
+
+  onControlChanges() {
+    this.jobDetails.controls['brand'].valueChanges.subscribe((data) => {
+      // this.jobDetails.controls['productLine'].setValue('');
+      // this.jobDetails.controls['productLine'].markAsUntouched;
+      // this.jobDetails.controls['productLine'].valid;
+      // this.jobDetails.controls['country'].setValue('');
+      // this.jobDetails.controls['country'].markAsUntouched;
+      // this.jobDetails.controls['country'].valid;
     });
+    this.updateSelectedBrand(this.selectedBrand);
+  }
+
+  ngOnInit() {
+    // this.onControlChanges();
   }
 }

@@ -7,7 +7,8 @@
             <div class="grid-child-left">
                 <mat-form-field>
                     <mat-label>Brand</mat-label>
-                    <input matInput type="input" formControlName="brand" [matAutocomplete]="auto" required />
+                    <input matInput type="input" (keyup)="onSelectionChange($event,'brand')" formControlName="brand"
+                        [matAutocomplete]="auto" required />
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor=" let option of filteredBrands " [value]="option.brandName"
                             (onSelectionChange)="updateSelectedBrand($event)">
@@ -17,10 +18,14 @@
                     <mat-error *ngIf="jobDetails?.get('brand')?.invalid && jobDetails?.get('brand')?.touched
               "> Please enter a valid Brand.
                     </mat-error>
+                    <mat-error *ngIf="jobDetails.errors?.['requireMatch']">
+                        Please enter a brand from the available options
+                    </mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Product Line</mat-label>
-                    <input matInput type="input" formControlName="productLine" [matAutocomplete]="productLineAuto"
+                    <input matInput type="input" formControlName="productLine"
+                        (keyup)="onSelectionChange($event,'productLine')" [matAutocomplete]="productLineAuto"
                         required />
                     <mat-autocomplete #productLineAuto="matAutocomplete" [displayWith]="getProductLine.bind(this)">
                         <mat-option *ngFor="let option of (filteredProductLine)" [value]="option.prdLineId">
@@ -33,7 +38,8 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Country</mat-label>
-                    <input matInput type="input" formControlName="country" [matAutocomplete]="country" required />
+                    <input matInput type="input" formControlName="country" [matAutocomplete]="country" required
+                        (keyup)="onSelectionChange($event,'country')" />
                     <mat-autocomplete #country="matAutocomplete" [displayWith]="getCountry.bind(this)">
                         <mat-option *ngFor="let option of filterCountries " [value]="option.countryId">
                             {{option.countryDsName}}

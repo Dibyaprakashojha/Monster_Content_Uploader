@@ -10,6 +10,8 @@ export class FormService {
   constructor(private _http: HttpClient) {}
   base_url = environment.retrieveUrl;
 
+  // base_url = '/api/v1/';
+
   getAllBrands(): Observable<any> {
     let url = `${this.base_url}brand`;
     return this._http.get(url);
@@ -31,7 +33,7 @@ export class FormService {
   }
 
   getJobdetailsByJobId(jobId: any): Observable<any> {
-    let url = 'api/v1/job-details/';
+    let url = `${this.base_url}job-details/`;
     return this._http.get(url.concat(jobId));
   }
 
@@ -49,6 +51,7 @@ export class FormService {
         }
       });
     });
+    console.log(`job in isr job creation`, job);
     let url = `${this.base_url}job-details`;
     let jobDetails = {
       albumName: job.albumName,
@@ -101,7 +104,6 @@ export class FormService {
 
   createJobDetails(jobDetails: any, JobId: any): Observable<any> {
     let url = `${this.base_url}job-details`;
-    console.log(`jobdetails, final post`, jobDetails);
     let jobValue = {
       albumName: jobDetails.albumName,
       assetSubType: {

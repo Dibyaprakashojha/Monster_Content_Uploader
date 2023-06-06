@@ -12,7 +12,7 @@ import { LoginService } from './content-upload/services/login.service';
 })
 export class AppComponent {
   title = 'content-upload';
-  redirectUri: string = `${environment.baseUrl}ticketConsumer?redirectUri=${window.location.href}`;
+  // redirectUri: string = `${environment.baseUrl}ticketConsumer?redirectUri=${window.location.href}`;
   constructor(private loginService: LoginService) {}
   // ngOnInit() {
   //   this.loginService.getTest().subscribe({

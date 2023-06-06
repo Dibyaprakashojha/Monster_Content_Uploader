@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://micromm.acheron-tech.com/mcu",
+    "target": "'https://micromm.acheron-tech.com/mcu/api/v1/",
     "secure": false
   }
 }

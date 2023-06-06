@@ -18,6 +18,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
 const modules = [
   CdkTableModule,
   MatToolbarModule,
@@ -38,6 +39,7 @@ const modules = [
   MatSelectModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatDialogModule,
 ];
 @NgModule({
   declarations: [],

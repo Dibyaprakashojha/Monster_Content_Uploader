@@ -5,10 +5,17 @@ import {
   SimpleChanges,
   OnInit,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { map, startWith } from 'rxjs';
 import { FormService } from '../../services/form.service';
 import { Route, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'mcu-creative-form',
@@ -62,9 +69,10 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     this.getAllAssets();
     this.getAllUseCase();
     this.getAllSubAssetTypes();
-    this.disableFormFields();
+    // this.disableFormFields();
   }
 
+  disableRadio!: boolean;
   disableFormFields() {
     if (
       this.jobDetails.controls['brand'].getRawValue !== null ||
@@ -90,18 +98,25 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     ) {
       this.jobDetails.controls['albumName'].disable();
     }
+    // if (
+    //   this.jobDetails.controls['department'].get('department') !== null ||
+    //   this.jobDetails.controls['department'].get('department') !== undefined
+    // ) {
+    //   this.jobDetails.controls['albumName'].disable();
+    // }
   }
 
   jobDetails!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private formService: FormService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {
     this.jobDetails = this.fb.group({
-      brand: [''],
-      productLine: [null],
-      country: [null],
+      brand: ['', [Validators.required]],
+      productLine: ['', Validators.required],
+      country: ['', Validators.required],
       albumName: [''],
       department: [''],
       assetType: [''],
@@ -113,7 +128,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     });
   }
 
-  brands = [];
+  brands: any[] = [];
   producs = [];
   countries = [];
   assets = [];
@@ -137,58 +152,94 @@ export class CreativeFormComponent implements OnInit, OnChanges {
       (err) => {}
     );
 
-    this.filteredBrands = this.jobDetails.controls['brand'].valueChanges.pipe(
-      startWith(''),
-      map((value) => {
-        const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._filterBrand(name as string) : this.brands.slice();
-      })
-    );
-    this.jobDetails.controls['productLine'].valueChanges.pipe(
-      startWith(''),
-      map((value) => {
-        const name = typeof value === 'string' ? value : value?.name;
-        this.filteredProductLine = name
-          ? this._filterProductLine(name as string, this.brandId)
-          : this.producs.slice();
-      })
-    );
-    this.jobDetails.controls['country'].valueChanges.pipe(
-      startWith(''),
-      map((value) => {
-        const name = typeof value === 'string' ? value : value?.name;
-        this.filterCountries = name
-          ? this._filterCountries(name as string)
-          : this.countries.slice();
-      })
-    );
-    this.jobDetails.controls['assetType'].valueChanges.pipe(
-      startWith(''),
-      map((value) => {
-        const name = typeof value === 'string' ? value : value?.name;
-        this.filterAssetTypes = name
-          ? this._filterAssets(name as string)
-          : this.assets.slice();
-      })
-    );
-    this.jobDetails.controls['assetSubType'].valueChanges.pipe(
-      startWith(''),
-      map((value) => {
-        const name = typeof value === 'string' ? value : value?.name;
-        this.filterAssetSubTypes = name
-          ? this._filterSubAssets(name as string)
-          : this.assetsSubType.slice();
-      })
-    );
-    this.jobDetails.controls['useCase'].valueChanges.pipe(
-      startWith(''),
-      map((value) => {
-        const name = typeof value === 'string' ? value : value?.name;
-        this.useCaseTypes = name
-          ? this._useCase(name as string)
-          : this.useCase.slice();
-      })
-    );
+    // this.filteredBrands = this.jobDetails.controls['brand'].valueChanges.pipe(
+    //   startWith(''),
+    //   map((value) => {
+    //     const name = typeof value === 'string' ? value : value?.name;
+    //     return name ? this._filterBrand(name as string) : this.brands.slice();
+    //   })
+    // );
+    // this.jobDetails.controls['productLine'].valueChanges.pipe(
+    //   startWith(''),
+    //   map((value) => {
+    //     const name = typeof value === 'string' ? value : value?.name;
+    //     this.filteredProductLine = name
+    //       ? this._filterProductLine(name as string, this.brandId)
+    //       : this.producs.slice();
+    //   })
+    // );
+    // this.jobDetails.controls['country'].valueChanges.pipe(
+    //   startWith(''),
+    //   map((value) => {
+    //     const name = typeof value === 'string' ? value : value?.name;
+    //     this.filterCountries = name
+    //       ? this._filterCountries(name as string)
+    //       : this.countries.slice();
+    //   })
+    // );
+    // this.jobDetails.controls['assetType'].valueChanges.pipe(
+    //   startWith(''),
+    //   map((value) => {
+    //     const name = typeof value === 'string' ? value : value?.name;
+    //     this.filterAssetTypes = name
+    //       ? this._filterAssets(name as string)
+    //       : this.assets.slice();
+    //   })
+    // );
+    // this.jobDetails.controls['assetSubType'].valueChanges.pipe(
+    //   startWith(''),
+    //   map((value) => {
+    //     const name = typeof value === 'string' ? value : value?.name;
+    //     this.filterAssetSubTypes = name
+    //       ? this._filterSubAssets(name as string)
+    //       : this.assetsSubType.slice();
+    //   })
+    // );
+    // this.jobDetails.controls['useCase'].valueChanges.pipe(
+    //   startWith(''),
+    //   map((value) => {
+    //     const name = typeof value === 'string' ? value : value?.name;
+    //     this.useCaseTypes = name
+    //       ? this._useCase(name as string)
+    //       : this.useCase.slice();
+    //   })
+    // );
+  }
+
+  onSelectionChanged(event: any, filterCondition: string) {
+    let value = event.target.value;
+    if (filterCondition == 'brand') {
+      const name = typeof value === 'string' ? value : value?.name;
+      this.filteredBrands = name
+        ? this._filterBrand(name as string)
+        : this.brands;
+    } else if (filterCondition == 'productLine') {
+      const name = typeof value === 'string' ? value : value?.name;
+      this.filteredProductLine = name
+        ? this._filterProductLine(name as string, this.brandId)
+        : this.producs.slice();
+    } else if (filterCondition === 'country') {
+      const name = typeof value === 'string' ? value : value?.name;
+      this.filterCountries = name
+        ? this._filterCountries(name as string)
+        : this.countries.slice();
+    } else if (filterCondition === 'assetType') {
+      const name = typeof value === 'string' ? value : value?.name;
+      this.filterAssetTypes = name
+        ? this._filterAssets(name as string)
+        : this.assets;
+    } else if (filterCondition === 'assetSubType') {
+      console.log(value);
+      const name = typeof value === 'string' ? value : value?.name;
+      this.filterAssetSubTypes = name
+        ? this._filterSubAssets(name as string)
+        : this.assetsSubType;
+    } else if (filterCondition === 'useCase') {
+      const name = typeof value === 'string' ? value : value?.name;
+      this.useCaseTypes = name
+        ? this._useCase(name as string)
+        : this.useCase.slice();
+    }
   }
 
   brandId: any;
@@ -291,11 +342,10 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   updateSelectedAsset(selectedValue: any) {
     console.log(selectedValue);
     this.filterAssetSubTypes = [];
-    // this.selectedAsset = selectedValue.source.value;
-
     this.filterAssetSubTypes = this.allAssetSubTypes.filter(
       (x) => x.assetType.assetTypeId == selectedValue.source.value
     );
+    this.assetsSubType = this.filterAssetSubTypes;
     console.log(this.filterAssetSubTypes);
   }
 
@@ -328,13 +378,22 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     });
   }
 
+  /*validators*/
+
   showCreative!: boolean;
   submitForm() {
     console.log(`form`, this.jobDetails);
     this.showCreative = true;
     this.formService
       .createJobDetails(this.jobDetails.value, this.jobId)
-      .subscribe();
+      .subscribe({
+        next: (data) => {
+          this.router.navigateByUrl('apps/dashboard');
+        },
+        error: (err) => {
+          this.router.navigateByUrl('apps/dashboard');
+        },
+      });
   }
 
   deleteJob(jobId: any) {
