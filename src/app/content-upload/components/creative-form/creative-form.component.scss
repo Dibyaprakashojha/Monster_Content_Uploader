@@ -59,7 +59,7 @@
 }
 .grid-container {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
   width: 100%;
 }
@@ -112,11 +112,17 @@ mat-form-field {
   background-color: transparent;
 }
 .mat-mdc-form-field {
-  margin: 0 10px 7px 0;
+  margin: 0 10px 40px 0;
   height: 75px;
+  width: 27em;
 }
 .action-buttons {
   margin: 0 0 0 0;
+  position: relative;
+  right: 2em;
+  button {
+    margin: 0 5em 0 5em;
+  }
   ::ng-deep {
     .mat-mdc-raised-button[disabled][disabled] {
       --mdc-protected-button-disabled-container-color: rgb(255 255 255 / 12%);
@@ -140,13 +146,15 @@ mat-form-field {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  width: 300px;
-  height: 35px;
+  width: 20em;
+  height: 60px;
   border-radius: 10px;
   margin-bottom: 30px;
   color: white;
   font-family: $font-family;
   font-weight: bold;
+  font-size: 22px;
+  margin: 0 0 53px 0;
 }
 
 .add {
