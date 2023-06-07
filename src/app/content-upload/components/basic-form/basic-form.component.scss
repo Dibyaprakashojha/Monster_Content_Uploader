@@ -34,8 +34,10 @@
     }
   }
 }
+
 .mat-mdc-form-field {
   margin: 0 0 2em 0;
+  border: 0px;
 }
 .action-buttons {
   margin: 20rem 0 0 0;
@@ -112,6 +114,10 @@
       --mdc-protected-button-container-elevation: 0;
     }
   }
+  .mat-mdc-form-field {
+    margin: 0 0 2em 0;
+    border: 0px;
+  }
 }
 
 @media screen and (((min-width: 600px) and (max-width: 840px) )) {
@@ -139,6 +145,11 @@
     margin: 2rem 3rem 0 0;
     color: white;
     align-self: flex-end;
+  }
+
+  .mat-mdc-form-field {
+    margin: 0 0 2em 0;
+    border: 0px;
   }
 
   .mat-mdc-form-field-subscript-wrapper {
@@ -181,6 +192,10 @@
     // width: 100%;
     // position: relative;
     background: black;
+    border: 0px;
+  }
+  .mat-mdc-form-field {
+    margin: 0 0 2em 0;
     border: 0px;
   }
 }

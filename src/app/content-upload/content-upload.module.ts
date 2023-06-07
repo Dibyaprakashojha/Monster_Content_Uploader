@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BasicFormComponent } from './components/basic-form/basic-form.component';
 import { CreativeFormComponent } from './components/creative-form/creative-form.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { EditFormComponent } from './components/edit-form/edit-form.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -23,6 +24,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     CardViewComponent,
     BasicFormComponent,
     CreativeFormComponent,
+    EditFormComponent,
   ],
   imports: [
     CommonModule,

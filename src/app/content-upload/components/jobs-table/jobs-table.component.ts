@@ -9,6 +9,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { catchError, filter, map, of, startWith, switchMap } from 'rxjs';
 import { JobDetails, SorlResponse } from 'src/app/shared/models/jobDetails';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
+import { FormService } from '../../services/form.service';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'mcu-jobs-table',
@@ -50,7 +52,8 @@ export class JobsTableComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private searchService: SearchService,
-    private router: Router
+    private router: Router,
+    private formService: FormService
   ) {}
 
   applyFilter(event: Event) {
@@ -230,5 +233,21 @@ export class JobsTableComponent implements OnInit {
           this.totalPageNumber = solrData.cursor.total_records;
         });
     }
+  }
+
+  editTheJob(job: any) {
+    // this.router.navigate(['./edit-from'], {
+    //   queryParams: { jobId: job.job_id },
+    // });
+    this.router.navigate(['/apps/edit-form'], {
+      queryParams: { jobId: job.job_id },
+    });
+    console.log(job.job_id);
+  }
+  viewTheJob(job: any) {
+    this.formService.getJobdetailsByJobId(job.job_id).subscribe((data: any) => {
+      this.router.navigate;
+    });
+    console.log(job);
   }
 }

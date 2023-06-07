@@ -44,6 +44,7 @@
   background: black;
   border: 0px;
 }
+
 .mat-mdc-form-field {
   margin: 0 0 2em 0;
   border: 0px;
@@ -206,6 +207,10 @@ p {
 }
 
 @media screen and (((min-width: 600px) and (max-width: 840px) )) {
+  .mat-mdc-form-field {
+    margin: 0 0 2em 0;
+    border: 0px;
+  }
   .grid-container {
     display: flex;
     flex-direction: column;
@@ -215,6 +220,10 @@ p {
     margin-left: 5px;
   }
 
+  .mat-mdc-form-field {
+    margin: 0 0 2em 0;
+    border: 0px;
+  }
   mat-form-field {
     width: 150px;
     background-color: transparent;
@@ -237,10 +246,6 @@ p {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
-  }
-  .mat-mdc-form-field {
-    margin: 0 0 2em 0;
-    border: 0px;
   }
 }
 
@@ -299,10 +304,6 @@ p {
   }
   .upload-container {
     align-items: center;
-  }
-  .mat-mdc-form-field {
-    margin: 0 0 2em 0;
-    border: 0px;
   }
 }
 

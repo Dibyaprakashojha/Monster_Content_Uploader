@@ -1,0 +1,192 @@
+<div class="content-upload-form">
+
+    <form [formGroup]="jobDetails" (ngSubmit)="submitForm()" class="form">
+        <div class="grid-container">
+            <div class="grid-child-left">
+                <mat-form-field>
+                    <mat-label>Brand</mat-label>
+                    <input matInput type="input" formControlName="brand" [matAutocomplete]="auto"
+                        (keyup)="onSelectionChanged($event,'brand')" required />
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="getBrand.bind(this)">
+                        <mat-option *ngFor="let option of filteredBrands " [value]="option.brandId"
+                            (onSelectionChange)="updateSelectedBrand($event)">
+                            {{ option.brandDsName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="
+                jobDetails?.get('brand')?.invalid &&
+                jobDetails?.get('brand')?.touched
+              ">
+                        Please enter a valid Brand.
+                    </mat-error>
+                    <mat-error *ngIf="jobDetails.errors?.['requireMatch']">
+                        Please enter a brand from the available options
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Product Line</mat-label>
+                    <input matInput type="input" formControlName="productLine" [matAutocomplete]="productLineAuto"
+                        (keyup)="onSelectionChanged($event,'productLine')" required />
+                    <mat-autocomplete #productLineAuto="matAutocomplete" [displayWith]="getProductLine.bind(this)">
+                        <mat-option *ngFor="let option of filteredProductLine" [value]="option.prdLineId">
+                            {{ option.prdLineName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="
+                jobDetails.get('productLine')?.invalid &&
+                jobDetails.get('productLine')?.touched
+              ">
+                        Please select the ProductLine.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Country</mat-label>
+                    <input matInput type="input" formControlName="country" [matAutocomplete]="country"
+                        (keyup)="onSelectionChanged($event,'country')" required />
+                    <mat-autocomplete #country="matAutocomplete" [displayWith]="getCountry.bind(this)">
+                        <mat-option *ngFor="let option of filterCountries" [value]="option.countryId">
+                            {{ option.countryDsName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="
+                jobDetails.get('country')?.invalid &&
+                jobDetails.get('country')?.touched
+              ">
+                        Please enter Country.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Album Name</mat-label>
+                    <input matInput type="input" formControlName="albumName" required />
+                    <mat-error *ngIf="
+                jobDetails.get('albumName')?.invalid ||
+                jobDetails.get('albumName')?.untouched
+              ">
+                        Please enter Album Name
+                    </mat-error>
+                </mat-form-field>
+                <mat-label>Department</mat-label>
+                <mat-radio-group required formControlName="department">
+                    <mat-radio-button type="radio" [value]="1">Creative</mat-radio-button>
+                    <mat-radio-button type="radio" [value]="2">Sales</mat-radio-button>
+                    <mat-radio-button type="radio" [value]="3">Marketing</mat-radio-button>
+                </mat-radio-group>
+                <mat-error *ngIf="
+              jobDetails.get('department')?.invalid &&
+              jobDetails.get('department')?.touched
+            ">
+                    Please enter Department details.
+                </mat-error>
+            </div>
+            <div class="grid-child-right">
+                <mat-form-field>
+                    <mat-label>Asset Type</mat-label>
+                    <input matInput type="input" formControlName="assetType" [matAutocomplete]="assetTypeAuto"
+                        (keyup)="onSelectionChanged($event,'assetType')" required />
+                    <mat-autocomplete #assetTypeAuto="matAutocomplete" [displayWith]="getAssetType.bind(this)">
+                        <mat-option *ngFor="let option of filterAssetTypes" [value]="option.assetTypeId"
+                            (onSelectionChange)="updateSelectedAsset($event)">
+                            {{ option.assetTypeName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="
+                jobDetails.get('assetType')?.invalid &&
+                jobDetails.get('assetType')?.touched
+              ">
+                        Please enter AssetType
+                    </mat-error>
+                    <mat-error *ngIf="jobDetails.errors?.['requireMatch']">
+                        Please enter a Asset from the available options
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Asset Sub Type</mat-label>
+                    <input matInput type="input" formControlName="assetSubType" [matAutocomplete]="assetSubType"
+                        (keyup)="onSelectionChanged($event,'assetSubType')" required />
+                    <mat-autocomplete #assetSubType="matAutocomplete" [displayWith]="getAssetSubType.bind(this)">
+                        <mat-option *ngFor="let option of filterAssetSubTypes" [value]="option.assetSubtypeId">
+                            {{ option.assetSubtypeName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="
+                jobDetails.get('assetType')?.invalid &&
+                jobDetails.get('assetType')?.touched
+              ">
+                        Please enter AssetType
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Use Case</mat-label>
+                    <input matInput type="input" formControlName="useCase"
+                        (keyup)="onSelectionChanged($event,'useCase')" [matAutocomplete]="use" required />
+                    <mat-autocomplete #use="matAutocomplete" [displayWith]="getUseCase.bind(this)">
+                        <mat-option *ngFor="let option of useCaseTypes" [value]="option.useCaseId">
+                            {{ option.useCaseName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="
+                jobDetails.get('useCase')?.invalid &&
+                jobDetails.get('useCase')?.touched
+              ">
+                        Please enter UseCase
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input placeholder="SAP NO" matInput type="number" formControlName="sapNumber" />
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input placeholder="Comments" matInput type="text" formControlName="comments" />
+                </mat-form-field>
+            </div>
+
+            <div class="upload-container">
+                <mat-form-field class="date-container">
+                    <input placeholder="Date" matInput [matDatepicker]="to" formControlName="eventDate" />
+                    <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
+                    <mat-datepicker #to></mat-datepicker>
+                </mat-form-field>
+
+                <div class="typeOfUpload final">
+                    <p>Final</p>
+                    <p>300</p>
+                    <div class="image-preview">
+                        <button class="add">+</button>
+                    </div>
+                </div>
+                <div class="typeOfUpload proof">
+                    <p>Proof</p>
+                    <p>300</p>
+                    <div class="image-preview">
+                        <button class="add">+</button>
+                    </div>
+                </div>
+                <div class="typeOfUpload resources">
+                    <p>Resources</p>
+                    <p>300</p>
+                    <div class="image-preview">
+                        <button class="add">+</button>
+                    </div>
+                </div>
+                <div class="typeOfUpload woorking">
+                    <p>Working</p>
+                    <p>300</p>
+                    <div class="image-preview">
+                        <button class="add">+</button>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button mat-raised-button color="accent">
+                        Delete
+                    </button>
+                    <button mat-raised-button color="accent" type="submit" [disabled]="jobDetails.invalid">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

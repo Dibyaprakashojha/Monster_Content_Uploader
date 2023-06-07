@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -8,12 +8,23 @@ import { environment } from 'src/environments/environment';
 })
 export class FormService {
   constructor(private _http: HttpClient) {}
-  base_url = environment.retrieveUrl;
+  // base_url = environment.retrieveUrl;
 
-  // base_url = '/api/v1/';
+  // base_url = '/api/v1';
+  base_url = 'http://localhost:8081/mcu/api/v1/';
 
   getAllBrands(): Observable<any> {
     let url = `${this.base_url}brand`;
+    return this._http.get(url);
+  }
+
+  getAllProductLine() {
+    let url = `${this.base_url}product-line`;
+    return this._http.get(url);
+  }
+
+  getAllCountries() {
+    let url = `${this.base_url}country`;
     return this._http.get(url);
   }
 
@@ -103,7 +114,9 @@ export class FormService {
   }
 
   createJobDetails(jobDetails: any, JobId: any): Observable<any> {
-    let url = `${this.base_url}job-details`;
+    // let url = `${this.base_url}job-details`;
+    let url = 'https://micromm.acheron-tech.com/mcu/api/v1/';
+
     let jobValue = {
       albumName: jobDetails.albumName,
       assetSubType: {

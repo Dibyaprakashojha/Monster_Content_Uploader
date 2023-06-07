@@ -9,16 +9,16 @@ import { environment } from 'src/environments/environment';
 export class LoginService {
   constructor(private http: HttpClient) {}
 
-  // baseUrl: string = environment.baseUrl;
+  baseUrl: string = environment.baseUrl;
 
-  // getLoginUri = (redirectUri: string) => {
-  //   return this.http.get(`${this.baseUrl}loginUri?redirectUri=${redirectUri}`);
-  // };
+  getLoginUri = (redirectUri: string) => {
+    return this.http.get(`${this.baseUrl}loginUri?redirectUri=${redirectUri}`);
+  };
 
-  // getTest = () => {
-  //   return this.http.get(`${this.baseUrl}login-test`, {
-  //     withCredentials: true,
-  //     responseType: 'text',
-  //   });
-  // };
+  getTest = () => {
+    return this.http.get(`${this.baseUrl}login-test`, {
+      withCredentials: true,
+      responseType: 'text',
+    });
+  };
 }

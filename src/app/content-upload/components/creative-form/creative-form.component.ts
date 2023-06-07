@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 import { map, startWith } from 'rxjs';
 import { FormService } from '../../services/form.service';
-import { Route, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationServiceService } from 'src/app/shared/services/notification-service.service';
 
@@ -153,6 +153,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     console.log(`jonbId in onint`, this.jobId);
+
     this.formService.getAllBrands().subscribe(
       (eachBrand) => {
         this.brands = eachBrand;
@@ -160,59 +161,6 @@ export class CreativeFormComponent implements OnInit, OnChanges {
       },
       (err) => {}
     );
-
-    // this.filteredBrands = this.jobDetails.controls['brand'].valueChanges.pipe(
-    //   startWith(''),
-    //   map((value) => {
-    //     const name = typeof value === 'string' ? value : value?.name;
-    //     return name ? this._filterBrand(name as string) : this.brands.slice();
-    //   })
-    // );
-    // this.jobDetails.controls['productLine'].valueChanges.pipe(
-    //   startWith(''),
-    //   map((value) => {
-    //     const name = typeof value === 'string' ? value : value?.name;
-    //     this.filteredProductLine = name
-    //       ? this._filterProductLine(name as string, this.brandId)
-    //       : this.producs.slice();
-    //   })
-    // );
-    // this.jobDetails.controls['country'].valueChanges.pipe(
-    //   startWith(''),
-    //   map((value) => {
-    //     const name = typeof value === 'string' ? value : value?.name;
-    //     this.filterCountries = name
-    //       ? this._filterCountries(name as string)
-    //       : this.countries.slice();
-    //   })
-    // );
-    // this.jobDetails.controls['assetType'].valueChanges.pipe(
-    //   startWith(''),
-    //   map((value) => {
-    //     const name = typeof value === 'string' ? value : value?.name;
-    //     this.filterAssetTypes = name
-    //       ? this._filterAssets(name as string)
-    //       : this.assets.slice();
-    //   })
-    // );
-    // this.jobDetails.controls['assetSubType'].valueChanges.pipe(
-    //   startWith(''),
-    //   map((value) => {
-    //     const name = typeof value === 'string' ? value : value?.name;
-    //     this.filterAssetSubTypes = name
-    //       ? this._filterSubAssets(name as string)
-    //       : this.assetsSubType.slice();
-    //   })
-    // );
-    // this.jobDetails.controls['useCase'].valueChanges.pipe(
-    //   startWith(''),
-    //   map((value) => {
-    //     const name = typeof value === 'string' ? value : value?.name;
-    //     this.useCaseTypes = name
-    //       ? this._useCase(name as string)
-    //       : this.useCase.slice();
-    //   })
-    // );
   }
 
   onSelectionChanged(event: any, filterCondition: string) {
