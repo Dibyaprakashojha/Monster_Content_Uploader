@@ -269,8 +269,10 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     }
   }
 
-  getAssetType(assetId: any): any {
-    let element = this.assets.find((e: any) => e.assetTypeId == assetId);
+  getAssetType(event: any): any {
+    let element = this.assets.find(
+      (e: any) => e.assetTypeId == event.assetTypeId
+    );
     if (element) {
       return element['assetTypeName'];
     }
@@ -296,14 +298,17 @@ export class CreativeFormComponent implements OnInit, OnChanges {
 
   selectedAsset: any;
   assetName: any;
-  updateSelectedAsset(selectedValue: any) {
-    console.log(selectedValue);
-    this.filterAssetSubTypes = [];
-    this.filterAssetSubTypes = this.allAssetSubTypes.filter(
-      (x) => x.assetType.assetTypeId == selectedValue.source.value
-    );
-    this.assetsSubType = this.filterAssetSubTypes;
-    console.log(this.filterAssetSubTypes);
+  updateSelectedAsset() {
+    setTimeout(() => {
+      let value = this.jobDetails.value.assetType;
+      console.log(value);
+      this.filterAssetSubTypes = [];
+      this.filterAssetSubTypes = this.allAssetSubTypes.filter(
+        (x) => x.assetType.assetTypeId == value.assetTypeId
+      );
+      this.assetsSubType = this.filterAssetSubTypes;
+      console.log(this.filterAssetSubTypes);
+    });
   }
 
   public allAssetSubTypes: Array<any> = [];
@@ -351,7 +356,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
         },
         error: (err) => {
           this.router.navigateByUrl('apps/dashboard');
-          this.notificationService.success(
+          this.notificationService.error(
             'UpLoad Job has not submitted please reinitiate Job'
           );
         },

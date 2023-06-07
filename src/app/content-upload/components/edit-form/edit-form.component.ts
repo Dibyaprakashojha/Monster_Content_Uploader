@@ -86,7 +86,7 @@ export class EditFormComponent implements OnInit {
   getAllProductLines() {
     this.formService.getAllProductLine().subscribe((eachProductLine: any) => {
       this.producs = eachProductLine;
-      this.dummyProducts = this.producs;
+      // this.dummyProducts = this.producs;
       this.filteredProductLine = this.producs;
       console.log(`productLine`, eachProductLine);
     });
@@ -219,8 +219,10 @@ export class EditFormComponent implements OnInit {
     }
   }
 
-  getAssetType(assetId: any): any {
-    let element = this.assets.find((e: any) => e.assetTypeId == assetId);
+  getAssetType(event: any): any {
+    let element = this.assets.find(
+      (e: any) => e.assetTypeId == event.assetTypeId
+    );
     if (element) {
       return element['assetTypeName'];
     }
@@ -246,14 +248,18 @@ export class EditFormComponent implements OnInit {
 
   selectedAsset: any;
   assetName: any;
-  updateSelectedAsset(selectedValue: any) {
-    console.log(selectedValue);
-    this.filterAssetSubTypes = [];
-    this.filterAssetSubTypes = this.allAssetSubTypes.filter(
-      (x) => x.assetType.assetTypeId == selectedValue.source.value
-    );
-    this.assetsSubType = this.filterAssetSubTypes;
-    console.log(this.filterAssetSubTypes);
+  updateSelectedAsset() {
+    setTimeout(() => {
+      this.jobDetails.get('assetSubType')?.setValue(null);
+      let value = this.jobDetails.value.assetType;
+      console.log(value);
+      this.filterAssetSubTypes = [];
+      this.filterAssetSubTypes = this.allAssetSubTypes.filter(
+        (x) => x.assetType.assetTypeId == value.assetTypeId
+      );
+      this.assetsSubType = this.filterAssetSubTypes;
+      console.log(this.filterAssetSubTypes);
+    });
   }
 
   public allAssetSubTypes: Array<any> = [];
@@ -323,9 +329,7 @@ export class EditFormComponent implements OnInit {
     );
     this.jobDetails.controls['country'].setValue(jobData.country.countryId);
     this.jobDetails.controls['albumName'].setValue(jobData.albumName);
-    this.jobDetails.controls['assetType'].setValue(
-      jobData.assetType.assetTypeId
-    );
+    this.jobDetails.controls['assetType'].setValue(jobData.assetType);
     this.jobDetails.controls['assetSubType'].setValue(
       jobData.assetSubType.assetSubtypeId
     );
@@ -389,6 +393,20 @@ export class EditFormComponent implements OnInit {
     // this.enableFormFields();
     console.log(`form`, this.jobDetails);
     this.showCreative = true;
+    this.formService
+      .createJobDetails(this.jobDetails.value, this.jobId)
+      .subscribe({
+        next: (data) => {
+          this.router.navigateByUrl('apps/dashboard');
+          this.notificationService.success('UpLoad Job has beedn submitted');
+        },
+        error: (err) => {
+          this.router.navigateByUrl('apps/dashboard');
+          this.notificationService.error(
+            'UpLoad Job has not submitted please reinitiate Job'
+          );
+        },
+      });
   }
 
   deleteJob(jobId: any) {

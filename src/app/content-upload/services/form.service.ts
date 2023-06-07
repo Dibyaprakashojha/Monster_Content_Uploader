@@ -55,13 +55,13 @@ export class FormService {
 
   createJob(job: any): Observable<any> {
     let brandId;
-    this.getAllBrands().subscribe((brands) => {
-      brands.map((brand: any) => {
-        if (brand.brandName === job.brand) {
-          brandId = brand.brandId;
-        }
-      });
-    });
+    // this.getAllBrands().subscribe((brands) => {
+    //   brands.map((brand: any) => {
+    //     if (brand.brandName === job.brand) {
+    //       brandId = brand.brandId;
+    //     }
+    //   });
+    // });
     console.log(`job in isr job creation`, job);
     let url = `${this.base_url}job-details`;
     let jobDetails = {
@@ -73,7 +73,7 @@ export class FormService {
         assetTypeId: 2,
       },
       brand: {
-        brandId: job.brand,
+        brandId: job.brand.brandId,
       },
       businessId: null,
       comments: null,
@@ -116,14 +116,14 @@ export class FormService {
   createJobDetails(jobDetails: any, JobId: any): Observable<any> {
     // let url = `${this.base_url}job-details`;
     let url = 'https://micromm.acheron-tech.com/mcu/api/v1/';
-
+    console.log(`form service---1`, jobDetails, JobId);
     let jobValue = {
       albumName: jobDetails.albumName,
       assetSubType: {
         assetSubtypeId: jobDetails.assetSubType,
       },
       assetType: {
-        assetTypeId: jobDetails.assetType,
+        assetTypeId: jobDetails.assetType.assetTypeId,
       },
       brand: {
         brandId: jobDetails.brand,
@@ -158,6 +158,8 @@ export class FormService {
         useCaseId: 1,
       },
     };
+    console.log(jobValue);
+
     return this._http.put(url, jobValue, {
       params: {
         hardIndex: true,

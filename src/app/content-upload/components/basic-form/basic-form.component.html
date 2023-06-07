@@ -2,16 +2,16 @@
     <div class="header">
         <h1>CONTENT DETAILS</h1>
     </div>
-    <form [formGroup]="jobDetails" (ngSubmit)="submitForm()" class="form">
+    <form [formGroup]="jobDetails" class="form">
         <div class="grid-container">
             <div class="grid-child-left">
                 <mat-form-field>
                     <mat-label>Brand</mat-label>
                     <input matInput type="input" (keyup)="onSelectionChange($event,'brand')" formControlName="brand"
                         [matAutocomplete]="auto" required />
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor=" let option of filteredBrands " [value]="option.brandName"
-                            (onSelectionChange)="updateSelectedBrand($event)">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="getBrand.bind(this)">
+                        <mat-option *ngFor=" let option of filteredBrands " [value]="option"
+                            (onSelectionChange)="onBrandChange()">
                             {{option.brandDsName}}
                         </mat-option>
                     </mat-autocomplete>
@@ -78,7 +78,8 @@
                     <button mat-raised-button color="accent" [routerLink]="['apps/my-jobs']" type="submit">
                         Delete
                     </button>
-                    <button mat-raised-button color="accent" type="submit" [disabled]="jobDetails.invalid">
+                    <button (click)="submitForm()" mat-raised-button color="accent" type="submit"
+                        [disabled]="jobDetails.invalid">
                         Submit
                     </button>
                 </div>

@@ -84,8 +84,8 @@
                     <input matInput type="input" formControlName="assetType" [matAutocomplete]="assetTypeAuto"
                         (keyup)="onSelectionChanged($event,'assetType')" required />
                     <mat-autocomplete #assetTypeAuto="matAutocomplete" [displayWith]="getAssetType.bind(this)">
-                        <mat-option *ngFor="let option of filterAssetTypes" [value]="option.assetTypeId"
-                            (onSelectionChange)="updateSelectedAsset($event)">
+                        <mat-option *ngFor="let option of filterAssetTypes" [value]="option"
+                            (onSelectionChange)="updateSelectedAsset()">
                             {{ option.assetTypeName }}
                         </mat-option>
                     </mat-autocomplete>
