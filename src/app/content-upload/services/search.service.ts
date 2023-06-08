@@ -8,9 +8,9 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class SearchService {
-  // base_url = environment.retrieveUrl;
+  base_url = environment.retrieveUrl;
   // base_url = '/api/';
-  base_url = 'http://localhost:8081/mcu/api/v1/';
+  // base_url = 'http://localhost:8081/mcu/api/v1/';
   constructor(private httpClient: HttpClient) {}
   jobList: any;
 

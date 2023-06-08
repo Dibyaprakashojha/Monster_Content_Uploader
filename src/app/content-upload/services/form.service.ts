@@ -8,10 +8,10 @@ import { environment } from 'src/environments/environment';
 })
 export class FormService {
   constructor(private _http: HttpClient) {}
-  // base_url = environment.retrieveUrl;
+  base_url = environment.retrieveUrl;
 
   // base_url = '/api/v1';
-  base_url = 'http://localhost:8081/mcu/api/v1/';
+  // base_url = 'http://localhost:8081/mcu/api/v1/';
 
   getAllBrands(): Observable<any> {
     let url = `${this.base_url}brand`;
@@ -88,7 +88,7 @@ export class FormService {
         dptId: job.department,
       },
       eventDateTime: new Date(),
-      jobName: null,
+      jobName: job,
       jobStatus: {
         jobStatusId: 1,
       },
@@ -114,8 +114,8 @@ export class FormService {
   }
 
   createJobDetails(jobDetails: any, JobId: any): Observable<any> {
-    // let url = `${this.base_url}job-details`;
-    let url = 'https://micromm.acheron-tech.com/mcu/api/v1/';
+    let url = `${this.base_url}job-details`;
+    // let url = 'https://micromm.acheron-tech.com/mcu/api/v1/';
     console.log(`form service---1`, jobDetails, JobId);
     let jobValue = {
       albumName: jobDetails.albumName,
