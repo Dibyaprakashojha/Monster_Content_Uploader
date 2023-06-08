@@ -56,6 +56,14 @@ hr {
 // }
 
 .infinite-scroll {
-  min-height: 800px;
-  overflow: auto;
+  // min-height: 800px;
+  // overflow: auto;
+
+  height: 100%;
+  width: 100%;
+}
+
+.card-container {
+  height: 20vh;
+  width: 100vw;
 }

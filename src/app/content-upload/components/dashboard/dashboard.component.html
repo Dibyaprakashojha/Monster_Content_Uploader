@@ -314,8 +314,8 @@
     <div ngClass="route-content">
       <div ngClass="menu-name-container" *ngIf="!isMobile">
         <h3 *ngIf="!isMobile" class="menu-name">{{ menuName }}</h3>
-        <button *ngIf="checkMenu('my-jobs')||checkMenu('my-jobs')||checkMenu('my-jobs')" mat-button
-          class="create-button approved" (click)="navigateTO()">
+        <button *ngIf="checkMenu('my-jobs')||checkMenu('all-jobs')||checkMenu('edit-form')" mat-button
+          class=" create-button approved" (click)="navigateTO()">
           Create Job
         </button>
       </div>

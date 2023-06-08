@@ -8,15 +8,15 @@
         <button (click)="toggleSearch()" class="reload-button">
             <img class="reload-image" src=" assets/images/save.png" />
         </button>
-        <input #value *ngIf="showSearchBar" mat-Input class="input" placeholder="Search"
-            (keyDown.enter)="search($event)" type="text">
+        <input #value *ngIf="showSearchBar" mat-Input class="input" placeholder="Search" [(ngModel)]="searchText"
+            type="text">
         <button (click)="sortTheData()" class="reload-button">
             <img class="reload-image" src="assets/images/refresh.png" />
         </button>
     </div>
 </div>
-<div class="infinite-scroll" infinite-scroll [scrollWindow]="false" (scrolled)="onScroll()">
-    <ng-container *ngFor="let job of jobList">
-        <mcu-card-view [job]="job"></mcu-card-view>
-    </ng-container>
+<div class="infinite-scroll" [infiniteScrollDistance]="0.5" infiniteScroll (scrolled)="onScroll($event)">
+    <div *ngFor="let job of jobList | filterByText:searchText">
+        <mcu-card-view class="card-container" [job]="job"></mcu-card-view>
+    </div>
 </div>

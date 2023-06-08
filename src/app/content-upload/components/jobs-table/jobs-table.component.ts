@@ -1,16 +1,14 @@
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SearchService } from './../../services/search.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { AfterViewInit, DoCheck, OnInit } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { Component, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { catchError, filter, map, of, startWith, switchMap } from 'rxjs';
 import { JobDetails, SorlResponse } from 'src/app/shared/models/jobDetails';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { FormService } from '../../services/form.service';
-import { state } from '@angular/animations';
 
 @Component({
   selector: 'mcu-jobs-table',
@@ -81,8 +79,8 @@ export class JobsTableComponent implements OnInit {
         .subscribe((solrData) => {
           this.totalPageNumber = 0;
           this.dataSource.data = solrData.data;
-          console.log(`myjobs`, solrData.cursor.total_records);
-          this.totalPageNumber = solrData.cursor.total_records;
+          console.log(`myjobs`, solrData.cursor.totalRecords);
+          this.totalPageNumber = solrData.cursor.totalRecords;
         });
     } else if (this.router.url.includes('all-jobs')) {
       this.searchService
@@ -94,7 +92,7 @@ export class JobsTableComponent implements OnInit {
         )
         .subscribe((solrData) => {
           this.dataSource.data = solrData.data;
-          this.totalPageNumber = solrData.cursor.total_records;
+          this.totalPageNumber = solrData.cursor.totalRecords;
         });
     }
 
@@ -150,7 +148,7 @@ export class JobsTableComponent implements OnInit {
         )
         .subscribe((solrData) => {
           this.dataSource.data = solrData.data;
-          this.totalPageNumber = solrData.cursor.total_records;
+          this.totalPageNumber = solrData.cursor.totalRecords;
         });
     } else if (this.router.url.includes('all-jobs')) {
       this.searchService
@@ -162,7 +160,7 @@ export class JobsTableComponent implements OnInit {
         )
         .subscribe((solrData: SorlResponse) => {
           this.dataSource.data = solrData.data;
-          this.totalPageNumber = solrData.cursor.total_records;
+          this.totalPageNumber = solrData.cursor.totalRecords;
           console.log(`all`, solrData);
         });
     }
@@ -180,7 +178,7 @@ export class JobsTableComponent implements OnInit {
         )
         .subscribe((solrData) => {
           this.dataSource.data = solrData.data;
-          this.totalPageNumber = solrData.cursor.total_records;
+          this.totalPageNumber = solrData.cursor.totalRecords;
         });
     } else if (this.router.url.includes('all-jobs')) {
       this.searchService
@@ -192,7 +190,7 @@ export class JobsTableComponent implements OnInit {
         )
         .subscribe((solrData: SorlResponse) => {
           this.dataSource.data = solrData.data;
-          this.totalPageNumber = solrData.cursor.total_records;
+          this.totalPageNumber = solrData.cursor.totalRecords;
           console.log(`all`, solrData);
         });
     }
@@ -218,7 +216,7 @@ export class JobsTableComponent implements OnInit {
         )
         .subscribe((solrData) => {
           this.dataSource.data = solrData.data;
-          this.totalPageNumber = solrData.cursor.total_records;
+          this.totalPageNumber = solrData.cursor.totalRecords;
         });
     } else if (this.router.url.includes('all-jobs')) {
       this.searchService
@@ -230,7 +228,7 @@ export class JobsTableComponent implements OnInit {
         )
         .subscribe((solrData: SorlResponse) => {
           this.dataSource.data = solrData.data;
-          this.totalPageNumber = solrData.cursor.total_records;
+          this.totalPageNumber = solrData.cursor.totalRecords;
         });
     }
   }

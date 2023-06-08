@@ -3,18 +3,10 @@ import {
   BreakpointState,
   Breakpoints,
 } from '@angular/cdk/layout';
-import {
-  EventEmitter,
-  Input,
-  ViewChild,
-  AfterViewInit,
-  ViewEncapsulation,
-} from '@angular/core';
+import { ViewChild, AfterViewInit } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { Output } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 
 @Component({
@@ -83,6 +75,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     } else if (this.router.url.includes('assets-team')) {
       this.menu = 'assets-team';
       this.menuName = 'ASSETS TEAM';
+    } else if (this.router.url.includes('editor-form')) {
+      this.menu = 'editor-form';
+      this.menuName = 'EDIT FORM';
     }
   }
 

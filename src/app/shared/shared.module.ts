@@ -9,9 +9,15 @@ import { UTCToLocalPipePipe } from './pipes/utcto-local-pipe.pipe';
 import { NotificationComponent } from './components/notification/notification.component';
 import { NotificationServiceService } from './services/notification-service.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FilterByTextPipe } from './pipes/filter-by-text.pipe';
 
 @NgModule({
-  declarations: [PaginatorDirective, UTCToLocalPipePipe, NotificationComponent],
+  declarations: [
+    PaginatorDirective,
+    UTCToLocalPipePipe,
+    NotificationComponent,
+    FilterByTextPipe,
+  ],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -27,6 +33,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ReactiveFormsModule,
     PaginatorDirective,
     UTCToLocalPipePipe,
+    FilterByTextPipe,
   ],
   providers: [NotificationServiceService, MatSnackBarModule],
 })

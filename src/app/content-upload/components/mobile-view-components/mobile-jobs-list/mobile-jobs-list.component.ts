@@ -19,7 +19,7 @@ export class MobileJobsListComponent implements OnInit {
   ) {}
 
   menuName!: string;
-
+  searchText!: string;
   menuNameIdentifier() {
     if (this.router.url.includes('my-jobs')) {
       this.menuName = 'MY JOBS';
@@ -39,13 +39,13 @@ export class MobileJobsListComponent implements OnInit {
   filteredJobList: any[] = [];
   searchValue: any;
   search(event: any) {
-    // let value = event.target.value.toString();
-    this.jobList.forEach((each) => {
+    this.jobList.filter((each) => {
       if (each.job_id == event.target.value) {
-        this.filteredJobList.push(each);
+        // this.jobList = [...this.filteredJobList];
+        // this.filteredJobList.push(each);
       }
     });
-    this.jobList = [...this.filteredJobList];
+
     if (event.target.value == '') {
       if (this.router.url.includes('all-jobs')) {
         this.searchService
@@ -100,32 +100,34 @@ export class MobileJobsListComponent implements OnInit {
     this.menuNameIdentifier();
   }
 
-  onScroll(): void {
+  onScroll(event: any): void {
+    console.log('on Scroll method', event);
     if (this.router.url.includes('all-jobs')) {
       this.searchService
         .getAllJobsForMobile(this.documentIndex + 3, 'ASC')
-        .subscribe((solrData) => {
-          solrData.data.map((each) => {
-            this.jobList.push(each);
-          });
+        .subscribe((solrData: any) => {
+          console;
+          // solrData.data.map((each) => {
+          //   this.jobList.push(each);
+          // });
+          this.jobList = [...this.jobList, ...solrData.data];
+
           console.log(this.jobList);
         });
       console.log(`joblist`, this.jobList);
-    } else if (this.router.url.includes('all-jobs')) {
+    } else if (this.router.url.includes('my-jobs')) {
       this.searchService
         .getMyJobsForMobile(this.documentIndex + 3, 1)
-        .subscribe((solrData) => {
-          solrData.data.map((each) => {
-            this.jobList.push(each);
-            console.log(this.jobList);
-          });
+        .subscribe((solrData: any) => {
+          console.log(solrData);
+          this.jobList = [...this.jobList, ...solrData.data];
+          // solrData.data.map((each) => {
+          //   this.jobList.push(each);
+          //   console.log(this.jobList);
+          // });
         });
     }
   }
-
-  // ngOnDestroy(): void {
-  //   throw new Error('Method not implemented.');
-  // }
 
   scrollUpDistance: number = 2;
 }

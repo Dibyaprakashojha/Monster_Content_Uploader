@@ -51,7 +51,7 @@
 
 .action-buttons {
   margin: 20rem 0 0 0;
-  align-self: flex-end;
+  align-self: flex-start;
   ::ng-deep {
     .mat-mdc-raised-button[disabled][disabled] {
       --mdc-protected-button-disabled-container-color: rgb(255 255 255 / 12%);
@@ -137,9 +137,9 @@ mat-form-field {
 .action-buttons {
   margin: 0 0 0 0;
   position: relative;
-  right: 2em;
+  // right: 2em;
   button {
-    margin: 0 5em 0 5em;
+    margin: 0 2em;
   }
   ::ng-deep {
     .mat-mdc-raised-button[disabled][disabled] {
@@ -156,6 +156,7 @@ mat-form-field {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-left: 15px;
   align-items: flex-start;
   // width: 150px;
 }

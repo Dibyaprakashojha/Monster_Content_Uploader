@@ -55,13 +55,6 @@ export class FormService {
 
   createJob(job: any): Observable<any> {
     let brandId;
-    // this.getAllBrands().subscribe((brands) => {
-    //   brands.map((brand: any) => {
-    //     if (brand.brandName === job.brand) {
-    //       brandId = brand.brandId;
-    //     }
-    //   });
-    // });
     console.log(`job in isr job creation`, job);
     let url = `${this.base_url}job-details`;
     let jobDetails = {
@@ -88,7 +81,7 @@ export class FormService {
         dptId: job.department,
       },
       eventDateTime: new Date(),
-      jobName: job,
+      jobName: 'Upload',
       jobStatus: {
         jobStatusId: 1,
       },
