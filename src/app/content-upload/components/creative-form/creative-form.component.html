@@ -1,6 +1,6 @@
 <div class="content-upload-form">
 
-  <form [formGroup]="jobDetails" (ngSubmit)="submitForm()" class="form">
+  <form [formGroup]="jobDetails" class="form">
     <div class="grid-container">
       <div class="grid-child-left">
         <mat-form-field>
@@ -182,10 +182,10 @@
           <button mat-raised-button color="accent" (click)="deleteJob(jobId)">
             Delete
           </button>
-          <button mat-raised-button color="accent" type="submit">
+          <button mat-raised-button color="accent" (click)="Dispaly()">
             Save
           </button>
-          <button mat-raised-button color="accent" type="submit" [disabled]="jobDetails.invalid">
+          <button mat-raised-button color="accent" (click)="submitForm()" type="submit" [disabled]="jobDetails.invalid">
             Submit
           </button>
         </div>

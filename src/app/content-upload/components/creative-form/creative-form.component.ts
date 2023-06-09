@@ -342,6 +342,25 @@ export class CreativeFormComponent implements OnInit, OnChanges {
 
   /*validators*/
 
+  Dispaly() {
+    this.notificationService.success('UpLoad Job has beedn saved');
+
+    // this.formService
+    //   .createJobDetails(this.jobDetails.value, this.jobId)
+    //   .subscribe({
+    //     next: (data) => {
+    //       // this.router.navigateByUrl('apps/dashboard');
+    //       this.notificationService.success('UpLoad Job has beedn saved');
+    //     },
+    //     error: (err) => {
+    //       // this.router.navigateByUrl('apps/dashboard');
+    //       this.notificationService.error(
+    //         'UpLoad Job has not submitted please reinitiate Job'
+    //       );
+    //     },
+    //   });
+  }
+
   showCreative!: boolean;
   submitForm() {
     this.enableFormFields();
