@@ -1,0 +1,14 @@
+<h1 mat-dialog-title class="confirmation-modal-title">{{confirmationHeading}}</h1>
+<mat-dialog-content>
+    <span *ngIf="message">{{message}}</span>
+    <mat-form-field *ngIf="data.hasConfirmationComment" class="comment-field" appearance="outline"
+        style="width: 100%!important;">
+        <mat-label>{{data.commentText}}</mat-label>
+        <textarea required="{{data.isCommentRequired}}" matInput id="confirmationComment" name="" cols="" rows=""
+            [(ngModel)]="confirmationComment"></textarea>
+    </mat-form-field>
+</mat-dialog-content>
+<div align="end">
+    <button mat-stroked-button (click)="closeDialog()">{{data.cancelButton}}</button>
+    <button color="primary" mat-flat-button (click)="onYesClick()" cdkFocusInitial>{{data.submitButton}}</button>
+</div>

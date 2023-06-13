@@ -10,6 +10,10 @@ import { NotificationComponent } from './components/notification/notification.co
 import { NotificationServiceService } from './services/notification-service.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FilterByTextPipe } from './pipes/filter-by-text.pipe';
+import { UploadComponent } from './components/upload/upload.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
+import { OtmmService } from './services/otmm.service';
 
 @NgModule({
   declarations: [
@@ -17,6 +21,9 @@ import { FilterByTextPipe } from './pipes/filter-by-text.pipe';
     UTCToLocalPipePipe,
     NotificationComponent,
     FilterByTextPipe,
+    UploadComponent,
+    FileUploadComponent,
+    ConfirmationModalComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +42,6 @@ import { FilterByTextPipe } from './pipes/filter-by-text.pipe';
     UTCToLocalPipePipe,
     FilterByTextPipe,
   ],
-  providers: [NotificationServiceService, MatSnackBarModule],
+  providers: [NotificationServiceService, MatSnackBarModule,OtmmService],
 })
 export class SharedModule {}

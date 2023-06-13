@@ -19,6 +19,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatChipsModule} from '@angular/material/chips';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 const modules = [
   CdkTableModule,
   MatToolbarModule,
@@ -40,6 +42,8 @@ const modules = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatDialogModule,
+  MatChipsModule,
+  MatSnackBarModule
 ];
 @NgModule({
   declarations: [],

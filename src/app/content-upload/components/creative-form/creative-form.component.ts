@@ -17,6 +17,11 @@ import { FormService } from '../../services/form.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationServiceService } from 'src/app/shared/services/notification-service.service';
+import { GlobalConfig as config } from 'src/Utils/config/config';
+import { otmmServicesConstants } from 'src/Utils/config/constants';
+import { environment } from 'src/environments/environment';
+import { UploadComponent } from 'src/app/shared/components/upload/upload.component';
+import { OtmmService } from 'src/app/shared/services/otmm.service';
 
 @Component({
   selector: 'mcu-creative-form',
@@ -120,7 +125,8 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     private formService: FormService,
     private router: Router,
     public dialog: MatDialog,
-    private notificationService: NotificationServiceService
+    private notificationService: NotificationServiceService,
+    private otmmService:OtmmService
   ) {
     this.jobDetails = this.fb.group({
       brand: ['', [Validators.required]],
@@ -341,24 +347,17 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   }
 
   /*validators*/
-
-  Dispaly() {
+  
+  SaveForm() {
     this.notificationService.success('UpLoad Job has beedn saved');
+    // if(config.getOtmmSession().session_resource.session.session==null){
+      this.otmmService.postSession().subscribe((data:any)=>{
+        this.otmmService.jSession=data.session_resource.session.id;
+        console.log(data)
+      })
+    // }
 
-    // this.formService
-    //   .createJobDetails(this.jobDetails.value, this.jobId)
-    //   .subscribe({
-    //     next: (data) => {
-    //       // this.router.navigateByUrl('apps/dashboard');
-    //       this.notificationService.success('UpLoad Job has beedn saved');
-    //     },
-    //     error: (err) => {
-    //       // this.router.navigateByUrl('apps/dashboard');
-    //       this.notificationService.error(
-    //         'UpLoad Job has not submitted please reinitiate Job'
-    //       );
-    //     },
-    //   });
+
   }
 
   showCreative!: boolean;
@@ -387,5 +386,51 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     this.router.navigateByUrl('apps/dashboard');
     this.notificationService.success('Job has been deleted sucessfully ');
     // });
+  }
+
+  assetData = {
+    "metadata": {
+      "metadata_element_list":[]
+    },
+    "metadata_model_id":"",
+    "security_policy_list": [1],
+    "template_id": environment.folder_template_id,
+    "folderId": environment.folder_id,
+  
+  };
+  
+
+  maxFileSize=null
+  uplodAsset(){
+    this.assetData.metadata_model_id = otmmServicesConstants.defaultFolderModel;
+    this.assetData.template_id = environment.folder_template_id;
+    this.assetData.folderId  = environment.folder_id
+    let fileToRevision;
+    let isRevision = false;
+    let maxFiles = null;
+    const allowDuplicateDeliverable = false;
+    isRevision = false;
+
+
+    const dialogRef = this.dialog.open(UploadComponent, {
+      width: '60%',
+      disableClose: true,
+      data: {
+        assetData: this.assetData,
+        isRevisionUpload: isRevision,
+        fileToRevision,
+        maxFiles,
+        maxFileSize: this.maxFileSize,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {});
+    console.log('linking');
+}
+
+
+  createSession(){
+    this.otmmService.postSession().subscribe((data)=>{
+      console.log(data)
+    });
   }
 }

@@ -1,0 +1,90 @@
+<div class="acron-file-upload-container">
+    <div class="acron-file-upload-action">
+        <div class="actions-align">
+            <div class="actions-holder">
+                <button mat-raised-button class="actionbuttons" *ngIf="selectedFiles.length > 1" (click)="removeAll()"
+                    matTooltip="Click here to remove all selected files">Remove All</button>
+                <button mat-raised-button class="actionbuttons" (click)="isQDSUpload ? openQDSFileChooser() : fileBtn.click()"
+                    matTooltip="Click here to select Files">Select
+                    Files</button>
+                   
+                <mat-chip-listbox class="actions chips">
+                    <mat-chip *ngIf="selectedFiles.length" matTooltip="No. of Files Selected">Selected ({{selectedFiles.length}})</mat-chip>
+                    <mat-chip  *ngIf="selectedFiles.length" matTooltip="{{formatBytes(calculateSelectedFileSize())}}"><span>{{formatBytes(calculateSelectedFileSize())}}</span></mat-chip>
+                </mat-chip-listbox>
+               
+                <input mat-raised-button class="actionbuttons" #fileBtn type="file" multiple
+                    (change)="onFileSelectionChange($event)" style="display: none;" />
+               
+            </div>
+        </div>
+    </div>
+    <div class="qds-thumbnail-note" *ngIf="isQDSUpload">
+        <span>Note: Thumbnail preview will be shown only for first 10 image files for each selection.</span>
+    </div>
+    <div class="existing-file-holder" *ngIf="isRevisionUpload && fileToRevision">
+        <div class="file-items-holder">
+            <h4 class="file-text">Original File</h4>
+            <mat-card class="matCardWidth">
+                <div class="card-file-contents">
+                    <div class="file-icon" matTooltip="Preview">
+                        <img *ngIf="fileToRevision.url" src="{{fileToRevision.url}}" />
+                         <img *ngIf="!fileToRevision.url" src="{{fileToRevision.icon}}" />
+                       <!--  <mat-icon *ngIf="!fileToRevision.url">{{fileToRevision.url}}</mat-icon> -->
+                    </div>
+                    <div class="file-details name">
+                        <span class="file-info"
+                            matTooltip="{{renameFileName(fileToRevision.name)}}">{{renameFileName(fileToRevision.name)}}</span>
+                    </div>
+                    <div class="file-details size">
+                        <span class="file-info"
+                            matTooltip="File Size: {{formatBytes(fileToRevision.size)}}">{{formatBytes(fileToRevision.size)}}</span>
+                    </div>
+                    <div class="file-details type">
+                        <span class="file-info" matTooltip="File Type: {{fileToRevision.type}}">{{fileToRevision.type}}</span>
+                    </div>
+                    <div class="file-actions">
+                        <a class="action" mat-icon-button>
+                            <mat-icon class="action">
+                                
+                            </mat-icon>
+                        </a>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+    <div class="acron-file-upload-wrapper" (click)="isQDSUpload ? openQDSFileChooser():fileBtn.click()">
+        <div class="file-items-holder" *ngIf="selectedFiles.length > 0">
+            <h4 class="margin-l-4" *ngIf="isRevisionUpload">Revision File</h4>
+            <mat-card *ngFor="let file of selectedFiles">
+                <div class="card-file-contents">
+                    <div class="file-icon" matTooltip="Preview">
+                        <img *ngIf="file.url && getTypeOf(file.url) !== 'object'" src="{{file.url}}" />
+                        <img *ngIf="file.icon && !(file.url || getTypeOf(file.url) === 'object')" src="{{file.icon}}" />
+                    </div>
+                    <div class="file-details name">
+                        <span class="file-info"
+                            matTooltip="{{renameFileName(file.name)}}">{{renameFileName(file.name)}}</span>
+                    </div>
+                    <div class="file-details size">
+                        <span class="file-info"
+                            matTooltip="File Size: {{formatBytes(file.size)}}">{{formatBytes(file.size)}}</span>
+                    </div>
+                    <div class="file-details type">
+                        <span class="file-info" matTooltip="File Type: {{file.type}}">{{file.type}}</span>
+                    </div>
+                    <div class="file-actions">
+                        <button class="action" mat-icon-button matTooltip="Click here to remove this file">
+                            <mat-icon class="action" (click)="removeFile(file, selectedFiles.indexOf(file), $event)">
+                                cancel</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div *ngIf="!selectedFiles.length">
+            <p>Click or Drag and Drop Files here to upload</p>
+        </div>
+    </div>
+</div>

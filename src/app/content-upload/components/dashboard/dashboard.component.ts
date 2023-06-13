@@ -8,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
-
+import { OtmmService } from 'src/app/shared/services/otmm.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { GlobalConfig as config } from 'src/Utils/config/config';
+import Cookie from 'js-cookie';
 @Component({
   selector: 'mcu-dashboard',
   templateUrl: './dashboard.component.html',
@@ -50,7 +53,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private breakpointObserver: BreakpointObserver,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private otmmService:OtmmService,
+    private authenticationService:AuthenticationService
   ) {}
 
   ngAfterViewInit(): void {}
@@ -79,6 +84,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.menu = 'editor-form';
       this.menuName = 'EDIT FORM';
     }
+    
+
   }
 
   checkMenu(menuName: string): boolean {
@@ -93,6 +100,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   isDesktop!: boolean;
   isTablet!: boolean;
   ngOnInit(): void {
+
+    // this.authenticationService.authenticateInOtds(config.config?.userName,config.config?.password).subscribe((authData:any)=>{
+    //         //console.log('Logged in: ' + authData);
+    //         if(authData['ticket']) {
+    //           this.authenticationService.otdsTicket = authData['ticket'];
+    //           this.authenticationService.otdsToken = authData['token'];
+    //           Cookie.set('OTDSTicket', authData['ticket']);
+    //           // this.appRouteService.navigateToRootFolder();
+    //         }
+
+    // })
     // this.loginService.getTest().subscribe({
     //   next: (res) => {
     //     console.log(`Hello World`, res);
@@ -143,6 +161,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   navigateTO() {
+  this.otmmService.postSession().subscribe((data)=>{
+    console.log('data in post session',data)
+    this.otmmService.getSessioons().subscribe((data)=>{
+      console.log(data)
+      })
+  });
+ 
     this.router.navigateByUrl('apps/basic-form');
     this.menuName = '';
     this.menu = '';

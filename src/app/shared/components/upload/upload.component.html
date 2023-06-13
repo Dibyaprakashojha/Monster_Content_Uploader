@@ -1,0 +1,14 @@
+<div class="sf-modal-title margin-b-4" *ngIf="!data.isRevisionUpload">Upload</div>
+<div class="sf-modal-title margin-b-4" *ngIf="data.isRevisionUpload">Revision Upload</div><mat-dialog-content>
+    <mcu-file-upload (queuedFiles)="udploadFileEvent($event)" [isRevisionUpload]="data.isRevisionUpload"
+        [fileToRevision]="data.fileToRevision" [maxFiles]="data.maxFiles" [maxFileSize]="data.maxFileSize" [fileContent]="data.fileContent">
+    </mcu-file-upload>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="closeDialog()">
+        Close
+    </button>
+    <button color="primary" mat-flat-button (click)="uploadFiles()" [disabled]="uploadProcessing">
+        Finish
+    </button>
+</mat-dialog-actions>

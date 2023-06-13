@@ -4,7 +4,8 @@ import { RoutingConstants } from './RoutingConstants';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LoginService } from './content-upload/services/login.service';
-
+import { OtmmService } from './shared/services/otmm.service';
+import { GlobalConfig as config } from  '../Utils/config/config'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,23 +14,27 @@ import { LoginService } from './content-upload/services/login.service';
 export class AppComponent {
   title = 'content-upload';
   redirectUri: string = `${environment.baseUrl}ticketConsumer?redirectUri=${window.location.href}`;
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService,private otmmService:OtmmService) {}
   ngOnInit() {
-    this.loginService.getTest().subscribe({
-      next: (res) => {
-        console.log(`Hello World`, res);
-      },
-      error: (err) => {
-        if (err.status == 401) {
-          this.loginService.getLoginUri(this.redirectUri).subscribe({
-            next: (response: any) => {
-              console.log(`Url: `, response);
-              window.location.href = response.url;
-            },
-          });
-        }
-        console.log(`error: `, err);
-      },
-    });
+  //   this.loginService.getTest().subscribe({
+  //     next: (res) => {
+  //       console.log(`Hello World`, res);
+  //     },
+  //     error: (err) => {
+  //       if (err.status == 401) {
+  //         this.loginService.getLoginUri(this.redirectUri).subscribe({
+  //           next: (response: any) => {
+  //             console.log(`Url: `, response);
+  //             window.location.href = response.url;
+  //           },
+  //         });
+  //       }
+  //       console.log(`error: `, err);
+  //     },
+  //   });
+    // this.otmmService.postSession().subscribe((data)=>{
+    //   config.setOtmmSession=data
+    // })
+
   }
 }
