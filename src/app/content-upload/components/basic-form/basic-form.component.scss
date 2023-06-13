@@ -1,7 +1,9 @@
+@import "src/scss/variables";
 .header {
   h1 {
     color: white;
     font-weight: 500;
+    margin-left: 2.3em;
   }
 }
 .grid-container {
@@ -16,7 +18,7 @@
 .grid-child-right {
   display: flex;
   flex-direction: column;
-  margin: 1em 0 0 0;
+  margin: 1em 0 0 7em;
   color: white;
   ::ng-deep {
     .mat-mdc-radio-button .mdc-form-field {
@@ -40,6 +42,37 @@
   border: 0px;
 }
 .action-buttons {
+  .delete-btn,
+  .submit-btn:not(:disabled) {
+    border-radius: 4px;
+    font-family: $font-family;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    word-spacing: 2%;
+    margin-right: 30px;
+    height: 35px;
+    width: 123px;
+    letter-spacing: 2px;
+    -ms-transform: skewX(-10deg);
+    -webkit-transform: skewX(-10deg);
+    transform: skewX(-10deg);
+    background: linear-gradient(270deg, #49c732 -11.81%, #248512 93.7%);
+  }
+  .submit-btn:disabled {
+    border-radius: 4px;
+    font-family: $font-family;
+    font-size: 20px;
+    font-weight: bold;
+    word-spacing: 2%;
+    margin-right: 30px;
+    height: 35px;
+    width: 123px;
+    letter-spacing: 2px;
+    -ms-transform: skewX(-10deg);
+    -webkit-transform: skewX(-10deg);
+    transform: skewX(-10deg);
+  }
   margin: 20rem 0 0 0;
   ::ng-deep {
     .mat-mdc-raised-button[disabled][disabled] {
@@ -51,15 +84,20 @@
     }
   }
 }
-.header {
-  h1 {
-    color: white;
-    font-weight: 500;
+::ng-deep {
+  mat-form-field {
+    .mat-mdc-form-field-error {
+      color: $text-color;
+    }
+    .mdc-text-field--invalid:not(.mdc-text-field--disabled)
+      .mdc-floating-label {
+      color: $text-color;
+    }
   }
 }
 .grid-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 .grid-child-left {
   display: flex;
@@ -81,7 +119,7 @@
   color: white;
   margin-top: 0px;
   justify-self: flex-end;
-  min-width: 50%;
+  min-width: 40%;
   ::ng-deep {
     .mat-mdc-radio-button .mdc-form-field {
       color: var(

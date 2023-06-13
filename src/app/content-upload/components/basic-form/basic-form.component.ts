@@ -203,7 +203,7 @@ export class BasicFormComponent {
         this.jobId = details.jobId;
         console.log(`jobId`, details.jobId);
         this.mcucomponent?.getData(details.jobId);
-        this.notificationService.success('UpLoad Job Initiated');
+        this.notificationService.success('Upload Job Initiated');
       },
       (error) => {
         this.notificationService.error('Something went wrong .');

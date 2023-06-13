@@ -27,8 +27,7 @@
 }
 
 .mat-sidenav-container {
-  // height: 100vh;
-  height: 91.7vh;
+  height: 91.4vh;
 }
 
 .route-content {
@@ -54,7 +53,7 @@ mat-icon {
 }
 
 mat-sidenav {
-  background-color: #171717;
+  background-color: $black;
   height: 100vh;
   overflow: hidden;
 }

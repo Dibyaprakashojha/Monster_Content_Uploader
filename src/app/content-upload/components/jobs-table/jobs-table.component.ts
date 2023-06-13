@@ -244,7 +244,9 @@ export class JobsTableComponent implements OnInit {
   }
   viewTheJob(job: any) {
     this.formService.getJobdetailsByJobId(job.job_id).subscribe((data: any) => {
-      this.router.navigate;
+      this.router.navigate(['/apps/view-form'], {
+        queryParams: { jobId: job.job_id },
+      });
     });
     console.log(job);
   }
