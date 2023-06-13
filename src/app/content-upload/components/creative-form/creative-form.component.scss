@@ -52,6 +52,38 @@
 .action-buttons {
   margin: 20rem 0 0 0;
   align-self: flex-start;
+  .delete-btn,
+  .save-btn,
+  .submit-btn:not(:disabled) {
+    border-radius: 4px;
+    font-family: $font-family;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    word-spacing: 2%;
+    margin-right: 30px;
+    height: 35px;
+    width: 105px;
+    letter-spacing: 2px;
+    -ms-transform: skewX(-10deg);
+    -webkit-transform: skewX(-10deg);
+    transform: skewX(-10deg);
+    background: linear-gradient(270deg, #49c732 -11.81%, #248512 93.7%);
+  }
+  .submit-btn:disabled {
+    border-radius: 4px;
+    font-family: $font-family;
+    font-size: 20px;
+    font-weight: bold;
+    word-spacing: 2%;
+    margin-right: 30px;
+    height: 35px;
+    width: 105px;
+    letter-spacing: 2px;
+    -ms-transform: skewX(-10deg);
+    -webkit-transform: skewX(-10deg);
+    transform: skewX(-10deg);
+  }
   ::ng-deep {
     .mat-mdc-raised-button[disabled][disabled] {
       --mdc-protected-button-disabled-container-color: rgb(255 255 255 / 12%);
@@ -129,8 +161,22 @@ mat-form-field {
     }
   }
 }
+::ng-deep {
+  mat-form-field {
+    .mat-mdc-form-field-error {
+      color: $text-color;
+    }
+    .mdc-text-field--invalid:not(.mdc-text-field--disabled)
+      .mdc-floating-label {
+      color: $text-color;
+    }
+    input::placeholder {
+      letter-spacing: 1px !important;
+    }
+  }
+}
 .mat-mdc-form-field {
-  margin: 0 10px 40px 0;
+  margin: 0 10px 18px 0;
   height: 75px;
   width: 27em;
 }
@@ -139,7 +185,7 @@ mat-form-field {
   position: relative;
   // right: 2em;
   button {
-    margin: 0 2em;
+    margin: 0 0.65em;
   }
   ::ng-deep {
     .mat-mdc-raised-button[disabled][disabled] {
@@ -161,6 +207,7 @@ mat-form-field {
   // width: 150px;
 }
 .typeOfUpload {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -168,33 +215,46 @@ mat-form-field {
   width: 20em;
   height: 60px;
   border-radius: 10px;
-  margin-bottom: 30px;
   color: white;
   font-family: $font-family;
   font-weight: bold;
   font-size: 22px;
-  margin: 0 0 53px 0;
+  margin: 0 0 31px 0;
+  .upload-text {
+    position: relative;
+    right: 4.5rem;
+  }
+  .upload-count {
+    position: absolute;
+    left: 5em;
+  }
+  .add {
+    position: absolute;
+    top: 0.5rem;
+    left: 10em;
+  }
 }
 
 .add {
   background-color: transparent;
   border-width: 0px;
+  font-size: 36px;
 }
 .final {
-  background-color: #56e63c;
+  background: linear-gradient(180deg, #56e63c 0%, #248512 100%);
 }
-
 .proof {
-  background-color: #f99500;
+  background: linear-gradient(180deg, #f99500 0%, #df972c 100%);
 }
 .resources {
-  background-color: #093bef;
+  background: linear-gradient(180deg, #093bef 0%, #4560c0 100%);
 }
-.woorking {
-  background-color: #6c6c6c;
+.working {
+  background: linear-gradient(180deg, #6c6c6c 0%, #555555 100%);
 }
 p {
   font-family: $font-family;
+  color: black;
 }
 
 .create-button {

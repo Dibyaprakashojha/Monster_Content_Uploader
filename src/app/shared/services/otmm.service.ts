@@ -386,8 +386,6 @@ assetRendition(file:any, importJobID:any) {
 
 importOTMMJob(files: string | any[]|any, metadataFields: any, metaDataFieldValues: any, parentForlderID: string | Blob|any, importTemplateID: any, metadataModel: any,
   securityPolicy: any, importJobId: string | Blob, isRevision?: any):any {
-
-
   const url = this.formRestUrl((isRevision ? otmmServicesConstants.checkinUrl : otmmServicesConstants.importJobUrl) + '/' + importJobId, null, false);
   const param = new FormData();
   let blob = null;

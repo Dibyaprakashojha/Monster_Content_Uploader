@@ -74,7 +74,7 @@ $text-color: #8cc63f;
 $typography-config: mat.define-typography-config();
 $body-font-size: mat.font-size($typography-config, "caption");
 $padding: $body-font-size;
-$background-color: $black;
+$background-color: #171717;
 $background: #8cc63f;
 $background-button: linear-gradient(270deg, #bfec1d -4.72%, #22bb39 100.79%);
 $border-radius: 7px;

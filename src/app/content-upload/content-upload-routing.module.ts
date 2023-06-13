@@ -5,6 +5,7 @@ import { JobsTableComponent } from './components/jobs-table/jobs-table.component
 import { CreativeFormComponent } from './components/creative-form/creative-form.component';
 import { BasicFormComponent } from './components/basic-form/basic-form.component';
 import { EditFormComponent } from './components/edit-form/edit-form.component';
+import { ViewFormComponent } from './components/view-form/view-form.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path: 'assets-team', component: JobsTableComponent },
       { path: 'basic-form', component: BasicFormComponent },
       { path: 'edit-form', component: EditFormComponent },
+      { path: 'view-form', component: ViewFormComponent },
       { path: '', redirectTo: 'my-jobs', pathMatch: 'full' },
     ],
   },

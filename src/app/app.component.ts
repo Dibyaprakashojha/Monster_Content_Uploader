@@ -13,9 +13,9 @@ import { GlobalConfig as config } from  '../Utils/config/config'
 })
 export class AppComponent {
   title = 'content-upload';
-  redirectUri: string = `${environment.baseUrl}ticketConsumer?redirectUri=${window.location.href}`;
-  constructor(private loginService: LoginService,private otmmService:OtmmService) {}
-  ngOnInit() {
+  // redirectUri: string = `${environment.baseUrl}ticketConsumer?redirectUri=${window.location.href}`;
+  // constructor(private loginService: LoginService) {}
+  // ngOnInit() {
   //   this.loginService.getTest().subscribe({
   //     next: (res) => {
   //       console.log(`Hello World`, res);

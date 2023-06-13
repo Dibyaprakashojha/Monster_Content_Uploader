@@ -13,7 +13,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
 import { CdkTableModule } from '@angular/cdk/table';
-import { MatBadgeModule } from '@angular/material/badge';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
@@ -37,7 +36,6 @@ const modules = [
   MatRadioModule,
   MatFormFieldModule,
   MatSortModule,
-  MatBadgeModule,
   MatSelectModule,
   MatDatepickerModule,
   MatNativeDateModule,

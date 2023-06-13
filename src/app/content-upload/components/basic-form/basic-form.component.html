@@ -1,90 +1,165 @@
 <div *ngIf="!showCreative" class="content-upload-form">
-    <div class="header">
-        <h1>CONTENT DETAILS</h1>
-    </div>
-    <form [formGroup]="jobDetails" class="form">
-        <div class="grid-container">
-            <div class="grid-child-left">
-                <mat-form-field>
-                    <mat-label>Brand</mat-label>
-                    <input matInput type="input" (keyup)="onSelectionChange($event,'brand')" formControlName="brand"
-                        [matAutocomplete]="auto" required />
-                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="getBrand.bind(this)">
-                        <mat-option *ngFor=" let option of filteredBrands " [value]="option"
-                            (onSelectionChange)="onBrandChange()">
-                            {{option.brandDsName}}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-error *ngIf="jobDetails?.get('brand')?.invalid && jobDetails?.get('brand')?.touched
-              "> Please enter a valid Brand.
-                    </mat-error>
-                    <mat-error *ngIf="jobDetails.errors?.['requireMatch']">
-                        Please enter a brand from the available options
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Product Line</mat-label>
-                    <input matInput type="input" formControlName="productLine"
-                        (keyup)="onSelectionChange($event,'productLine')" [matAutocomplete]="productLineAuto"
-                        required />
-                    <mat-autocomplete #productLineAuto="matAutocomplete" [displayWith]="getProductLine.bind(this)">
-                        <mat-option *ngFor="let option of (filteredProductLine)" [value]="option.prdLineId">
-                            {{option.prdLineDsName}}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-error *ngIf="jobDetails.get('productLine')?.invalid &&jobDetails.get('productLine')?.touched">
-                        Please select the ProductLine.
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Country</mat-label>
-                    <input matInput type="input" formControlName="country" [matAutocomplete]="country" required
-                        (keyup)="onSelectionChange($event,'country')" />
-                    <mat-autocomplete #country="matAutocomplete" [displayWith]="getCountry.bind(this)">
-                        <mat-option *ngFor="let option of filterCountries " [value]="option.countryId">
-                            {{option.countryDsName}}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-error *ngIf="
-                jobDetails.get('country')?.invalid && jobDetails.get('country')?.touched
-              ">
-                        Please enter Country.
-                    </mat-error>
-                </mat-form-field>
+  <div class="header">
+    <h1>CONTENT DETAILS</h1>
+  </div>
+  <form [formGroup]="jobDetails" class="form">
+    <div class="grid-container">
+      <div class="grid-child-left">
+        <mat-form-field>
+          <mat-label>Brand</mat-label>
+          <input
+            matInput
+            type="input"
+            (keyup)="onSelectionChange($event, 'brand')"
+            formControlName="brand"
+            [matAutocomplete]="auto"
+            required
+          />
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            [displayWith]="getBrand.bind(this)"
+          >
+            <mat-option
+              *ngFor="let option of filteredBrands"
+              [value]="option"
+              (onSelectionChange)="onBrandChange()"
+            >
+              {{ option.brandDsName }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error
+            *ngIf="
+              jobDetails?.get('brand')?.invalid &&
+              jobDetails?.get('brand')?.touched
+            "
+          >
+            Please enter a valid Brand
+          </mat-error>
+          <mat-error *ngIf="jobDetails.errors?.['requireMatch']">
+            Please enter a brand from the available options
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Product Line</mat-label>
+          <input
+            matInput
+            type="input"
+            formControlName="productLine"
+            (keyup)="onSelectionChange($event, 'productLine')"
+            [matAutocomplete]="productLineAuto"
+            required
+          />
+          <mat-autocomplete
+            #productLineAuto="matAutocomplete"
+            [displayWith]="getProductLine.bind(this)"
+          >
+            <mat-option
+              *ngFor="let option of filteredProductLine"
+              [value]="option.prdLineId"
+            >
+              {{ option.prdLineDsName }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error
+            *ngIf="
+              jobDetails.get('productLine')?.invalid &&
+              jobDetails.get('productLine')?.touched
+            "
+          >
+            Please select the Product Line
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Country</mat-label>
+          <input
+            matInput
+            type="input"
+            formControlName="country"
+            [matAutocomplete]="country"
+            required
+            (keyup)="onSelectionChange($event, 'country')"
+          />
+          <mat-autocomplete
+            #country="matAutocomplete"
+            [displayWith]="getCountry.bind(this)"
+          >
+            <mat-option
+              *ngFor="let option of filterCountries"
+              [value]="option.countryId"
+            >
+              {{ option.countryDsName }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error
+            *ngIf="
+              jobDetails.get('country')?.invalid &&
+              jobDetails.get('country')?.touched
+            "
+          >
+            Please enter Country
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field>
-                    <mat-label>Album Name</mat-label>
-                    <input matInput type="input" formControlName="albumName" required />
-                    <mat-error *ngIf="
-                jobDetails.get('albumName')?.invalid ||
-                jobDetails.get('albumName')?.untouched
-              ">
-                        Please enter Album Name
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div class="grid-child-right">
-                <mat-label>Department</mat-label>
-                <mat-radio-group required formControlName="department">
-                    <mat-radio-button type="radio" [value]="'1'">Creative</mat-radio-button>
-                    <mat-radio-button type="radio" [value]="'2'">Sales</mat-radio-button>
-                    <mat-radio-button type="radio" [value]="'3'">Marketing</mat-radio-button>
-                </mat-radio-group>
-                <mat-error *ngIf="jobDetails.get('department')?.invalid && jobDetails.get('department')?.touched">
-                    Please enter Departmentthe details.
-                </mat-error>
-                <mcu-creative-form *ngIf="showCreative"></mcu-creative-form>
-                <div class="action-buttons">
-                    <button mat-raised-button color="accent" [routerLink]="['apps/my-jobs']" type="submit">
-                        Delete
-                    </button>
-                    <button (click)="submitForm()" mat-raised-button color="accent" type="submit"
-                        [disabled]="jobDetails.invalid">
-                        Submit
-                    </button>
-                </div>
-            </div>
+        <mat-form-field>
+          <mat-label>Album Name</mat-label>
+          <input matInput type="input" formControlName="albumName" required />
+          <mat-error
+            *ngIf="
+              jobDetails.get('albumName')?.invalid ||
+              jobDetails.get('albumName')?.untouched
+            "
+          >
+            Please enter Album Name
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="grid-child-right">
+        <mat-label>Department</mat-label>
+        <mat-radio-group required formControlName="department">
+          <mat-radio-button type="radio" [value]="'1'"
+            >Creative</mat-radio-button
+          >
+          <mat-radio-button type="radio" [value]="'2'">Sales</mat-radio-button>
+          <mat-radio-button type="radio" [value]="'3'"
+            >Marketing</mat-radio-button
+          >
+        </mat-radio-group>
+        <mat-error
+          *ngIf="
+            jobDetails.get('department')?.invalid &&
+            jobDetails.get('department')?.touched
+          "
+        >
+          Please enter Departmentthe details.
+        </mat-error>
+        <mcu-creative-form *ngIf="showCreative"></mcu-creative-form>
+        <div class="action-buttons">
+          <button
+            class="delete-btn"
+            mat-raised-button
+            color="accent"
+            [routerLink]="['apps/my-jobs']"
+            type="submit"
+          >
+            DELETE
+          </button>
+          <button
+            class="submit-btn"
+            (click)="submitForm()"
+            mat-raised-button
+            color="accent"
+            type="submit"
+            [disabled]="jobDetails.invalid"
+          >
+            NEXT
+          </button>
         </div>
-    </form>
+      </div>
+    </div>
+  </form>
 </div>
-<mcu-creative-form #mcucomponent [jobId]="jobId" *ngIf="showCreative"></mcu-creative-form>
+<mcu-creative-form
+  #mcucomponent
+  [jobId]="jobId"
+  *ngIf="showCreative"
+></mcu-creative-form>
