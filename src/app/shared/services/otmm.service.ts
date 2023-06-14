@@ -5,6 +5,7 @@ import { GlobalConfig as config } from 'src/Utils/config/config'
 import { NotificationServiceService } from 'src/app/shared/services/notification-service.service';
 import { otmmServicesConstants } from 'src/Utils/config/constants';
 import Cookie from 'js-cookie';
+import { environment as env } from 'src/environments/environment';
 
 
 @Injectable({
@@ -46,25 +47,27 @@ export class OtmmService {
 }
 
 postSession(){
-  let baseUrl:string='otmmapi/v6/sessions';
- 
-  let data=new URLSearchParams();
-  data.set('username','tsuper')
-  data.set('password','Cordys@1234')
-  data.set('withCredentials','true')
-  const httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
-    }),
-    withCredentials: true,
+    let baseUrl:string=env.otmmHost+env.version+'/sessions';
+   
+    let data=new URLSearchParams();
+    data.set('username','tsuper')
+    data.set('password','Cordys@1234')
+    data.set('withCredentials','true')
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+      }),
+      withCredentials: true,
+    }
+    return this.http.post(baseUrl,data.toString(), httpOptions).pipe(map((response:any) => {
+      // this.jSession = response.session_resource.session.id;
+      // console.log(this.jSession,'jsessjion')
+      return response;
+    }))
+  
+  
   }
-  return this.http.post(baseUrl,data.toString(), httpOptions).pipe(map((response:any) => {
-    this.jSession = response.session_resource.session.id;
-    console.log(this.jSession,'jsessjion')
-    return response;
-  }))
-
-}
+  
 
 getSessioons(){
     let baseUrl:string='otmmapi/v6/sessions';
@@ -280,20 +283,20 @@ uploadFilesViaHTTP(filesToUpload:any, eventData:any, isRevision?:any): Observabl
                           if (eventData && eventData.data) {
                               if (eventData.processId && eventData.files) {
                                  
-                                  // this.qdsService.createQDSImportJob(eventData.processId, this.otmmService.getFilePaths(eventData.files));
+                                //   this.qdsService.createQDSImportJob(eventData.processId, this.otmmService.getFilePaths(eventData.files));
                                  
                                   observer.next(eventData);
                               } else {
-                                  observer.error('Something went wrong while uploading the file(s).');
+                                  observer.error(' abc Something went wrong while uploading the file(s).');
                               }
                               } else {
-                              observer.error('Something went wrong while uploading the file(s).');
+                              observer.error(' vvvv Something went wrong while uploading the file(s).');
                           }
                       }, (importOTMMJobError: any) => {
-                          observer.error('Something went wrong while uploading the file(s).');
+                          observer.error(' aaaa Something went wrong while uploading the file(s).');
                       });
               },error:()=>{
-                  observer.error('Something went wrong while creating jobs to upload the file(s).');
+                  observer.error(' aaahg Something went wrong while creating jobs to upload the file(s).');
               }});
               },
               error: (error: any) => {
@@ -302,46 +305,38 @@ uploadFilesViaHTTP(filesToUpload:any, eventData:any, isRevision?:any): Observabl
   });
 }
 
+
 customImport(fileName: string) {
-  let baseurl = 'https://micromm.acheron-tech.com/otmmapi/v6/jobs/imports';
-//   https://micromm.acheron-tech.com/otmmapi/v6/sessions
-
-  const formData = new FormData();
-  formData.append('file_name', fileName);
-  const urlParam =
-    'file_name=' + encodeURIComponent(JSON.stringify(formData));
-  // urlParam='file_name: Acheron_logo.png
-  console.log(this.jSession)
-  Cookie.set('jsession',this.jSession) 
-  const httpOptions = {
-        withCredentials: true,
-        headers: new HttpHeaders({
-          'Content-Type': 'application/x-www-form-urlencoded',
-           'X-Requested-By': this.jSession,
-        })
-      }
-   if((this.jSession.toString===null)||(this.jSession.toString.length==0)){
-    console.log("jsession error")
-   }
-
+    const baseUrl = env.otmmHost+env.version+'/jobs/imports';
+    const formData = new FormData();
+    formData.append('file_name', fileName);
+    const urlParam =
+      'file_name=' + encodeURIComponent(JSON.stringify(formData));
+    // urlParam='file_name: Acheron_logo.png
+    console.log(this.jSession)
+    Cookie.set('jsession',this.jSession)
+    const httpOptions = {
+          withCredentials: true,
+          headers: new HttpHeaders({
+            'Content-Type': 'application/x-www-form-urlencoded',
+             'X-Requested-By': this.jSession.toString(),
+          })
+        }
+     if((this.jSession.toString===null)||(this.jSession.toString.length==0)){
+      console.log("jsession error")
+     }
+  
+  
+   
+  return this.http.post(baseUrl, urlParam,httpOptions).pipe(map((response:any) => {
+      return response;
+  }))
+  
+  
+  }
+  
   
 
-//   let headerObject = new HttpHeaders({
-    
-//     'Content-Type': otmmServicesConstants.CONTENT_TYPE.MULTIPARTFORMDATA,
-//     'X-Requested-By': this.jSession.toString(),
-//   });
-//   return this.firePostRequest(
-//     baseurl,
-//     urlParam,
-//     otmmServicesConstants.CONTENT_TYPE.MULTIPARTFORMDATA    
-//   );
-return this.http.post(baseurl, urlParam,httpOptions ).pipe(map((response:any) => {
-    // this.jSession = response.session_resource.session.id;
-    // console.log(this.jSession,'jsessjion')
-    
-    return response;
-}))}
 
 firePostRequest(url:any, parameters:any, contentType:any):Observable<any>{
     const httpOptions = {
@@ -353,8 +348,6 @@ firePostRequest(url:any, parameters:any, contentType:any):Observable<any>{
     };
     let s = this.formRestUrl(url, null, false);
     return this.http.post(this.formRestUrl(url, null, false), parameters, httpOptions)
-
-
   }
 
 assetsRendition(files: any, importJobID: any) {
@@ -375,57 +368,75 @@ assetsRendition(files: any, importJobID: any) {
 }
 
 assetRendition(file:any, importJobID:any) {
-    const url = this.formRestUrl(otmmServicesConstants.renditionsUrl, null, false);
+    const url = env.otmmHost+env.version+"/renditions"
     const param = new FormData();
     param.append('import_job_id', importJobID);
     param.append('file', file);
       param.append('file_name', file.name);
-      return this.doPostRequest(url, param, false, false);
+      Cookie.set('jsession',this.jSession)
+      const httpOptions = {
+            withCredentials: true,
+            headers: new HttpHeaders({
+               'X-Requested-By': this.jSession.toString(),
+            })
+          }
+      return this.http.post(url, param, httpOptions).pipe(map((response:any) => {
+        return response;
+    }));
   }
 
-
-importOTMMJob(files: string | any[]|any, metadataFields: any, metaDataFieldValues: any, parentForlderID: string | Blob|any, importTemplateID: any, metadataModel: any,
-  securityPolicy: any, importJobId: string | Blob, isRevision?: any):any {
-  const url = this.formRestUrl((isRevision ? otmmServicesConstants.checkinUrl : otmmServicesConstants.importJobUrl) + '/' + importJobId, null, false);
-  const param = new FormData();
-  let blob = null;
-  let content = null;
-
-
-  if ((files && Array.isArray(files)) && metaDataFieldValues &&
-      parentForlderID && importTemplateID) {
-      for (let i = 0; i < files.length; i++) {
-          content = JSON.stringify(this.formAssetRepresentation(metaDataFieldValues, metadataModel, securityPolicy));
-          blob = new Blob([content], {
-              type: otmmServicesConstants.CONTENT_TYPE.JSONDATA
-          });
-          if (!isRevision) {
-              param.append('asset_representation', blob);
-              param.append('parent_folder_id', parentForlderID);
-          }
-          param.append('import_job_id', importJobId);
-          param.append('file_name', files[i].name);
-
-
-          if (isRevision) {
-              content = JSON.stringify(this.createUploadManifestForRevision(files));
-          } else {
-              content = JSON.stringify(this.createUploadManifest(files));
-          }
-          blob = new Blob([content], {
-              type: otmmServicesConstants.CONTENT_TYPE.JSONDATA
-          });
-          param.append('manifest', blob);
-         
-         
-      }
-      return this.doPutRequest(url, param, null, false);
-  } else {
-      console.error('Unable to upload assets:\nbecause the parameters are either incorrect or undefined.');
-      return null;
+  importOTMMJob(files: string | any[]|any, metadataFields: any, metaDataFieldValues: any, parentForlderID: string | Blob|any, importTemplateID: any, metadataModel: any,
+    securityPolicy: any, importJobId: string | Blob, isRevision?: any):any {
+    const url =env.otmmHost+env.version+"/jobs/imports/"+importJobId;
+    const param = new FormData();
+    let blob = null;
+    let content = null;
+    if ((files && Array.isArray(files)) && metaDataFieldValues &&
+        parentForlderID && importTemplateID) {
+        for (let i = 0; i < files.length; i++) {
+            content = JSON.stringify(this.formAssetRepresentation(metaDataFieldValues, metadataModel, securityPolicy));
+            blob = new Blob([content], {
+                type: otmmServicesConstants.CONTENT_TYPE.JSONDATA
+            });
+            if (!isRevision) {
+                param.append('asset_representation', blob);
+                param.append('parent_folder_id', parentForlderID);
+            }
+            param.append('import_job_id', importJobId);
+            param.append('file_name', files[i].name);
+  
+  
+  
+  
+            if (isRevision) {
+                content = JSON.stringify(this.createUploadManifestForRevision(files));
+            } else {
+                content = JSON.stringify(this.createUploadManifest(files));
+            }
+            blob = new Blob([content], {
+                type: otmmServicesConstants.CONTENT_TYPE.JSONDATA
+            });
+            param.append('manifest', blob);
+           
+           
+        }
+        const httpOptions = {
+          withCredentials: true,
+          headers: new HttpHeaders({
+          //   'Content-Type': 'application/x-www-form-urlencoded',
+             'X-Requested-By': this.jSession.toString(),
+          })
+        }
+        return this.http.put(url, param, httpOptions).pipe(map((response:any) => {
+          return response;
+      }));
+  
+  
+    } else {
+        console.error('Unable to upload assets:\nbecause the parameters are either incorrect or undefined.');
+        return null;
+    }
   }
-}
-
 
 createUploadManifestForRevision(files:   any) {
   let uploadManifest = null;

@@ -402,6 +402,19 @@ export class CreativeFormComponent implements OnInit, OnChanges {
 
   maxFileSize=null
   uplodAsset(){
+    this.otmmService.getSessioons().subscribe({
+      next:(data)=>{
+        console.log(data)
+      },
+      error:(error)=>{
+        this.otmmService.postSession().subscribe({
+          next:(data)=>{
+            this.otmmService.jSession='';
+            this.otmmService.jSession=data.session_resource.session.id;
+          }
+        })
+      }}
+    )
     this.assetData.metadata_model_id = otmmServicesConstants.defaultFolderModel;
     this.assetData.template_id = environment.folder_template_id;
     this.assetData.folderId  = environment.folder_id

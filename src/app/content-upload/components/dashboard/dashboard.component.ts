@@ -161,12 +161,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   navigateTO() {
-  this.otmmService.postSession().subscribe((data)=>{
-    console.log('data in post session',data)
-    this.otmmService.getSessioons().subscribe((data)=>{
+    this.otmmService.postSession().subscribe((data)=>{
       console.log(data)
-      })
-  });
+      this.otmmService.jSession='';
+      this.otmmService.jSession=data.session_resource.session.id;
+    });
+
  
     this.router.navigateByUrl('apps/basic-form');
     this.menuName = '';
