@@ -567,17 +567,24 @@ formAssetRepresentation(metadata:any, metaDataModel:any, securityPolicyID:any) {
       }
 
 
-      if (metadata && metadata.metadata_element_list && Array.isArray(metadata.metadata_element_list)) {
-          for (const metadataGroup of metadata.metadata_element_list) {
-              for (const metadataElement of metadataGroup.metadata_element_list) {
-                  if (metadataElement && metadataElement.id === 'MPM.UTILS.DATA_TYPE' && metadataElement.value && metadataElement.value.value) {
-                      metadataElement.value.value.value = 'ASSET';
-                  }
-                  metadataElementList.push(metadataElement);
-              }
-          }
-      }
+    //   if (metadata && metadata.metadata_element_list && Array.isArray(metadata.metadata_element_list)) {
+    //       for (const metadataGroup of metadata.metadata_element_list) {
+    //           for (const metadataElement of metadataGroup.metadata_element_list) {
+    //               if (metadataElement && metadataElement.id === 'MPM.UTILS.DATA_TYPE' && metadataElement.value && metadataElement.value.value) {
+    //                   metadataElement.value.value.value = 'ASSET';
+    //               }
+    //               metadataElementList.push(metadataElement);
+    //           }
+    //       }
+    //   }
 
+    if (metadata && metadata.metadata_element_list && Array.isArray(metadata.metadata_element_list)) {
+             
+            for (const metadataGroup of metadata.metadata_element_list) {
+                metadataElementList.push(metadataGroup);
+               } 
+    
+      }
 
       assetRepresentation = {
           asset_resource: {
