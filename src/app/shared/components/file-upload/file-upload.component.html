@@ -22,7 +22,7 @@
     <div class="qds-thumbnail-note" *ngIf="isQDSUpload">
         <span>Note: Thumbnail preview will be shown only for first 10 image files for each selection.</span>
     </div>
-    <div class="existing-file-holder" *ngIf="isRevisionUpload && fileToRevision">
+    <!-- <div class="existing-file-holder" *ngIf="isRevisionUpload && fileToRevision">
         <div class="file-items-holder">
             <h4 class="file-text">Original File</h4>
             <mat-card class="matCardWidth">
@@ -30,7 +30,6 @@
                     <div class="file-icon" matTooltip="Preview">
                         <img *ngIf="fileToRevision.url" src="{{fileToRevision.url}}" />
                          <img *ngIf="!fileToRevision.url" src="{{fileToRevision.icon}}" />
-                       <!--  <mat-icon *ngIf="!fileToRevision.url">{{fileToRevision.url}}</mat-icon> -->
                     </div>
                     <div class="file-details name">
                         <span class="file-info"
@@ -53,7 +52,7 @@
                 </div>
             </mat-card>
         </div>
-    </div>
+    </div> -->
     <div class="acron-file-upload-wrapper" (click)="isQDSUpload ? openQDSFileChooser():fileBtn.click()">
         <div class="file-items-holder" *ngIf="selectedFiles.length > 0">
             <h4 class="margin-l-4" *ngIf="isRevisionUpload">Revision File</h4>
@@ -75,8 +74,8 @@
                         <span class="file-info" matTooltip="File Type: {{file.type}}">{{file.type}}</span>
                     </div>
                     <div class="file-actions">
-                        <button class="action" mat-icon-button matTooltip="Click here to remove this file">
-                            <mat-icon class="action" (click)="removeFile(file, selectedFiles.indexOf(file), $event)">
+                        <button class="action" mat-icon-button matTooltip="Click here to remove this file" (click)="removeFile(file, selectedFiles.indexOf(file), $event)">
+                            <mat-icon class="action" >
                                 cancel</mat-icon>
                         </button>
                     </div>

@@ -194,7 +194,7 @@ export class ViewFormComponent {
   getBrand(brandId: any): any {
     let element = this.brands.find((e: any) => e.brandId == brandId);
     if (element) {
-      return element['brandName'];
+      return element['brandDsName'];
     }
   }
 
@@ -202,20 +202,20 @@ export class ViewFormComponent {
     let element = this.filteredProductLine.find(
       (e: any) => e.prdLineId == prdLineId
     );
-    return element?.prdLineName;
+    return element['prdLineDsName']
   }
 
   getCountry(countryId: any): any {
     let element = this.countries.find((e: any) => e.countryId == countryId);
     if (element) {
-      return element['countryName'];
+      return element['countryDsName'];
     }
   }
 
   getUseCase(useCaseId: any): any {
     let element = this.useCaseTypes.find((e: any) => e.useCaseId == useCaseId);
     if (element) {
-      return element['useCaseName'];
+      return element['useCaseDsName'];
     }
   }
 
@@ -224,7 +224,7 @@ export class ViewFormComponent {
       (e: any) => e.assetTypeId == event.assetTypeId
     );
     if (element) {
-      return element['assetTypeName'];
+      return element['assetTypeDsName'];
     }
   }
 
@@ -234,7 +234,7 @@ export class ViewFormComponent {
       (e: any) => e.assetSubtypeId == assetSubTypeId
     );
     if (element) {
-      return element['assetSubtypeName'];
+      return element['assetSubtypeDsName'];
     }
   }
 
@@ -449,5 +449,9 @@ export class ViewFormComponent {
         );
       },
     });
+  }
+
+  navigateBack(){
+    this.router.navigateByUrl('apps/dashboard')
   }
 }

@@ -13,6 +13,11 @@ export class FormService {
   // base_url = '/api/v1';
   // base_url = 'http://localhost:8081/mcu/api/v1/';
 
+  getAllDepartmentName(){
+    let url= `${this.base_url}/department/`
+    return this._http.get(url);
+    }
+
   getAllBrands(): Observable<any> {
     let url = `${this.base_url}brand`;
     return this._http.get(url);
@@ -109,7 +114,6 @@ export class FormService {
   createJobDetails(jobDetails: any, JobId: any): Observable<any> {
     let url = `${this.base_url}job-details`;
     // let url = 'https://micromm.acheron-tech.com/mcu/api/v1/';
-    console.log(`form service---1`, jobDetails, JobId);
     let jobValue = {
       albumName: jobDetails.albumName,
       assetSubType: {
@@ -151,7 +155,6 @@ export class FormService {
         useCaseId: 1,
       },
     };
-    console.log(jobValue);
 
     return this._http.put(url, jobValue, {
       params: {
@@ -162,7 +165,7 @@ export class FormService {
   }
 
   deleteJob(id: any) {
-    let url = `${this.base_url}job-details/`;
+    let url = `${this.base_url}job-details/job-details/`;
     return this._http.delete(url.concat(id));
   }
 }

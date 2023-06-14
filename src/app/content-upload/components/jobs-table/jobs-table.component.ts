@@ -72,12 +72,10 @@ export class JobsTableComponent implements OnInit {
         .getMyJobDetails(
           this.startIndex,
           this.endIndex,
-          this.totalPageNumber,
           this.sortDirection,
           1
         )
         .subscribe((solrData) => {
-          this.totalPageNumber = 0;
           this.dataSource.data = solrData.data;
           console.log(`myjobs`, solrData.cursor.totalRecords);
           this.totalPageNumber = solrData.cursor.totalRecords;
@@ -87,7 +85,6 @@ export class JobsTableComponent implements OnInit {
         .getAllJobDeatils(
           this.startIndex,
           this.endIndex,
-          this.totalPageNumber,
           this.sortDirection
         )
         .subscribe((solrData) => {
@@ -142,7 +139,7 @@ export class JobsTableComponent implements OnInit {
         .getMyJobDetails(
           this.startIndex,
           this.endIndex,
-          this.totalPageNumber,
+         
           this.sortDirection,
           1
         )
@@ -155,7 +152,6 @@ export class JobsTableComponent implements OnInit {
         .getAllJobDeatils(
           this.startIndex,
           this.endIndex,
-          this.totalPageNumber,
           this.sortDirection
         )
         .subscribe((solrData: SorlResponse) => {
@@ -172,7 +168,7 @@ export class JobsTableComponent implements OnInit {
         .getMyJobDetails(
           this.startIndex,
           this.endIndex,
-          this.totalPageNumber,
+      
           this.sortDirection,
           1
         )
@@ -185,7 +181,6 @@ export class JobsTableComponent implements OnInit {
         .getAllJobDeatils(
           this.startIndex,
           this.endIndex,
-          this.totalPageNumber,
           this.sortDirection
         )
         .subscribe((solrData: SorlResponse) => {
@@ -210,7 +205,6 @@ export class JobsTableComponent implements OnInit {
         .getMyJobDetails(
           this.startIndex,
           this.endIndex,
-          this.totalPageNumber,
           this.sortDirection,
           1
         )
@@ -223,7 +217,6 @@ export class JobsTableComponent implements OnInit {
         .getAllJobDeatils(
           this.startIndex,
           this.endIndex,
-          this.totalPageNumber,
           this.sortDirection
         )
         .subscribe((solrData: SorlResponse) => {

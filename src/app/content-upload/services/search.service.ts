@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
 })
 export class SearchService {
   base_url = environment.retrieveUrl;
-  // base_url = '/api/';
   // base_url = 'http://localhost:8081/mcu/api/v1/';
   constructor(private httpClient: HttpClient) {}
   jobList: any;
@@ -17,7 +16,6 @@ export class SearchService {
   getAllJobDeatils(
     pageIndex: any,
     pageSize: any,
-    totalRecords: any,
     sortDirection: any
   ): Observable<SorlResponse> {
     let url = this.base_url.concat('all-job/search');
@@ -38,7 +36,6 @@ export class SearchService {
   getMyJobDetails(
     pageIndex: any,
     pageSize: any,
-    totalRecords: any,
     sortDirection: any,
     userId: any
   ): Observable<SorlResponse> {
@@ -61,14 +58,13 @@ export class SearchService {
     pageIndex: any,
     sortType?: string
   ): Observable<SorlResponse> {
-    let url = this.base_url.concat('all-job/search/mobile-view');
+    let url = this.base_url.concat('all-job/search');
 
     return this.httpClient.post<SorlResponse>(url, {
       keyword: '*',
       cursor: {
         page_index: pageIndex,
         page_size: 3,
-        // total_records: 0,
       },
       sort: {
         sort_field: '*',

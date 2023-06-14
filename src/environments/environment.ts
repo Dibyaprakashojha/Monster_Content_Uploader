@@ -13,5 +13,6 @@ export const environment = {
   folder_template_id:'3e4ccc6f87a99e3b22fb6a39702d460b56505ac1',
   max_file_size_property_key: 'UX^^IMPORT^^MAX_IMPORT_FILE_SIZE',
   userName:'tsuper',
-  password:'Cordys@1234'
+  password:'Cordys@1234',
+  MetadataModel:'MCU.ASSET'
 };

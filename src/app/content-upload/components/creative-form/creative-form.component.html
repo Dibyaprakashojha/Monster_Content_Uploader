@@ -241,9 +241,6 @@
             formControlName="comments"
           />
         </mat-form-field>
-      </div>
-
-      <div class="upload-container">
         <mat-form-field class="date-container">
           <input
             placeholder="Date"
@@ -254,33 +251,43 @@
           <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
           <mat-datepicker #to></mat-datepicker>
         </mat-form-field>
+      </div>
 
+      <div class="upload-container">
         <div class="typeOfUpload final">
           <p class="upload-text">Final</p>
           <p class="upload-count">(300)</p>
           <div class="image-preview">
-            <button mat-button (click)="uplodAsset()" class="add">+</button>
+            <button  (click)="uploadAsset('Final')" class="add">
+              +
+            </button>
           </div>
         </div>
         <div class="typeOfUpload proof">
           <p class="upload-text">Proof</p>
           <p class="upload-count">(300)</p>
           <div class="image-preview">
-            <button class="add">+</button>
+            <button class="add"  (click)="uploadAsset('Proof')">
+              +
+            </button>
           </div>
         </div>
         <div class="typeOfUpload resources">
           <p class="upload-text">Resources</p>
           <p class="upload-count">(300)</p>
           <div class="image-preview">
-            <button class="add">+</button>
+            <button class="add"  (click)="uploadAsset('Resources')">
+              +
+            </button>
           </div>
         </div>
         <div class="typeOfUpload working">
           <p class="upload-text">Working</p>
           <p class="upload-count">(300)</p>
           <div class="image-preview">
-            <button class="add">+</button>
+            <button class="add"  (click)="uploadAsset('Working')">
+              +
+            </button>
           </div>
         </div>
         <div class="action-buttons">
@@ -292,7 +299,12 @@
           >
             DELETE
           </button>
-          <button class="submit-btn"  mat-raised-button color="accent" (click)="SaveForm()">
+          <button
+            class="submit-btn"
+            mat-raised-button
+            color="accent"
+            (click)="SaveForm()"
+          >
             Save
           </button>
           <button

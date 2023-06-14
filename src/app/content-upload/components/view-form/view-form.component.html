@@ -283,11 +283,11 @@
           </div>
         </div>
         <div class="action-buttons">
-          <button class="delete-btn" mat-raised-button color="accent">
-            DELETE
+          <button class="delete-btn" (click)="navigateBack()" mat-raised-button color="accent">
+            Back
           </button>
 
-          <button
+          <!-- <button
             class="submit-btn"
             mat-raised-button
             color="accent"
@@ -295,7 +295,7 @@
             [disabled]="jobDetails.invalid"
           >
             SUBMIT
-          </button>
+          </button> -->
         </div>
       </div>
     </div>

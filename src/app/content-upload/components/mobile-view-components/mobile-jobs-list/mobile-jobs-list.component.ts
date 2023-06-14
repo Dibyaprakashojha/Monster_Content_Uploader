@@ -38,31 +38,31 @@ export class MobileJobsListComponent implements OnInit {
 
   filteredJobList: any[] = [];
   searchValue: any;
-  search(event: any) {
-    this.jobList.filter((each) => {
-      if (each.job_id == event.target.value) {
-        // this.jobList = [...this.filteredJobList];
-        // this.filteredJobList.push(each);
-      }
-    });
+  // search(event: any) {
+  //   this.jobList.filter((each) => {
+  //     if (each.job_id == event.target.value) {
+  //       // this.jobList = [...this.filteredJobList];
+  //       // this.filteredJobList.push(each);
+  //     }
+  //   });
 
-    if (event.target.value == '') {
-      if (this.router.url.includes('all-jobs')) {
-        this.searchService
-          .getAllJobsForMobile(this.documentIndex)
-          .subscribe((solrData) => {
-            this.jobList = solrData.data;
-            console.log(`jobList`, this.jobList);
-          });
-      } else if (this.router.url.includes('my-jobs')) {
-        this.searchService
-          .getMyJobsForMobile(this.documentIndex, 1)
-          .subscribe((solrData) => {
-            this.jobList = solrData.data;
-          });
-      }
-    }
-  }
+  //   if (event.target.value == '') {
+  //     if (this.router.url.includes('all-jobs')) {
+  //       this.searchService
+  //         .getAllJobsForMobile(this.documentIndex)
+  //         .subscribe((solrData) => {
+  //           this.jobList = solrData.data;
+  //           console.log(`jobList`, this.jobList);
+  //         });
+  //     } else if (this.router.url.includes('my-jobs')) {
+  //       this.searchService
+  //         .getMyJobsForMobile(this.documentIndex, 1)
+  //         .subscribe((solrData) => {
+  //           this.jobList = solrData.data;
+  //         });
+  //     }
+  //   }
+  // }
 
   sortType = true;
   sortTheData() {
@@ -79,18 +79,20 @@ export class MobileJobsListComponent implements OnInit {
     this.showSearchBar = !this.showSearchBar;
   }
 
-  documentIndex = 0;
+  documentIndexAllJobs = 0;
+  documentIndexMyJobs = 0;
   ngOnInit(): void {
+    this.jobList=[]
     if (this.router.url.includes('all-jobs')) {
       this.searchService
-        .getAllJobsForMobile(this.documentIndex)
+        .getAllJobDeatils(this.documentIndexAllJobs,3,'ASC')
         .subscribe((solrData) => {
           this.jobList = solrData.data;
         });
       console.log(`joblist`, this.jobList);
     } else if (this.router.url.includes('my-jobs')) {
       this.searchService
-        .getMyJobsForMobile(this.documentIndex, 1)
+        .getMyJobDetails(this.documentIndexMyJobs,3,'ASC',1)
         .subscribe((solrData) => {
           this.jobList = solrData.data;
         });
@@ -103,8 +105,10 @@ export class MobileJobsListComponent implements OnInit {
   onScroll(event: any): void {
     console.log('on Scroll method', event);
     if (this.router.url.includes('all-jobs')) {
+      this.documentIndexAllJobs+=3
+      console.log(this.documentIndexAllJobs)
       this.searchService
-        .getAllJobsForMobile(this.documentIndex + 3, 'ASC')
+        .getAllJobsForMobile(this.documentIndexAllJobs , 'ASC')
         .subscribe((solrData: any) => {
           console;
           // solrData.data.map((each) => {
@@ -116,11 +120,13 @@ export class MobileJobsListComponent implements OnInit {
         });
       console.log(`joblist`, this.jobList);
     } else if (this.router.url.includes('my-jobs')) {
+      this.documentIndexMyJobs+=3
       this.searchService
-        .getMyJobsForMobile(this.documentIndex + 3, 1)
+        .getMyJobsForMobile(this.documentIndexMyJobs + 3, 1)
         .subscribe((solrData: any) => {
           console.log(solrData);
-          this.jobList = [...this.jobList, ...solrData.data];
+          // this.jobList = [...this.jobList, ...solrData.data];
+          this.jobList.push(...solrData.data)
           // solrData.data.map((each) => {
           //   this.jobList.push(each);
           //   console.log(this.jobList);

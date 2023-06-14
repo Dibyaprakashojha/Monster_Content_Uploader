@@ -29,15 +29,27 @@ import { OtmmService } from 'src/app/shared/services/otmm.service';
   styleUrls: ['./creative-form.component.scss'],
 })
 export class CreativeFormComponent implements OnInit, OnChanges {
+  
+  
   @Input() jobId: any;
+
+  brands: any[] = [];
+  producs = [];
+  countries = [];
+  departments=[]
+  assets = [];
+  assetsSubType: any = [];
+  useCase = [];
+  filteredBrands: any = [];
+  filteredProductLine: Array<any> = [];
+  filterCountries: Array<any> = [];
+  filterAssetTypes: Array<any> = [];
+  filterAssetSubTypes: Array<any> = [];
+  useCaseTypes: Array<any> = [];
+  selectedBrand: any;
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(`jonbId in cretaive`, this.jobId);
-    // this.formService.getJobdetailsByJobId(this.jobId).subscribe((data: any) => {
-    //   console.log(data);
-    //   this.ngOnInit();
-    //   this.setTheFormVlaues(data);
-    // });
   }
 
   lastModifiedBy: any;
@@ -143,19 +155,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     });
   }
 
-  brands: any[] = [];
-  producs = [];
-  countries = [];
-  assets = [];
-  assetsSubType: any = [];
-  useCase = [];
-  filteredBrands: any = [];
-  filteredProductLine: Array<any> = [];
-  filterCountries: Array<any> = [];
-  filterAssetTypes: Array<any> = [];
-  filterAssetSubTypes: Array<any> = [];
-  useCaseTypes: Array<any> = [];
-  selectedBrand: any;
+ 
 
   ngOnInit() {
     console.log(`jonbId in onint`, this.jobId);
@@ -167,6 +167,9 @@ export class CreativeFormComponent implements OnInit, OnChanges {
       },
       (err) => {}
     );
+    this.formService.getAllDepartmentName().subscribe((data:any)=>{
+      this.departments=data
+    })
   }
 
   onSelectionChanged(event: any, filterCondition: string) {
@@ -250,28 +253,29 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   getBrand(brandId: any): any {
     let element = this.brands.find((e: any) => e.brandId == brandId);
     if (element) {
-      return element['brandName'];
+      return element['brandDsName']
     }
   }
 
   getProductLine(prdLineId: any): any {
     let element = this.producs.find((e: any) => e.prdLineId == prdLineId);
     if (element) {
-      return element['prdLineName'];
+      return element['prdLineDsName'];
     }
   }
 
   getCountry(countryId: any): any {
     let element = this.countries.find((e: any) => e.countryId == countryId);
     if (element) {
-      return element['countryName'];
+      return element['countryDsName'];
     }
   }
 
+  
   getUseCase(useCaseId: any): any {
     let element = this.useCaseTypes.find((e: any) => e.useCaseId == useCaseId);
     if (element) {
-      return element['useCaseName'];
+      return element['useCaseDsName'];
     }
   }
 
@@ -280,12 +284,11 @@ export class CreativeFormComponent implements OnInit, OnChanges {
       (e: any) => e.assetTypeId == event.assetTypeId
     );
     if (element) {
-      return element['assetTypeName'];
+      return element['assetTypeDsName'];
     }
   }
 
   getAssetSubType(assetSubTypeId: any): any {
-    console.log(`BAABBABA`, assetSubTypeId);
     let element = this.allAssetSubTypes.find(
       (e: any) => e.assetSubtypeId == assetSubTypeId
     );
@@ -382,10 +385,12 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   }
 
   deleteJob(jobId: any) {
-    // this.formService.deleteJob(jobId).subscribe(() => {
+   
     this.router.navigateByUrl('apps/dashboard');
     this.notificationService.success('Job has been deleted sucessfully ');
-    // });
+    this.formService.deleteJob(jobId).subscribe((data:any)=>{
+      console.log(data)
+    })
   }
 
   assetData :any= {
@@ -396,26 +401,36 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     "security_policy_list": [1],
     "template_id": environment.folder_template_id,
     "folderId": environment.folder_id,
-    
   };
 
-//   a(){
-//   this.assetData.metadata.metadata_element_list= [
-//     {
-//       id: 'MCU_DETAILS_DEPARTMENT',
-//       type: 'com.artesia.metadata.MetadataField',
-//       value: {
-//         value: {
-//           type: 'string',
-//           value: "Creative"
-//         },
-//       },
-//     },
-//    ];
-  
-// }
+
+  getDepartment(departMentId:any){
+    const dept:any =this.departments.find((each:any)=>each.dptId==departMentId)
+
+    console.log('deperkpoere',dept)
+    return dept['dptDsName']
+    
+  }
+
+  getMetaDataAsset(){
+
+    console.log(this.getBrand(this.jobDetails.get('brand')?.value),
+    this.getProductLine(this.jobDetails.get('productLine')?.value),
+    this.getCountry(this.jobDetails.get('country')?.value),
+    this.jobDetails.get('albumName')?.value,
+    this.getDepartment(this.jobDetails.controls['department']?.value),
+    this.jobDetails.controls['department'].value,
+    this.getAssetType(this.jobDetails.controls['assetType'].value),
+    this.getAssetSubType(this.jobDetails.controls['assetSubType'].value),
+    this.getUseCase(this.jobDetails.controls['useCase'].value),
+    this.jobDetails.controls['comments'].value)
+    
+  }
+
+
   maxFileSize=null
-  uplodAsset(){
+  uploadAsset(BucketName:string){
+
     this.otmmService.getSessioons().subscribe({
       next:(data)=>{
         console.log(data)
@@ -429,23 +444,118 @@ export class CreativeFormComponent implements OnInit, OnChanges {
         })
       }}
     )
-    this.assetData.metadata_model_id = otmmServicesConstants.defaultFolderModel;
+    this.getMetaDataAsset();
+    this.assetData.metadata_model_id = environment.MetadataModel;
     this.assetData.template_id = environment.folder_template_id;
     this.assetData.folderId  = environment.folder_id
-    this.assetData.metadata.metadata_element_list= [
+    this.assetData.metadata.metadata_element_list = [
+      {
+        id: 'MCU_DETAILS_BRAND',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value: `${this.getBrand(this.jobDetails.get('brand')?.value)}^${this.getProductLine(this.jobDetails.get('productLine')?.value)}^${this.getCountry(this.jobDetails.get('country')?.value)}`
+          },
+        },
+      },
       {
         id: 'MCU_DETAILS_DEPARTMENT',
         type: 'com.artesia.metadata.MetadataField',
         value: {
           value: {
             type: 'string',
-            value: "Creative"
+            value: this.getDepartment(this.jobDetails.controls['department']?.value),
           },
         },
       },
-     ];
+      {
+        id: 'MCU_DETAIL_ALBUM_NAME',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value: this.jobDetails.controls['albumName']?.value,
+          },
+        },
+      },
+      {
+        id: 'MCU_DETAILS_SAP_NUMBER',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: "decimal",
+            value: this.jobDetails.controls['sapNumber']?.value,
+          },
+        },
+      },
+      {
+        id: 'MCU_DETAILS_DATE',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'dateTime',
+            value: this.jobDetails.controls['eventDate']?.value,
+          },
+        },
+      },
+      {
+        id: 'MCU_DETAILS_COMMENTS',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value: this.jobDetails.controls['comments']?.value,
+          },
+        },
+      },
+      {
+        id: 'MCU_DETAILS_BUCKET_NAME',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value: BucketName,
+          },
+        },
+      },
+      {
+        id: 'MCU_DETAILSJOB_ID',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value: this.jobId,
+          },
+        },
+      },
+      {
+        id: 'MCU_DETAILS_USECASE',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value:this.getUseCase(this.jobDetails.controls['useCase'].value)
+          },
+        },
+      },
+      {
+        id: 'MCU_ASSET_TYPE',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value: `${this.getAssetType(this.jobDetails.controls['assetType'].value)}^${this.getAssetSubType(this.jobDetails.controls['assetSubType'].value)}`
+          },
+        },
+      },
+      
+      
+    ];
+    console.log(this.assetData.metadata.metadata_element_list)
     let fileToRevision;
     let isRevision = false;
+  
     let maxFiles = null;
     const allowDuplicateDeliverable = false;
     isRevision = false;

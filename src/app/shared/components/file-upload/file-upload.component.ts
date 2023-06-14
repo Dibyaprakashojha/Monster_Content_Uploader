@@ -348,12 +348,16 @@ removeAll() {
 }
 
 
-removeFile(fileObj: any, index: number, event:Event ) {
+removeFile(fileObj: any, index: number, event:any ) {
 
-    console.log('rmoved files in angualr ')
-    if(event.currentTarget as HTMLButtonElement  ){
-    event.stopPropagation();
-}
+    if(event){
+        event.stopPropagation()
+    }
+
+    // console.log('rmoved files in angualr ')
+    // if(event.currentTarget as HTMLButtonElement  ){
+    // event.stopPropagation();
+// }
   this.selectedFiles.splice(index, 1);
   this.queuedFiles.next(this.selectedFiles);
 }

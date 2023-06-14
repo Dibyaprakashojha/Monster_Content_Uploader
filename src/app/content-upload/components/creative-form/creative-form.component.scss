@@ -220,6 +220,8 @@ mat-form-field {
   font-weight: bold;
   font-size: 22px;
   margin: 0 0 31px 0;
+
+}
   .upload-text {
     position: relative;
     right: 4.5rem;
@@ -227,15 +229,19 @@ mat-form-field {
   .upload-count {
     position: absolute;
     left: 5em;
+    
   }
-  .add {
-    position: absolute;
-    top: 0.5rem;
-    left: 10em;
-  }
-}
+  // .add {
+  //   position: absolute;
+  //   top: 0.5rem;
+  //   left: 10em;
+  // }
+
 
 .add {
+  position: absolute;
+  top: 0.5rem;
+  left: 10em;
   background-color: transparent;
   border-width: 0px;
   font-size: 36px;
@@ -317,9 +323,15 @@ p {
     margin: 0 0 2em 0;
     border: 0px;
   }
+
+  .upload-count{
+     margin-left: 25px;
+  }
 }
 
 @media screen and ((max-width: 599px)) {
+
+  
   .action-buttons {
     display: flex;
     justify-content: space-between;
@@ -369,15 +381,14 @@ p {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    width: 15em;
-    height: 60px;
+    height: 47px;
     border-radius: 10px;
     margin-bottom: 30px;
     color: white;
     font-family: $font-family;
     font-weight: bold;
     font-size: 22px;
-    margin: 0 0 53px 0;
+    width:75%
   }
   .upload-container {
     align-items: center;
@@ -385,9 +396,19 @@ p {
   .mat-mdc-form-field {
     margin: 0 0 2em 0;
     border: 0px;
+  }  
+
+  .add{
+  // position: absolute;
+  // top: 0rem;
+  left: 7em;
+  background-color: transparent;
+  border-width: 0px;
+  font-size: 36px;
+  }
+  .upload-text{
+    position: relative;
+    right:3.5rem;
   }
 }
 
-button {
-  margin-left: 15px;
-}

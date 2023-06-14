@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'filterByText',
+  pure:true
 })
 export class FilterByTextPipe implements PipeTransform {
   transform(items: any[], searchText: string): any[] {
@@ -27,6 +28,8 @@ export class FilterByTextPipe implements PipeTransform {
         return true;
       } else if (each.job_status.includes(searchText)) {
         return true;
+      }else{
+        return true
       }
     });
   }
