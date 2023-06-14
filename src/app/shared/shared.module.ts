@@ -14,6 +14,7 @@ import { UploadComponent } from './components/upload/upload.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 import { OtmmService } from './services/otmm.service';
+import { PreviewImageComponent } from './components/preview-image/preview-image.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { OtmmService } from './services/otmm.service';
     UploadComponent,
     FileUploadComponent,
     ConfirmationModalComponent,
+    PreviewImageComponent,
   ],
   imports: [
     CommonModule,

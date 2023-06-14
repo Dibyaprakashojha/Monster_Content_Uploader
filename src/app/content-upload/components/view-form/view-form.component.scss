@@ -52,7 +52,7 @@
 .action-buttons {
   margin: 20rem 0 0 0;
   align-self: flex-start;
-  .delete-btn,
+  .delete-btn:not(:disabled),
   .save-btn,
   .submit-btn:not(:disabled) {
     border-radius: 4px;
@@ -70,7 +70,8 @@
     transform: skewX(-10deg);
     background: linear-gradient(270deg, #49c732 -11.81%, #248512 93.7%);
   }
-  .submit-btn:disabled {
+  .submit-btn:disabled,
+  .delete-btn:disabled {
     border-radius: 4px;
     font-family: $font-family;
     font-size: 20px;
@@ -85,6 +86,9 @@
     transform: skewX(-10deg);
   }
   ::ng-deep {
+    .menu-name-container {
+      display: none !important;
+    }
     .mat-mdc-raised-button[disabled][disabled] {
       --mdc-protected-button-disabled-container-color: rgb(255 255 255 / 12%);
       --mdc-protected-button-disabled-label-text-color: rgba(0, 0, 0, 0.38);

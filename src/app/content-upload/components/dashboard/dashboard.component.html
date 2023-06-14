@@ -303,8 +303,6 @@
       >
       </span>
 
-      <!-- <img class="underline" *ngIf="checkMenu('my-jobs')" src="assets/images/underline-lg.png" /> -->
-
       <li class="menu-container">
         <button routerLink="all-jobs" class="menu-button-expanded">
           <img class="menu-image" src="assets/images/alljobs-2.png" />
@@ -317,7 +315,6 @@
         "
       >
       </span>
-      <!-- <img *ngIf="checkMenu('all-jobs')" src="assets/images/underline-lg.png" /> -->
 
       <li class="menu-container">
         <button routerLink="my-workflows" class="menu-button-expanded">
@@ -399,11 +396,7 @@
       <div ngClass="menu-name-container" *ngIf="!isMobile">
         <h3 *ngIf="!isMobile" class="menu-name">{{ menuName }}</h3>
         <button
-          *ngIf="
-            checkMenu('my-jobs') ||
-            checkMenu('all-jobs') ||
-            checkMenu('edit-form')
-          "
+          *ngIf="checkMenu('my-jobs') || checkMenu('all-jobs')"
           mat-button
           class="create-button approved"
           (click)="navigateTO()"

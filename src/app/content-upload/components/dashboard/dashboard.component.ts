@@ -54,8 +54,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private router: Router,
     private breakpointObserver: BreakpointObserver,
     private loginService: LoginService,
-    private otmmService:OtmmService,
-    private authenticationService:AuthenticationService
+    private otmmService: OtmmService,
+    private authenticationService: AuthenticationService
   ) {}
 
   ngAfterViewInit(): void {}
@@ -80,12 +80,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     } else if (this.router.url.includes('assets-team')) {
       this.menu = 'assets-team';
       this.menuName = 'ASSETS TEAM';
-    } else if (this.router.url.includes('editor-form')) {
-      this.menu = 'editor-form';
+    } else if (this.router.url.includes('edit-form')) {
+      this.menu = 'edit-form';
       this.menuName = 'EDIT FORM';
+    } else if (this.router.url.includes('view-form')) {
+      this.menu = 'view-form';
+      this.menuName = 'VIEW FORM';
     }
-    
-
   }
 
   checkMenu(menuName: string): boolean {
@@ -100,33 +101,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   isDesktop!: boolean;
   isTablet!: boolean;
   ngOnInit(): void {
-
-    // this.authenticationService.authenticateInOtds(config.config?.userName,config.config?.password).subscribe((authData:any)=>{
-    //         //console.log('Logged in: ' + authData);
-    //         if(authData['ticket']) {
-    //           this.authenticationService.otdsTicket = authData['ticket'];
-    //           this.authenticationService.otdsToken = authData['token'];
-    //           Cookie.set('OTDSTicket', authData['ticket']);
-    //           // this.appRouteService.navigateToRootFolder();
-    //         }
-
-    // })
-    // this.loginService.getTest().subscribe({
-    //   next: (res) => {
-    //     console.log(`Hello World`, res);
-    //   },
-    //   error: (err) => {
-    //     if (err.status == 401) {
-    //       this.loginService.getLoginUri(this.redirectUri).subscribe({
-    //         next: (response: any) => {
-    //           console.log(`Url: `, response);
-    //           window.location.href = response.url;
-    //         },
-    //       });
-    //     }
-    //     console.log(`error: `, err);
-    //   },
-    // });
     this.breakpointObserver
       .observe([Breakpoints.XSmall])
       .subscribe((result) => {
@@ -161,13 +135,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   navigateTO() {
-    this.otmmService.postSession().subscribe((data)=>{
-      console.log(data)
-      this.otmmService.jSession='';
-      this.otmmService.jSession=data.session_resource.session.id;
+    this.otmmService.postSession().subscribe((data) => {
+      console.log(data);
+      this.otmmService.jSession = '';
+      this.otmmService.jSession = data.session_resource.session.id;
     });
 
- 
     this.router.navigateByUrl('apps/basic-form');
     this.menuName = '';
     this.menu = '';

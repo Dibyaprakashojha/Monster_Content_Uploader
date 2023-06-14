@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { JobsTableComponent } from './components/jobs-table/jobs-table.component';
-import { CreativeFormComponent } from './components/creative-form/creative-form.component';
 import { BasicFormComponent } from './components/basic-form/basic-form.component';
 import { EditFormComponent } from './components/edit-form/edit-form.component';
 import { ViewFormComponent } from './components/view-form/view-form.component';

@@ -6,6 +6,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationServiceService } from 'src/app/shared/services/notification-service.service';
 import { FormService } from '../../services/form.service';
 import { formatDate } from '@angular/common';
+import { OtmmService } from 'src/app/shared/services/otmm.service';
+import { environment as env } from 'src/environments/environment';
+import { PreviewImageComponent } from 'src/app/shared/components/preview-image/preview-image.component';
 @Component({
   selector: 'mcu-edit-form',
   templateUrl: './edit-form.component.html',
@@ -18,7 +21,8 @@ export class EditFormComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private notificationService: NotificationServiceService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private otmmService: OtmmService
   ) {
     this.jobDetails = this.fb.group({
       brand: ['', [Validators.required]],
@@ -52,8 +56,10 @@ export class EditFormComponent implements OnInit {
   selectedBrand: any;
   lastModifiedBy: any;
   lastModifiedDate: any;
+  finalImageList: any;
 
   ngOnInit() {
+    this.getImagesFromOtmm();
     this.activatedRoute.queryParams.subscribe((data: any) => {
       if (data.jobId) {
         this.getAllbrands();
@@ -229,7 +235,6 @@ export class EditFormComponent implements OnInit {
   }
 
   getAssetSubType(assetSubTypeId: any): any {
-    console.log(`BAABBABA`, assetSubTypeId);
     let element = this.allAssetSubTypes.find(
       (e: any) => e.assetSubtypeId == assetSubTypeId
     );
@@ -419,6 +424,48 @@ export class EditFormComponent implements OnInit {
         this.notificationService.error(
           'Job is not deleted please verify the form'
         );
+      },
+    });
+  }
+
+  finalHitCount!: number;
+  /* Preview Image List from OTMM */
+  getImagesFromOtmm = () => {
+    this.otmmService.getSessioons().subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (error) => {
+        this.otmmService.postSession().subscribe({
+          next: (data) => {
+            this.otmmService.jSession = '';
+            this.otmmService.jSession = data.session_resource.session.id;
+          },
+        });
+      },
+    });
+    this.otmmService
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'FINAL')
+      .subscribe({
+        next: (res: any) => {
+          this.finalHitCount =
+            res.search_result_resource.search_result.total_hit_count;
+          this.finalImageList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.delivery_service_url;
+            }
+          );
+          console.log(`Metadata: `, res);
+        },
+      });
+  };
+
+  previewImage(imageList: any) {
+    this.dialog.open(PreviewImageComponent, {
+      width: '900px',
+      height: '700px',
+      data: {
+        imageList: imageList,
       },
     });
   }

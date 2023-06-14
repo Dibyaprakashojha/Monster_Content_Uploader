@@ -229,7 +229,6 @@ export class ViewFormComponent {
   }
 
   getAssetSubType(assetSubTypeId: any): any {
-    console.log(`BAABBABA`, assetSubTypeId);
     let element = this.allAssetSubTypes.find(
       (e: any) => e.assetSubtypeId == assetSubTypeId
     );
@@ -364,12 +363,12 @@ export class ViewFormComponent {
     ) {
       this.jobDetails.controls['albumName'].disable();
     }
-    if (
-      this.jobDetails.controls['department'].getRawValue !== null ||
-      this.jobDetails.controls['department'].getRawValue !== undefined
-    ) {
-      this.jobDetails.controls['department'].disable();
-    }
+    // if (
+    //   this.jobDetails.controls['department'].getRawValue !== null ||
+    //   this.jobDetails.controls['department'].getRawValue !== undefined
+    // ) {
+    //   this.jobDetails.controls['department'].disable();
+    // }
     if (
       this.jobDetails.controls['assetType'].getRawValue !== null ||
       this.jobDetails.controls['assetType'].getRawValue !== undefined

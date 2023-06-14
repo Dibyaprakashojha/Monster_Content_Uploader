@@ -84,7 +84,11 @@
     -webkit-transform: skewX(-10deg);
     transform: skewX(-10deg);
   }
+
   ::ng-deep {
+    .menu-name-container {
+      display: none !important;
+    }
     .mat-mdc-raised-button[disabled][disabled] {
       --mdc-protected-button-disabled-container-color: rgb(255 255 255 / 12%);
       --mdc-protected-button-disabled-label-text-color: rgba(0, 0, 0, 0.38);
@@ -227,6 +231,11 @@ mat-form-field {
   .upload-count {
     position: absolute;
     left: 5em;
+  }
+  p {
+    img {
+      display: inline-block;
+    }
   }
   .add {
     position: absolute;
