@@ -388,7 +388,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     // });
   }
 
-  assetData = {
+  assetData :any= {
     "metadata": {
       "metadata_element_list":[]
     },
@@ -396,10 +396,24 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     "security_policy_list": [1],
     "template_id": environment.folder_template_id,
     "folderId": environment.folder_id,
-  
+    
   };
-  
 
+//   a(){
+//   this.assetData.metadata.metadata_element_list= [
+//     {
+//       id: 'MCU_DETAILS_DEPARTMENT',
+//       type: 'com.artesia.metadata.MetadataField',
+//       value: {
+//         value: {
+//           type: 'string',
+//           value: "Creative"
+//         },
+//       },
+//     },
+//    ];
+  
+// }
   maxFileSize=null
   uplodAsset(){
     this.otmmService.getSessioons().subscribe({
@@ -418,6 +432,18 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     this.assetData.metadata_model_id = otmmServicesConstants.defaultFolderModel;
     this.assetData.template_id = environment.folder_template_id;
     this.assetData.folderId  = environment.folder_id
+    this.assetData.metadata.metadata_element_list= [
+      {
+        id: 'MCU_DETAILS_DEPARTMENT',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value: "Creative"
+          },
+        },
+      },
+     ];
     let fileToRevision;
     let isRevision = false;
     let maxFiles = null;
@@ -437,7 +463,6 @@ export class CreativeFormComponent implements OnInit, OnChanges {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {});
-    console.log('linking');
 }
 
 
@@ -446,4 +471,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
       console.log(data)
     });
   }
+
+
+  
 }

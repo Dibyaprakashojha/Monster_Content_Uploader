@@ -54,41 +54,7 @@ export class BasicFormComponent {
   }
 
   brandId: any;
-  // updateSelectedBrand(selectedValue: any) {
-  //   this._filterBrand(selectedValue?.source.value);
-  //   console.log(selectedValue?.source.value);
-  //   if (selectedValue?.source.value) {
-  //     // this.jobDetails.controls['productLine'].setValue(null);
-  //     // this.selectedBrand = selectedValue?.source.value;
-  //     // console.log(`sected brand`, this.selectedBrand);
-  //     let selectedBrand = this.brands.find(
-  //       (x) => x.brandName == selectedValue?.source.value
-  //     );
-  //     // this.brands.map((brand: any) => {
-  //     //   if (brand.brandName === this.selectedBrand) {
-  //     //     this.brandId = brand.brandId;
-  //     //     this.formService.getByBrandId(this.brandId).subscribe((eachBrand) => {
-  //     //       console.log(eachBrand);
-  //     //       this.products = eachBrand.productLines;
-  //     //       this.countries = eachBrand.countries;
-  //     //       this.filterCountries = this.countries;
-  //     //       this.filteredProductLine = this.products;
-  //     //       console.log(`brands `, this.brands);
-  //     //     });
-  //     //   }
-  //     // });
-  //     this.formService
-  //       .getByBrandId(selectedBrand.brandId)
-  //       .subscribe((eachBrand) => {
-  //         console.log(eachBrand);
-  //         this.products = eachBrand.productLines;
-  //         this.countries = eachBrand.countries;
-  //         this.filterCountries = this.countries;
-  //         this.filteredProductLine = this.products;
-  //         console.log(`brands `, this.brands);
-  //       });
-  //   }
-  // }
+ 
 
   private _filterBrand(name: string): any[] {
     const filterValue = name.toLowerCase();

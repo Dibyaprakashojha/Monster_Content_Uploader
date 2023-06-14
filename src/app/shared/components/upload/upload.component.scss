@@ -1,3 +1,41 @@
+@import "src/scss/variables";
+.upload-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color:#353333;
+}
+
+.title{
+    align-self: flex-start;
+    margin-left: 15px;
+    color: #49c732;
+    font-family:$font-family;
+    font-size:24px
+    
+}
+.close-button,.finish-button{
+border-radius: 4px;
+    font-family: $font-family;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    word-spacing: 2%;
+    margin-right: 30px;
+    height: 35px;
+    width: 105px;
+    letter-spacing: 2px;
+    -ms-transform: skewX(-10deg);
+    -webkit-transform: skewX(-10deg);
+    transform: skewX(-10deg);
+    background: linear-gradient(270deg, #49c732 -11.81%, #248512 93.7%);
+
+}
+
+
+
+
+
 .upload-modal-title {
     font-weight: bold;
 }
