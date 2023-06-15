@@ -1,7 +1,8 @@
 import { SearchService } from './../../../services/search.service';
 import { Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'mcu-mobile-jobs-list',
@@ -11,6 +12,8 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 export class MobileJobsListComponent implements OnInit {
   isMobile!: boolean;
   jobList: any[] = [];
+
+  @ViewChild(InfiniteScrollDirective) infiniteScroll!: InfiniteScrollDirective;
 
   constructor(
     private breakPointObserver: BreakpointObserver,
@@ -57,20 +60,24 @@ export class MobileJobsListComponent implements OnInit {
 
   documentIndexAllJobs = 0;
   documentIndexMyJobs = 0;
+  loadRecord=5;
   ngOnInit(): void {
     this.jobList = [];
     if (this.router.url.includes('all-jobs')) {
       this.searchService
-        .getAllJobDeatils(this.documentIndexAllJobs, 3, 'ASC')
+        .getInitialAllJobsFormobile(this.documentIndexAllJobs)
         .subscribe((solrData) => {
           this.jobList = solrData.data;
+          this.documentIndexAllJobs+=this.loadRecord
         });
+        
       console.log(`joblist`, this.jobList);
     } else if (this.router.url.includes('my-jobs')) {
       this.searchService
-        .getMyJobDetails(this.documentIndexMyJobs, 3, 'ASC', 1)
+        .getInitialMyJobsFormobile(this.documentIndexMyJobs)
         .subscribe((solrData) => {
           this.jobList = solrData.data;
+          this.documentIndexMyJobs+=this.loadRecord
         });
       console.log(`joblist`, this.jobList);
     }
@@ -81,30 +88,40 @@ export class MobileJobsListComponent implements OnInit {
   onScroll(event: any): void {
     console.log('on Scroll method', event);
     if (this.router.url.includes('all-jobs')) {
-      this.documentIndexAllJobs += 3;
+      // this.documentIndexAllJobs += 3;
       console.log(this.documentIndexAllJobs);
+      // this.infiniteScroll.ngOnDestroy();
+      // this.infiniteScroll.setup();
+
       this.searchService
         .getAllJobsForMobile(this.documentIndexAllJobs, 'ASC')
         .subscribe((solrData: any) => {
+      this.documentIndexAllJobs+=this.loadRecord
           
-          this.jobList.push.apply(solrData.data)
+          // this.jobList.push.apply(solrData.data)
+          this.jobList = [...this.jobList, ...solrData.data];
+
 
           console.log(this.jobList);
         });
-      console.log(`joblist`, this.jobList);
     } else if (this.router.url.includes('my-jobs')) {
-      this.documentIndexMyJobs += 3;
+      
+      // this.documentIndexMyJobs += 3;
+      
+
+
       this.searchService
         .getMyJobsForMobile(this.documentIndexMyJobs, 1)
         .subscribe((solrData: any) => {
+      this.documentIndexMyJobs+=this.loadRecord
+
           console.log(solrData);
           this.jobList = [...this.jobList, ...solrData.data];
-          // this.jobList.push.apply(solrData.data)
-
-          
         });
     }
+    // this.infiniteScroll.ngOnDestroy();
+    // this.infiniteScroll.setup();
   }
 
-  scrollUpDistance: number = 2;
+  // scrollUpDistance: number = 2;
 }

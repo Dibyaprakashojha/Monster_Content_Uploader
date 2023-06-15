@@ -12,6 +12,8 @@ export class SearchService {
   // base_url = 'http://localhost:8081/mcu/api/v1/';
   constructor(private httpClient: HttpClient) {}
   jobList: any;
+  loadRecord=20;
+  sortDirection='desc'
 
   getAllJobDeatils(
     pageIndex: any,
@@ -54,21 +56,57 @@ export class SearchService {
     });
   }
 
+  getInitialAllJobsFormobile(
+    pageIndex: any,
+    ): Observable<SorlResponse> {
+    let url = this.base_url.concat('all-job/search');
+    return this.httpClient.post<SorlResponse>(url, {
+      keyword: '*',
+      cursor: {
+        page_index:pageIndex ,
+        page_size: this.loadRecord,
+        // total_records: totalRecords,
+      },
+      sort: {
+        sort_field: '*',
+        sort_direction: this.sortDirection,
+      },
+    });
+  }
+
+  getInitialMyJobsFormobile(
+    pageIndex: any,
+    sortType?: string): Observable<SorlResponse> {
+    let url = this.base_url.concat('all-job/search');
+    return this.httpClient.post<SorlResponse>(url, {
+      keyword: '*',
+      cursor: {
+        page_index:pageIndex ,
+        page_size: this.loadRecord,
+        // total_records: totalRecords,
+      },
+      sort: {
+        sort_field: '*',
+        sort_direction: this.sortDirection,
+      },
+    });
+  }
+
   getAllJobsForMobile(
     pageIndex: any,
     sortType?: string
   ): Observable<SorlResponse> {
-    let url = this.base_url.concat('all-job/search');
+    let url = this.base_url.concat('my-job/search');
 
     return this.httpClient.post<SorlResponse>(url, {
       keyword: '*',
       cursor: {
         page_index: pageIndex,
-        page_size: 3,
+        page_size: this.loadRecord,
       },
       sort: {
-        sort_field: 'ASC',
-        sort_direction: sortType,
+        sort_field: '*',
+        sort_direction: 'desc',
       },
     });
   }
@@ -79,7 +117,7 @@ export class SearchService {
       keyword: '*',
       cursor: {
         page_index: pageIndex,
-        page_size: 3,
+        page_size: this.loadRecord,
         // total_records: 0,
       },
       sort: {

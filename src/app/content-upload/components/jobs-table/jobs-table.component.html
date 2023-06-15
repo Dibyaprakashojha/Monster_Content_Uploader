@@ -12,7 +12,7 @@
 
   </div>
 
-  <table mat-table matSort matSortDisableClear (matSortChange)="sortData($event)" *ngIf="!isMobile"
+  <table mat-table matSort  matSortStart="desc"  (matSortChange)="sortData($event)" *ngIf="!isMobile"
     [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="job_id">
       <th ngClass="decorate" mat-sort-header mat-header-cell *matHeaderCellDef>
