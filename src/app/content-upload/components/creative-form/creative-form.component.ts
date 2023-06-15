@@ -5,17 +5,13 @@ import {
   SimpleChanges,
   OnInit,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormService } from '../../services/form.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationServiceService } from 'src/app/shared/services/notification-service.service';
-import { GlobalConfig as config } from 'src/Utils/config/config'
-import { environment  } from 'src/environments/environment';
+import { GlobalConfig as config } from 'src/Utils/config/config';
+import { environment } from 'src/environments/environment';
 import { UploadComponent } from 'src/app/shared/components/upload/upload.component';
 import { OtmmService } from 'src/app/shared/services/otmm.service';
 import { PreviewImageComponent } from 'src/app/shared/components/preview-image/preview-image.component';
@@ -26,14 +22,12 @@ import { PreviewImageComponent } from 'src/app/shared/components/preview-image/p
   styleUrls: ['./creative-form.component.scss'],
 })
 export class CreativeFormComponent implements OnInit, OnChanges {
-  
-  
   @Input() jobId: any;
 
   brands: any[] = [];
   producs = [];
   countries = [];
-  departments=[]
+  departments = [];
   assets = [];
   assetsSubType: any = [];
   useCase = [];
@@ -135,7 +129,8 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     private router: Router,
     public dialog: MatDialog,
     private notificationService: NotificationServiceService,
-    private otmmService:OtmmService
+    private otmmService: OtmmService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.jobDetails = this.fb.group({
       brand: ['', [Validators.required]],
@@ -162,9 +157,9 @@ export class CreativeFormComponent implements OnInit, OnChanges {
       },
       (err) => {}
     );
-    this.formService.getAllDepartmentName().subscribe((data:any)=>{
-      this.departments=data
-    })
+    this.formService.getAllDepartmentName().subscribe((data: any) => {
+      this.departments = data;
+    });
   }
 
   onSelectionChanged(event: any, filterCondition: string) {
@@ -248,7 +243,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   getBrand(brandId: any): any {
     let element = this.brands.find((e: any) => e.brandId == brandId);
     if (element) {
-      return element['brandDsName']
+      return element['brandDsName'];
     }
   }
 
@@ -266,7 +261,6 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     }
   }
 
-  
   getUseCase(useCaseId: any): any {
     let element = this.useCaseTypes.find((e: any) => e.useCaseId == useCaseId);
     if (element) {
@@ -345,17 +339,15 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   }
 
   /*validators*/
-  
+
   SaveForm() {
     this.notificationService.success('UpLoad Job has beedn saved');
     // if(config.getOtmmSession().session_resource.session.session==null){
-      this.otmmService.postSession().subscribe((data:any)=>{
-        this.otmmService.jSession=data.session_resource.session.id;
-        console.log(data)
-      })
+    this.otmmService.postSession().subscribe((data: any) => {
+      this.otmmService.jSession = data.session_resource.session.id;
+      console.log(data);
+    });
     // }
-
-
   }
 
   showCreative!: boolean;
@@ -380,258 +372,267 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   }
 
   deleteJob(jobId: any) {
-   
     this.notificationService.success('Job has been deleted sucessfully ');
-    this.formService.deleteJob(jobId).subscribe((data:any)=>{
-      console.log(data)
-    this.router.navigateByUrl('apps/dashboard');
-
-    })
+    this.formService.deleteJob(jobId).subscribe((data: any) => {
+      console.log(data);
+      this.router.navigateByUrl('apps/dashboard');
+    });
   }
 
-  assetData :any= {
-    "metadata": {
-      "metadata_element_list":[]
+  assetData: any = {
+    metadata: {
+      metadata_element_list: [],
     },
-    "metadata_model_id":"",
-    "security_policy_list": [1],
-    "template_id": environment.folder_template_id,
-    "folderId": environment.folder_id,
+    metadata_model_id: '',
+    security_policy_list: [1],
+    template_id: environment.folder_template_id,
+    folderId: environment.folder_id,
   };
 
+  getDepartment(departMentId: any) {
+    const dept: any = this.departments.find(
+      (each: any) => each.dptId == departMentId
+    );
 
-  getDepartment(departMentId:any){
-    const dept:any =this.departments.find((each:any)=>each.dptId==departMentId)
-
-    console.log('deperkpoere',dept)
-    return dept['dptDsName']
-    
+    console.log('deperkpoere', dept);
+    return dept['dptDsName'];
   }
 
-  
-  maxFileSize=null
-  uploadAsset(BucketName:string){
-
-    if(this.jobDetails.valid){
-
-
-    this.otmmService.getSessioons().subscribe({
-      next:(data)=>{
-        console.log(data)
-      },
-      error:(error)=>{
-        this.otmmService.postSession().subscribe({
-          next:(data)=>{
-            this.otmmService.jSession='';
-            this.otmmService.jSession=data.session_resource.session.id;
-          }
-        })
-      }}
-    )
-    this.assetData.metadata_model_id = environment.MetadataModel;
-    this.assetData.template_id = environment.folder_template_id;
-    this.assetData.folderId  = environment.folder_id
-    this.assetData.metadata.metadata_element_list = [
-      {
-        id: 'MCU_DETAILS_BRAND',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
-          value: {
-            type: 'string',
-            value: `${this.getBrand(this.jobDetails.get('brand')?.value)}^${this.getProductLine(this.jobDetails.get('productLine')?.value)}^${this.getCountry(this.jobDetails.get('country')?.value)}`
-          },
-        },
-      },
-      {
-        id: 'MCU_DETAILS_DEPARTMENT',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
-          value: {
-            type: 'string',
-            value: this.getDepartment(this.jobDetails.controls['department']?.value),
-          },
-        },
-      },
-      {
-        id: 'MCU_DETAIL_ALBUM_NAME',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
-          value: {
-            type: 'string',
-            value: this.jobDetails.controls['albumName']?.value,
-          },
-        },
-      },
-      {
-        id: 'MCU_DETAILS_SAP_NUMBER',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
-          value: {
-            type: "decimal",
-            value: this.jobDetails.controls['sapNumber']?.value,
-          },
-        },
-      },
-      {
-        id: 'MCU_DETAILS_DATE',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
-          value: {
-            type: 'dateTime',
-            value: this.jobDetails.controls['eventDate']?.value,
-          },
-        },
-      },
-      {
-        id: 'MCU_DETAILS_COMMENTS',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
-          value: {
-            type: 'string',
-            value: this.jobDetails.controls['comments']?.value,
-          },
-        },
-      },
-      {
-        id: 'MCU_DETAILS_BUCKET_NAME',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
-          value: {
-            type: 'string',
-            value: BucketName,
-          },
-        },
-      },
-      {
-        id: 'MCU_DETAILSJOB_ID',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
-          value: {
-            type: 'string',
-            value: this.jobId,
-          },
-        },
-      },
-      {
-        id: 'MCU_DETAILS_USECASE',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
-          value: {
-            type: 'string',
-            value:this.getUseCase(this.jobDetails.controls['useCase'].value)
-          },
-        },
-      },
-      {
-        id: 'MCU_ASSET_TYPE',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
-          value: {
-            type: 'string',
-            value: `${this.getAssetType(this.jobDetails.controls['assetType'].value)}^${this.getAssetSubType(this.jobDetails.controls['assetSubType'].value)}`
-          },
-        },
-      },
-      
-      
-    ];
-    console.log(this.assetData.metadata.metadata_element_list)
-    let fileToRevision;
-    let isRevision = false;
-  
-    let maxFiles = null;
-    const allowDuplicateDeliverable = false;
-    isRevision = false;
-
-
-    const dialogRef = this.dialog.open(UploadComponent, {
-      width: '60%',
-      disableClose: true,
-      data: {
-        assetData: this.assetData,
-        isRevisionUpload: isRevision,
-        fileToRevision,
-        maxFiles,
-        maxFileSize: this.maxFileSize,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => {});
-  }else{
-    this.notificationService.error('please fill the form details')
-  }
-}
-
-
-getMetaDataAsset(){
-  let asstetMetaData={
-    'brand':this.getBrand(this.jobDetails.get('brand')?.value),
-    'productLine':this.getProductLine(this.jobDetails.get('productLine')?.value),
-    "country":this.getCountry(this.jobDetails.get('country')?.value),
-    "albumName":this.jobDetails.get('albumName')?.value,
-    "department":this.getDepartment(this.jobDetails.controls['department']?.value),
-    "assetType":this.getAssetType(this.jobDetails.controls['assetType'].value),
-    "assetSubType":this.getAssetSubType(this.jobDetails.controls['assetSubType'].value),
-    "useCase":this.getUseCase(this.jobDetails.controls['useCase'].value),
-    "comments": this.jobDetails.controls['comments'].value,
-    "sapNo":this.jobDetails.controls['sapNumber'].value,
-    "eventDate":this.jobDetails.controls['eventDate'].value
-  }
-  return asstetMetaData
-  
-  
-}
-
-finalHitCount!: number;
-/* Preview Image List from OTMM */
-getImagesFromOtmm = () => {
-  this.otmmService.getSessioons().subscribe({
-    next: (data) => {
-      console.log(data);
-      this.otmmService.jSession = data.session_resource.session.id;
-    },
-    error: (error) => {
-      this.otmmService.postSession().subscribe({
+  maxFileSize = null;
+  uploadAsset(BucketName: string) {
+    if (this.jobDetails.valid) {
+      this.otmmService.getSessioons().subscribe({
         next: (data) => {
-          this.otmmService.jSession = '';
-          this.otmmService.jSession = data.session_resource.session.id;
+          console.log(data);
+        },
+        error: (error) => {
+          this.otmmService.postSession().subscribe({
+            next: (data) => {
+              this.otmmService.jSession = '';
+              this.otmmService.jSession = data.session_resource.session.id;
+            },
+          });
         },
       });
-    },
-  });
-  this.otmmService
-    .otmmMetadataSearch(environment.searchConfigId, 0, 5, 'FINAL')
-    .subscribe({
-      next: (res: any) => {
-        this.finalHitCount =
-          res.search_result_resource.search_result.total_hit_count;
-        this.finalImageList = res.search_result_resource.asset_list.map(
-          (asset: any) => {
-            return asset.delivery_service_url;
-          }
-        );
-        console.log(`Metadata: `, res);
+      this.assetData.metadata_model_id = environment.MetadataModel;
+      this.assetData.template_id = environment.folder_template_id;
+      this.assetData.folderId = environment.folder_id;
+      this.assetData.metadata.metadata_element_list = [
+        {
+          id: 'MCU_DETAILS_BRAND',
+          type: 'com.artesia.metadata.MetadataField',
+          value: {
+            value: {
+              type: 'string',
+              value: `${this.getBrand(
+                this.jobDetails.get('brand')?.value
+              )}^${this.getProductLine(
+                this.jobDetails.get('productLine')?.value
+              )}^${this.getCountry(this.jobDetails.get('country')?.value)}`,
+            },
+          },
+        },
+        {
+          id: 'MCU_DETAILS_DEPARTMENT',
+          type: 'com.artesia.metadata.MetadataField',
+          value: {
+            value: {
+              type: 'string',
+              value: this.getDepartment(
+                this.jobDetails.controls['department']?.value
+              ),
+            },
+          },
+        },
+        {
+          id: 'MCU_DETAIL_ALBUM_NAME',
+          type: 'com.artesia.metadata.MetadataField',
+          value: {
+            value: {
+              type: 'string',
+              value: this.jobDetails.controls['albumName']?.value,
+            },
+          },
+        },
+        {
+          id: 'MCU_DETAILS_SAP_NUMBER',
+          type: 'com.artesia.metadata.MetadataField',
+          value: {
+            value: {
+              type: 'decimal',
+              value: this.jobDetails.controls['sapNumber']?.value,
+            },
+          },
+        },
+        {
+          id: 'MCU_DETAILS_DATE',
+          type: 'com.artesia.metadata.MetadataField',
+          value: {
+            value: {
+              type: 'dateTime',
+              value: this.jobDetails.controls['eventDate']?.value,
+            },
+          },
+        },
+        {
+          id: 'MCU_DETAILS_COMMENTS',
+          type: 'com.artesia.metadata.MetadataField',
+          value: {
+            value: {
+              type: 'string',
+              value: this.jobDetails.controls['comments']?.value,
+            },
+          },
+        },
+        {
+          id: 'MCU_DETAILS_BUCKET_NAME',
+          type: 'com.artesia.metadata.MetadataField',
+          value: {
+            value: {
+              type: 'string',
+              value: BucketName,
+            },
+          },
+        },
+        {
+          id: 'MCU_DETAILSJOB_ID',
+          type: 'com.artesia.metadata.MetadataField',
+          value: {
+            value: {
+              type: 'string',
+              value: this.jobId,
+            },
+          },
+        },
+        {
+          id: 'MCU_DETAILS_USECASE',
+          type: 'com.artesia.metadata.MetadataField',
+          value: {
+            value: {
+              type: 'string',
+              value: this.getUseCase(this.jobDetails.controls['useCase'].value),
+            },
+          },
+        },
+        {
+          id: 'MCU_ASSET_TYPE',
+          type: 'com.artesia.metadata.MetadataField',
+          value: {
+            value: {
+              type: 'string',
+              value: `${this.getAssetType(
+                this.jobDetails.controls['assetType'].value
+              )}^${this.getAssetSubType(
+                this.jobDetails.controls['assetSubType'].value
+              )}`,
+            },
+          },
+        },
+      ];
+      console.log(this.assetData.metadata.metadata_element_list);
+      let fileToRevision;
+      let isRevision = false;
+
+      let maxFiles = null;
+      const allowDuplicateDeliverable = false;
+      isRevision = false;
+
+      const dialogRef = this.dialog.open(UploadComponent, {
+        width: '60%',
+        disableClose: true,
+        data: {
+          assetData: this.assetData,
+          isRevisionUpload: isRevision,
+          fileToRevision,
+          maxFiles,
+          maxFileSize: this.maxFileSize,
+        },
+      });
+      dialogRef.afterClosed().subscribe((result) => {});
+    } else {
+      this.notificationService.error('please fill the form details');
+    }
+  }
+
+  getMetaDataAsset() {
+    let asstetMetaData = {
+      brand: this.getBrand(this.jobDetails.get('brand')?.value),
+      productLine: this.getProductLine(
+        this.jobDetails.get('productLine')?.value
+      ),
+      country: this.getCountry(this.jobDetails.get('country')?.value),
+      albumName: this.jobDetails.get('albumName')?.value,
+      department: this.getDepartment(
+        this.jobDetails.controls['department']?.value
+      ),
+      assetType: this.getAssetType(this.jobDetails.controls['assetType'].value),
+      assetSubType: this.getAssetSubType(
+        this.jobDetails.controls['assetSubType'].value
+      ),
+      useCase: this.getUseCase(this.jobDetails.controls['useCase'].value),
+      comments: this.jobDetails.controls['comments'].value,
+      sapNo: this.jobDetails.controls['sapNumber'].value,
+      eventDate: this.jobDetails.controls['eventDate'].value,
+    };
+    return asstetMetaData;
+  }
+
+  finalHitCount!: number;
+  JOB_ID!: string;
+  /* Preview Image List from OTMM */
+  getImagesFromOtmm = () => {
+    this.activatedRoute.queryParams.subscribe((data: any) => {
+      this.JOB_ID = data.jobId;
+    });
+    this.otmmService.getSessioons().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.otmmService.jSession = data.session_resource.session.id;
+      },
+      error: (error) => {
+        this.otmmService.postSession().subscribe({
+          next: (data) => {
+            this.otmmService.jSession = '';
+            this.otmmService.jSession = data.session_resource.session.id;
+          },
+        });
       },
     });
-};
+    this.otmmService
+      .otmmMetadataSearch(
+        environment.searchConfigId,
+        0,
+        5,
+        'FINAL',
+        this.JOB_ID
+      )
+      .subscribe({
+        next: (res: any) => {
+          this.finalHitCount =
+            res.search_result_resource.search_result.total_hit_count;
+          this.finalImageList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.delivery_service_url;
+            }
+          );
+          console.log(`Metadata: `, res);
+        },
+      });
+  };
 
-previewImage(imageList: any,bucketName:any) {
- let assetMetadataVlaues= this.getMetaDataAsset();
-  this.dialog.open(PreviewImageComponent, {
-    width: '900px',
-    height: '700px',
-    data: {
-      imageList: imageList,
-      finalHitCount: this.finalHitCount,
-      validStatus:this.jobDetails.valid,
-      bucketName:bucketName,
-      assetMetadata:assetMetadataVlaues,
-      JobId:this.jobId
-
-    },
-  });
-}
-  
-
-
-  
+  previewImage(imageList: any, bucketName: any) {
+    let assetMetadataVlaues = this.getMetaDataAsset();
+    this.dialog.open(PreviewImageComponent, {
+      width: '900px',
+      height: '700px',
+      data: {
+        imageList: imageList,
+        finalHitCount: this.finalHitCount,
+        validStatus: this.jobDetails.valid,
+        bucketName: bucketName,
+        assetMetadata: assetMetadataVlaues,
+        JobId: this.jobId,
+      },
+    });
+  }
 }

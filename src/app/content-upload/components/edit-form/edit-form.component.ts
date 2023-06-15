@@ -636,6 +636,8 @@ export class EditFormComponent implements OnInit {
         });
       },
     });
+    console.log(`Inside OTMM METADATA:`, this.otmmService.jSession);
+
     /**FINAL BUCKET */
     this.otmmService
       .otmmMetadataSearch(env.searchConfigId, 0, 5, 'FINAL', this.JOB_ID)

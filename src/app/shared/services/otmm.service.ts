@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { Observable, ObservableInput, forkJoin, map } from 'rxjs';
 import { GlobalConfig as config } from 'src/Utils/config/config';
 import { NotificationServiceService } from 'src/app/shared/services/notification-service.service';
@@ -12,7 +12,7 @@ import { environment as env } from 'src/environments/environment';
 })
 export class OtmmService {
   otdsTicket: any;
-  public jSession!: string;
+  public jSession: string = '';
   otdsToken: any;
 
   constructor(
@@ -22,6 +22,7 @@ export class OtmmService {
 
   createSession(url: string) {
     let otdsTicket = '';
+    let apiUrl: string = env.version + '/sessions';
     if (config.config.environment !== 'local') {
       otdsTicket = this.otdsTicket;
     } else {
@@ -35,19 +36,16 @@ export class OtmmService {
       withCredentials: true,
       params: new HttpParams().append('OTDSTicket', this.otdsTicket),
     };
-    return this.http
-      .get(url + config.config.version + '/sessions', httpOptions)
-      .pipe(
-        map((response: any) => {
-          this.jSession = response.session_resource.session.id;
-
-          return response;
-        })
-      );
+    return this.http.get(apiUrl, httpOptions).pipe(
+      map((response: any) => {
+        this.jSession = response.session_resource.session.id;
+        return response;
+      })
+    );
   }
 
   postSession() {
-    let baseUrl: string = env.otmmHost + env.version + '/sessions';
+    let apiUrl: string = env.version + '/sessions';
 
     let data = new URLSearchParams();
     data.set('username', 'tsuper');
@@ -59,7 +57,7 @@ export class OtmmService {
       }),
       withCredentials: true,
     };
-    return this.http.post(baseUrl, data.toString(), httpOptions).pipe(
+    return this.http.post(apiUrl, data.toString(), httpOptions).pipe(
       map((response: any) => {
         // this.jSession = response.session_resource.session.id;
         // console.log(this.jSession,'jsessjion')
@@ -69,7 +67,11 @@ export class OtmmService {
   }
 
   getSessioons() {
-    let baseUrl: string = 'otmmapi/v6/sessions';
+    // let apiUrl: string = 'otmmapi/v6/sessions';
+    let apiUrl: string = env.version + '/sessions';
+    // let baseUrl: string = isDevMode()
+    //   ? './'
+    //   : 'https://micromm.acheron-tech.com/';
     const httpOptions = {
       headers: new HttpHeaders().set(
         'Content-Type',
@@ -77,7 +79,7 @@ export class OtmmService {
       ),
       withCredentials: true,
     };
-    return this.http.get(baseUrl, httpOptions).pipe(
+    return this.http.get(apiUrl, httpOptions).pipe(
       map((response: any) => {
         this.jSession = response.session_resource.session.id;
         console.log(this.jSession, 'jsessjion in post session');
@@ -1054,8 +1056,7 @@ export class OtmmService {
     BucketName: any,
     jobId: any
   ) {
-    const baseUrl =
-      env.otmmHost + env.version + otmmServicesConstants.textAssetSearchUrl;
+    const baseUrl = env.version + otmmServicesConstants.textAssetSearchUrl;
     let searchConditions = [];
     let keywordScopeId = env.keyword_scope_id;
 
@@ -1117,10 +1118,10 @@ export class OtmmService {
       withCredentials: true,
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded',
-        'X-Requested-By': this.jSession.toString(),
+        'X-Requested-By': this.jSession,
       }),
     };
-    if (this.jSession.toString() === null || this.jSession.toString() == '') {
+    if (this.jSession === null || this.jSession == '') {
       console.log('jsession error');
     }
     console.log(`JSEssion: `, this.jSession);
