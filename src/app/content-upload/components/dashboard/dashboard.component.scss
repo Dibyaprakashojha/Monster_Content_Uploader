@@ -152,6 +152,17 @@ mat-sidenav {
   height: auto;
   border-color: #22bb39 2px;
 }
+
+.menu-items-container-mobile-open{
+  list-style-type: none;
+  padding-left: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: auto;
+  border-color: #22bb39 2px;
+}
 .menu-items-container-open {
   list-style-type: none;
   padding-left: 0px;

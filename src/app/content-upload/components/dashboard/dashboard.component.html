@@ -80,7 +80,7 @@
       <button class="menu-button">
         <img class="mb-logo" src="assets/images/monster-small.png" />
       </button>
-      <button class="menu-button" (click)="navigateTO()">
+      <button *ngIf="checkMenu('my-jobs')||checkMenu('all-jobs')||checkMenu('my-workflows')||checkMenu('my-tasks')"  class="menu-button" (click)="navigateTO()">
         <img class="mb-menu-image" src=" assets/images/add.png" />
       </button>
     </div>
@@ -289,7 +289,7 @@
   </mat-sidenav>
 
   <mat-sidenav *ngIf="isMobile" mode="over" #mobileSideNav>
-    <ul class="menu-items-container">
+    <ul class="menu-items-container-mobile-open">
       <li class="menu-container" role="listitem">
         <button routerLink="my-jobs" class="menu-button-expanded">
           <img class="menu-image" src="assets/images/myjobs-2.png" />

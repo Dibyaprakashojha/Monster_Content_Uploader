@@ -329,7 +329,7 @@ p {
   }
 }
 
-@media screen and ((max-width: 599px)) {
+@media screen and (((max-width: 599px)) or ((width:430px)and (height:932px))) {
 
   
   .action-buttons {

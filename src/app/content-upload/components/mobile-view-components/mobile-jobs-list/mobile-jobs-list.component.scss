@@ -1,8 +1,10 @@
 @import "src/scss/variables";
 .reload-container {
   display: flex;
-  justify-content: space-between;
-  // height: 100%;
+  justify-content: flex-end;
+  width:100%;
+  margin-right: 0px;
+  align-self: flex-end;
 }
 .reload-button {
   background-color: transparent;
@@ -14,9 +16,10 @@
 }
 
 .menu-name-container {
-  display: inline;
+  display: flex;
   justify-content: center;
   flex-direction: column;
+  width: 50%;
 }
 
 .search-reload {
@@ -66,5 +69,5 @@ hr {
 
 .card-container {
   height: 20vh;
-  width: 100vw;
+  width: 80%;
 }

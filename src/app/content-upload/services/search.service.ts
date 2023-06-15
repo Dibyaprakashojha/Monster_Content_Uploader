@@ -84,7 +84,7 @@ export class SearchService {
       },
       sort: {
         sort_field: '*',
-        sort_direction: 'asc',
+        sort_direction: 'desc',
       },
     });
   }
