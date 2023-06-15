@@ -429,6 +429,16 @@ p {
         font-weight: bolder;
       }
     }
+    ul {
+      display: flex;
+      li {
+        list-style: none;
+        margin-right: -12px;
+        position: relative;
+        top: 2px;
+        right: 14em;
+      }
+    }
   }
   .upload-container {
     align-items: center;

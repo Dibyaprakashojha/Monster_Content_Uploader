@@ -57,7 +57,7 @@
   }
   .p-galleria .p-galleria-thumbnail-container {
     background: $background-color;
-    padding: 2rem 6rem 0;
+    padding: 2rem 18rem 0;
   }
   .p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-prev,
   .p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-next {
@@ -67,6 +67,23 @@
   .p-galleria-thumbnail-item-content {
     .p-component {
       font-size: 0rem !important;
+    }
+  }
+}
+
+@media screen and (((max-width: 599px)) or ((width:430px)and (height:932px))) {
+  ::ng-deep {
+    .p-galleria .p-galleria-thumbnail-container {
+      background: $background-color;
+      padding: 2rem 0rem 0;
+    }
+  }
+  .card {
+    mat-card {
+      img {
+        width: 300px;
+        height: 500px;
+      }
     }
   }
 }
