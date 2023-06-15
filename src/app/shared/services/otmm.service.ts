@@ -1051,7 +1051,8 @@ export class OtmmService {
     searchConfigId: any,
     startIndex: any,
     endIndex: any,
-    BucketName: any
+    BucketName: any,
+    jobId: any
   ) {
     const baseUrl =
       env.otmmHost + env.version + otmmServicesConstants.textAssetSearchUrl;
@@ -1064,6 +1065,15 @@ export class OtmmService {
       keyword: BucketName,
       scope_id: keywordScopeId,
       relational_operator_name: 'Metadata and File Content',
+    });
+
+    searchConditions.push({
+      metadata_field_id: 'MCU_DETAILSJOB_ID',
+      type: 'com.artesia.search.SearchFulltextCondition',
+      keyword: jobId,
+      scope_id: keywordScopeId,
+      relational_operator_name: 'Metadata and File Content',
+      relational_operator: 'and',
     });
 
     let search_condition_list = {

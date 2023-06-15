@@ -1,47 +1,52 @@
 <div mat-card ngClass="card-container">
-    <div ngClass="Job">
-        <div>
-            <label>JObID</label>
-            <p>{{job.job_id}}</p>
-        </div>
-        <div>
-            <label>JOB NAME</label>
-            <p>{{job.job_name}}</p>
-        </div>
-        <div>
-            <label>BRAND</label>
-            <p>{{job.brand}}</p>
-        </div>
-        <div>
-            <label>DEPARTMENT</label>
-            <p>{{job.department_name}}</p>
-        </div>
-
+  <div ngClass="Job">
+    <div>
+      <label>JObID</label>
+      <p>{{ job.job_id }}</p>
     </div>
-    <div ngClass="status-container">
-        <div>
-            <label>COUNTRY</label>
-            <p>{{job.country}}</p>
-        </div>
-        <div>
-            <label>CREATED DATE</label>
-            <p>{{job.created_date|date:'shortDate'}}</p>
-        </div>
-        <div class="status-container">
-            <label>JOB STATUS</label>
-            <button mat-button [ngClass]="{
+    <div>
+      <label>JOB NAME</label>
+      <p>{{ job.job_name }}</p>
+    </div>
+    <div>
+      <label>BRAND</label>
+      <p>{{ job.brand }}</p>
+    </div>
+    <div>
+      <label>DEPARTMENT</label>
+      <p>{{ job.department_name }}</p>
+    </div>
+  </div>
+  <div ngClass="status-container">
+    <div>
+      <label>COUNTRY</label>
+      <p>{{ job.country }}</p>
+    </div>
+    <div>
+      <label>CREATED DATE</label>
+      <p>{{ job.created_date | date : "shortDate" }}</p>
+    </div>
+    <div class="status-container">
+      <label>JOB STATUS</label>
+      <button
+        mat-button
+        [ngClass]="{
                 'status approved':job.job_status.toUpperCase() ==='APPROVED',
                 'status draft':job.job_status.toUpperCase() ==='DRAFT',
                 'status inReview':job.job_status.toUpperCase() ==='IN REVIEW',
-            }" ngClass="status">{{job.job_status}}</button>
-        </div>
+            }"
+        ngClass="status"
+      >
+        {{ job.job_status }}
+      </button>
     </div>
-    <div ngClass=" actions">
-        <button class="reload-button" (click)="viewTheJob(job)">
-            <img class="reload-image" src="assets/images/preview.png" />
-        </button>
-        <button class="reload-button" (click)="editTheJob(job)">
-            <img class="reload-image" src="assets/images/edit.png" />
-        </button>
-    </div>
+  </div>
+  <div ngClass=" actions">
+    <button class="reload-button" (click)="viewTheJob(job)">
+      <img class="reload-image" src="assets/images/preview.png" />
+    </button>
+    <button class="reload-button" (click)="editTheJob(job)">
+      <img class="reload-image" src="assets/images/edit.png" />
+    </button>
+  </div>
 </div>

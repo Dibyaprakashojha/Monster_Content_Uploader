@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   baseUrl: 'https://micromm.acheron-tech.com/mcu/auth/v1/',
   retrieveUrl: 'https://micromm.acheron-tech.com/mcu/api/v1/',
-  otmmHost: 'http://localhost:4500',
+  otmmHost: 'https://micromm.acheron-tech.com',
   version: '/otmmapi/v6',
   // resourceId: 'c875189a-857f-439c-8870-0924c644d7cf',
   resourceId: 'cdf5bf32-4c1f-45af-b5d8-3fd41cd31b5b', // mcu resource id

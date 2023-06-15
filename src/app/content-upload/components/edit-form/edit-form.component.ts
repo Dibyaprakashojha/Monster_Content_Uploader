@@ -616,8 +616,12 @@ export class EditFormComponent implements OnInit {
     return asstetMetaData;
   }
   downloadUrl!: any;
+  JOB_ID!: string;
   /* Preview Image List from OTMM */
   getImagesFromOtmm = () => {
+    this.activatedRoute.queryParams.subscribe((data: any) => {
+      this.JOB_ID = data.jobId;
+    });
     this.otmmService.getSessioons().subscribe({
       next: (data) => {
         console.log(data);
@@ -634,7 +638,7 @@ export class EditFormComponent implements OnInit {
     });
     /**FINAL BUCKET */
     this.otmmService
-      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'FINAL')
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'FINAL', this.JOB_ID)
       .subscribe({
         next: (res: any) => {
           this.finalHitCount =
@@ -656,7 +660,7 @@ export class EditFormComponent implements OnInit {
 
     /**PROOF BUCKET */
     this.otmmService
-      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'PROOF')
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'PROOF', this.JOB_ID)
       .subscribe({
         next: (res: any) => {
           this.proofHitCount =
@@ -672,7 +676,7 @@ export class EditFormComponent implements OnInit {
 
     /**RESOURCES BUCKET */
     this.otmmService
-      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'RESOURCES')
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'RESOURCES', this.JOB_ID)
       .subscribe({
         next: (res: any) => {
           this.resourcesHitCount =
@@ -688,7 +692,7 @@ export class EditFormComponent implements OnInit {
 
     /**WORKING BUCKET */
     this.otmmService
-      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'WORKING')
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'WORKING', this.JOB_ID)
       .subscribe({
         next: (res: any) => {
           this.workingHitCount =
