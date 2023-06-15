@@ -1,75 +1,4 @@
 @import "src/scss/variables";
-// .main-container {
-//   .header {
-//     flex: 0 0 1;
-//     mat-icon {
-//       color: white;
-//     }
-//   }
-//   .header h1 {
-//     color: white;
-//     margin-left: 2em;
-//     margin-top: 1px;
-//   }
-//   .bucket-name h3 {
-//     color: $text-color;
-//     margin-left: 4em;
-//     margin-top: -20px;
-//   }
-//   .card {
-//     margin-top: -15px;
-
-//   .bucket-name-container{
-//     display: flex;
-//     justify-content: space-between;
-//     margin-left: 4em;
-
-//   }
-//   .bucket-name {
-//     color: $text-color;
-   
-    
-//   }
-//   .card {
-//     margin-top: -7px;
-//   }
-// }
-// ::ng-deep {
-//   .mat-mdc-dialog-container .mdc-dialog__surface {
-//     background-color: $background-color;
-//   }
-//   .p-galleria .p-galleria-thumbnail-container {
-//     background: $background-color;
-//     padding: 2rem 6rem 0;
-//   }
-//   .p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-prev,
-//   .p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-next {
-//     color: $text-color;
-//     font-size: 1.5rem;
-//   }
-// }
-//     padding: 2rem 16.25rem 0;
-//   }
-
-// .submit-button{
-//     border-radius: 4px;
-//     font-family: $font-family;
-//     font-size: 20px;
-//     color: white;
-//     font-weight: bold;
-//     word-spacing: 2%;
-//     margin-right: 30px;
-//     height: 35px;
-//     width: 123px;
-//     letter-spacing: 2px;
-//     -ms-transform: skewX(-10deg);
-//     -webkit-transform: skewX(-10deg);
-//     transform: skewX(-10deg);
-//     background: linear-gradient(270deg, #49c732 -11.81%, #248512 93.7%);
-// }
-
-
-@import "src/scss/variables";
 .main-container {
   .header {
     display: flex;
@@ -83,9 +12,6 @@
       mat-icon {
         color: white;
       }
-    .header > h1,
-    mat-icon {
-      color: white;
     }
   }
   .header h1 {
@@ -102,7 +28,6 @@
     margin-top: -15px;
   }
 }
-}
 ::ng-deep {
   .mat-mdc-dialog-container .mdc-dialog__surface {
     background-color: $background-color;
@@ -116,21 +41,4 @@
     color: $text-color;
     font-size: 1.5rem;
   }
-}
-
-.submit-button{
-    border-radius: 4px;
-    font-family: $font-family;
-    font-size: 20px;
-    color: white;
-    font-weight: bold;
-    word-spacing: 2%;
-    margin-right: 30px;
-    height: 35px;
-    width: 123px;
-    letter-spacing: 2px;
-    -ms-transform: skewX(-10deg);
-    -webkit-transform: skewX(-10deg);
-    transform: skewX(-10deg);
-    background: linear-gradient(270deg, #49c732 -11.81%, #248512 93.7%);
 }

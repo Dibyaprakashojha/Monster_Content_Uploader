@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, isDevMode } from '@angular/core';
 import { Observable, ObservableInput, forkJoin, map } from 'rxjs';
-import { GlobalConfig as config } from 'src/Utils/config/config';
+import { GlobalConfig, GlobalConfig as config } from 'src/Utils/config/config';
 import { NotificationServiceService } from 'src/app/shared/services/notification-service.service';
 import { otmmServicesConstants } from 'src/Utils/config/constants';
 import Cookie from 'js-cookie';
@@ -22,7 +22,7 @@ export class OtmmService {
 
   createSession(url: string) {
     let otdsTicket = '';
-    let apiUrl: string = env.version + '/sessions';
+    let apiUrl: string = GlobalConfig.getOtmmApiUrl() + '/sessions';
     if (config.config.environment !== 'local') {
       otdsTicket = this.otdsTicket;
     } else {
@@ -45,7 +45,7 @@ export class OtmmService {
   }
 
   postSession() {
-    let apiUrl: string = env.version + '/sessions';
+    let apiUrl: string = GlobalConfig.getOtmmApiUrl() + '/sessions';
 
     let data = new URLSearchParams();
     data.set('username', 'tsuper');
@@ -68,7 +68,7 @@ export class OtmmService {
 
   getSessioons() {
     // let apiUrl: string = 'otmmapi/v6/sessions';
-    let apiUrl: string = env.version + '/sessions';
+    let apiUrl: string = GlobalConfig.getOtmmApiUrl() + '/sessions';
     // let baseUrl: string = isDevMode()
     //   ? './'
     //   : 'https://micromm.acheron-tech.com/';
@@ -327,7 +327,7 @@ export class OtmmService {
   }
 
   customImport(fileName: string) {
-    const baseUrl = env.otmmHost + env.version + '/jobs/imports';
+    const baseUrl = GlobalConfig.getOtmmApiUrl() + '/jobs/imports';
     const formData = new FormData();
     formData.append('file_name', fileName);
     const urlParam =
@@ -392,7 +392,7 @@ export class OtmmService {
   }
 
   assetRendition(file: any, importJobID: any) {
-    const url = env.otmmHost + env.version + '/renditions';
+    const url = GlobalConfig.getOtmmApiUrl() + '/renditions';
     const param = new FormData();
     param.append('import_job_id', importJobID);
     param.append('file', file);
@@ -422,7 +422,7 @@ export class OtmmService {
     importJobId: string | Blob,
     isRevision?: any
   ): any {
-    const url = env.otmmHost + env.version + '/jobs/imports/' + importJobId;
+    const url = GlobalConfig.getOtmmApiUrl() + '/jobs/imports/' + importJobId;
     const param = new FormData();
     let blob = null;
     let content = null;
@@ -1056,7 +1056,8 @@ export class OtmmService {
     BucketName: any,
     jobId: any
   ) {
-    const baseUrl = env.version + otmmServicesConstants.textAssetSearchUrl;
+    const baseUrl =
+      GlobalConfig.getOtmmApiUrl() + otmmServicesConstants.textAssetSearchUrl;
     let searchConditions = [];
     let keywordScopeId = env.keyword_scope_id;
 
