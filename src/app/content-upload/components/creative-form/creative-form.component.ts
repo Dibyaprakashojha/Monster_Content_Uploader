@@ -7,21 +7,18 @@ import {
 } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
-  ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { map, startWith } from 'rxjs';
 import { FormService } from '../../services/form.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationServiceService } from 'src/app/shared/services/notification-service.service';
-import { GlobalConfig as config } from 'src/Utils/config/config';
-import { otmmServicesConstants } from 'src/Utils/config/constants';
-import { environment } from 'src/environments/environment';
+import { GlobalConfig as config } from 'src/Utils/config/config'
+import { environment  } from 'src/environments/environment';
 import { UploadComponent } from 'src/app/shared/components/upload/upload.component';
 import { OtmmService } from 'src/app/shared/services/otmm.service';
+import { PreviewImageComponent } from 'src/app/shared/components/preview-image/preview-image.component';
 
 @Component({
   selector: 'mcu-creative-form',
@@ -47,7 +44,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   filterAssetSubTypes: Array<any> = [];
   useCaseTypes: Array<any> = [];
   selectedBrand: any;
-
+  finalImageList: any;
   ngOnChanges(changes: SimpleChanges): void {
     console.log(`jonbId in cretaive`, this.jobId);
   }
@@ -154,8 +151,6 @@ export class CreativeFormComponent implements OnInit, OnChanges {
       comments: [''],
     });
   }
-
- 
 
   ngOnInit() {
     console.log(`jonbId in onint`, this.jobId);
@@ -293,7 +288,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
       (e: any) => e.assetSubtypeId == assetSubTypeId
     );
     if (element) {
-      return element['assetSubtypeName'];
+      return element['assetSubtypeDsName'];
     }
   }
 
@@ -413,22 +408,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     
   }
 
-  // getMetaDataAsset(){
-
-  //   console.log(this.getBrand(this.jobDetails.get('brand')?.value),
-  //   this.getProductLine(this.jobDetails.get('productLine')?.value),
-  //   this.getCountry(this.jobDetails.get('country')?.value),
-  //   this.jobDetails.get('albumName')?.value,
-  //   this.getDepartment(this.jobDetails.controls['department']?.value),
-  //   this.jobDetails.controls['department'].value,
-  //   this.getAssetType(this.jobDetails.controls['assetType'].value),
-  //   this.getAssetSubType(this.jobDetails.controls['assetSubType'].value),
-  //   this.getUseCase(this.jobDetails.controls['useCase'].value),
-  //   this.jobDetails.controls['comments'].value)
-    
-  // }
-
-
+  
   maxFileSize=null
   uploadAsset(BucketName:string){
 
@@ -582,11 +562,75 @@ export class CreativeFormComponent implements OnInit, OnChanges {
 }
 
 
-  createSession(){
-    this.otmmService.postSession().subscribe((data)=>{
-      console.log(data)
-    });
+getMetaDataAsset(){
+  let asstetMetaData={
+    'brand':this.getBrand(this.jobDetails.get('brand')?.value),
+    'productLine':this.getProductLine(this.jobDetails.get('productLine')?.value),
+    "country":this.getCountry(this.jobDetails.get('country')?.value),
+    "albumName":this.jobDetails.get('albumName')?.value,
+    "department":this.getDepartment(this.jobDetails.controls['department']?.value),
+    "assetType":this.getAssetType(this.jobDetails.controls['assetType'].value),
+    "assetSubType":this.getAssetSubType(this.jobDetails.controls['assetSubType'].value),
+    "useCase":this.getUseCase(this.jobDetails.controls['useCase'].value),
+    "comments": this.jobDetails.controls['comments'].value,
+    "sapNo":this.jobDetails.controls['sapNumber'].value,
+    "eventDate":this.jobDetails.controls['eventDate'].value
   }
+  return asstetMetaData
+  
+  
+}
+
+finalHitCount!: number;
+/* Preview Image List from OTMM */
+getImagesFromOtmm = () => {
+  this.otmmService.getSessioons().subscribe({
+    next: (data) => {
+      console.log(data);
+      this.otmmService.jSession = data.session_resource.session.id;
+    },
+    error: (error) => {
+      this.otmmService.postSession().subscribe({
+        next: (data) => {
+          this.otmmService.jSession = '';
+          this.otmmService.jSession = data.session_resource.session.id;
+        },
+      });
+    },
+  });
+  this.otmmService
+    .otmmMetadataSearch(environment.searchConfigId, 0, 5, 'FINAL')
+    .subscribe({
+      next: (res: any) => {
+        this.finalHitCount =
+          res.search_result_resource.search_result.total_hit_count;
+        this.finalImageList = res.search_result_resource.asset_list.map(
+          (asset: any) => {
+            return asset.delivery_service_url;
+          }
+        );
+        console.log(`Metadata: `, res);
+      },
+    });
+};
+
+previewImage(imageList: any,bucketName:any) {
+ let assetMetadataVlaues= this.getMetaDataAsset();
+  this.dialog.open(PreviewImageComponent, {
+    width: '900px',
+    height: '700px',
+    data: {
+      imageList: imageList,
+      finalHitCount: this.finalHitCount,
+      validStatus:this.jobDetails.valid,
+      bucketName:bucketName,
+      assetMetadata:assetMetadataVlaues,
+      JobId:this.jobId
+
+    },
+  });
+}
+  
 
 
   

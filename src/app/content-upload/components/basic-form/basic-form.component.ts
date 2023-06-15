@@ -95,7 +95,7 @@ export class BasicFormComponent {
   getCountry(countryId: any): any {
     let element = this.countries.find((e: any) => e.countryId == countryId);
     if (element) {
-      return element['countryName'];
+      return element['countryDsName'];
     }
   }
 

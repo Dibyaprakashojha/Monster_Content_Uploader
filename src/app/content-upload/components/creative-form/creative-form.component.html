@@ -179,7 +179,7 @@
               *ngFor="let option of filterAssetSubTypes"
               [value]="option.assetSubtypeId"
             >
-              {{ option.assetSubtypeName }}
+              {{ option.assetSubtypeDsName }}
             </mat-option>
           </mat-autocomplete>
           <mat-error
@@ -257,7 +257,26 @@
       <div class="upload-container">
         <div class="typeOfUpload final">
           <p class="upload-text">Final</p>
-          <p class="upload-count">(300)</p>
+          <p class="upload-count" *ngIf="finalImageList">
+            ({{ finalHitCount }})
+          </p>
+          <button
+            class="preview-button"
+            *ngIf="finalImageList"
+            (click)="previewImage(finalImageList, 'FINAL')"
+          >
+            <!-- <mat-icon> visibility </mat-icon> -->
+            <ul>
+              <li *ngFor="let image of finalImageList">
+                <img
+                  class="image-stack"
+                  src="{{ image }}"
+                  width="30px"
+                  height="40px"
+                />
+              </li>
+            </ul>
+          </button>
           <div class="image-preview">
             <button  (click)="uploadAsset('Final')" class="add">
               +

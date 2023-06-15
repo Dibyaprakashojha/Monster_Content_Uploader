@@ -114,6 +114,7 @@ export class FormService {
   createJobDetails(jobDetails: any, JobId: any): Observable<any> {
     let url = `${this.base_url}job-details`;
     // let url = 'https://micromm.acheron-tech.com/mcu/api/v1/';
+    console.log('create job details', jobDetails)
     let jobValue = {
       albumName: jobDetails.albumName,
       assetSubType: {
