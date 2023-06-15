@@ -128,7 +128,7 @@ export class JobsTableComponent implements OnInit {
   };
   pageIndexValue = 1;
   totalPageNumber = 0;
-  sortDirection: string = 'asc';
+  sortDirection: string = 'desc';
 
   sortData(event: any) {
     this.sortDirection = event.direction;
@@ -139,7 +139,6 @@ export class JobsTableComponent implements OnInit {
         .getMyJobDetails(
           this.startIndex,
           this.endIndex,
-         
           this.sortDirection,
           1
         )
