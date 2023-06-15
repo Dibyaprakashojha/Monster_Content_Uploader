@@ -4,6 +4,12 @@ import { OtmmService } from '../../services/otmm.service';
 import { environment as env, environment } from 'src/environments/environment';
 import { UploadComponent } from '../upload/upload.component';
 import { Dialog } from '@angular/cdk/dialog';
+
+interface Images {
+  imageUrl: string;
+  downloadUrl: string;
+  assetName: string;
+}
 @Component({
   selector: 'mcu-preview-image',
   templateUrl: './preview-image.component.html',
@@ -19,6 +25,9 @@ export class PreviewImageComponent implements OnInit {
   responsiveOptions!: any[];
   bucketName!: any;
   finalHitCount!: any;
+  downloadUrlList!: any;
+  assetNameList!: any;
+  combinedList!: any;
 
   ngOnInit(): void {
     console.log('data:', this.data);
@@ -33,14 +42,41 @@ export class PreviewImageComponent implements OnInit {
       )
       .subscribe({
         next: (res: any) => {
+          this.downloadUrlList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.master_content_info.url;
+            }
+          );
           this.imageList = res.search_result_resource.asset_list.map(
             (asset: any) => {
               return asset.delivery_service_url;
             }
           );
-          console.log(`Metadata: `, res);
+          this.assetNameList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.name;
+            }
+          );
+          this.combinedList = this.imageList.map((each, index) => {
+            let a: Images = {
+              imageUrl: '',
+              downloadUrl: '',
+              assetName: '',
+            };
+            a.imageUrl = each;
+            a.downloadUrl = this.downloadUrlList[index];
+            a.assetName = this.assetNameList[index];
+            return a;
+          });
+          console.log(`Combine List:   `, this.combinedList);
         },
       });
+  }
+
+  download(downloadUrl: any, assetName: any) {
+    const baseUrl = env.otmmHost + downloadUrl;
+    this.otmmService.initiateDownload(baseUrl, assetName);
+    console.log(`Downloaded Succesfully`);
   }
 
   closeDialog() {
@@ -202,6 +238,4 @@ export class PreviewImageComponent implements OnInit {
     } else {
     }
   }
-
-  download() {}
 }

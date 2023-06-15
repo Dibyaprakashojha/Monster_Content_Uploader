@@ -615,7 +615,7 @@ export class EditFormComponent implements OnInit {
     };
     return asstetMetaData;
   }
-
+  downloadUrl!: any;
   /* Preview Image List from OTMM */
   getImagesFromOtmm = () => {
     this.otmmService.getSessioons().subscribe({
@@ -639,11 +639,17 @@ export class EditFormComponent implements OnInit {
         next: (res: any) => {
           this.finalHitCount =
             res.search_result_resource.search_result.total_hit_count;
+          this.downloadUrl = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.master_content_info.url;
+            }
+          );
           this.finalImageList = res.search_result_resource.asset_list.map(
             (asset: any) => {
               return asset.delivery_service_url;
             }
           );
+          console.log(`Download Url:  `, this.downloadUrl);
           console.log(`Metadata: `, res);
         },
       });

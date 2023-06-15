@@ -11,23 +11,26 @@
     <button class="submit-button" (click)="uploadMore()">
       <mat-icon> cloud_upload </mat-icon>
     </button>
-    <button class="submit-button" (click)="download()">
-      <mat-icon> cloud_download </mat-icon>
-    </button>
   </div>
   <div class="card">
-    <p-galleria [value]="imageList" [numVisible]="10">
+    <p-galleria [value]="combinedList" [numVisible]="10">
       <ng-template pTemplate="item" let-item>
         <mat-card class="image-card"
-          ><img [src]="item" style="width: 500px; height: 532px"
+          ><img [src]="item.imageUrl" style="width: 500px; height: 532px"
         /></mat-card>
+        <button
+          class="submit-button"
+          (click)="download(item.downloadUrl, item.assetName)"
+        >
+          <mat-icon> cloud_download </mat-icon>
+        </button>
       </ng-template>
       <ng-template pTemplate="thumbnail" let-item>
         <div
           class="grid grid-nogutter justify-content-center"
           style="width: 50px; height: 40px"
         >
-          <img [src]="item" style="width: 50px; height: 40px" />
+          <img [src]="item.imageUrl" style="width: 50px; height: 40px" />
         </div>
       </ng-template>
     </p-galleria>
