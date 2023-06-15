@@ -145,7 +145,7 @@
               [value]="option"
               (onSelectionChange)="updateSelectedAsset()"
             >
-              {{ option.assetTypeName }}
+              {{ option.assetTypeDsName }}
             </mat-option>
           </mat-autocomplete>
           <mat-error
@@ -230,6 +230,7 @@
             matInput
             type="number"
             formControlName="sapNumber"
+            
           />
         </mat-form-field>
 

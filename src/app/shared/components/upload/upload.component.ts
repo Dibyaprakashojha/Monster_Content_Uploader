@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationServiceService } from '../../services/notification-service.service';
 import { OtmmService } from '../../services/otmm.service';
+import { LoaderService } from '../loading/loader.service';
 
 @Component({
   selector: 'mcu-upload',
@@ -13,7 +14,8 @@ export class UploadComponent {
     public dialogRef: MatDialogRef<UploadComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private notificationService: NotificationServiceService,
-    private otmmService:OtmmService
+    private otmmService:OtmmService,
+    private loaderService:LoaderService
   ) {}
   uploadedFiles = [];
   uploadProcessing = false;
@@ -31,37 +33,20 @@ export class UploadComponent {
   uploadFiles() {
     if (this.uploadedFiles.length > 0) {
       this.uploadProcessing = true;
+      this.loaderService.show()
       this.otmmService
         .startUpload(this.uploadedFiles, this.data, this.data.isRevisionUpload)
-        .subscribe(
-          // next:(response:any) => {
-          //   // this.otmmAssetService.delay().then((any) => {
-          //   console.log('wait for some time');
-          //   this.notificationService.success('Asset(s) upload is in progress.')
-          //   console.log('res ',response);
-          //   if(response =='Success'){
-          //     console.log("hiiis")
-          //   }
-          //   this.dialogRef.close(true);
-          // },
-          // error:() => {
-          //   this.uploadProcessing = false;
-          //   this.notificationService.error(
-          //     'Something went wrong while uploading the file(s).'
-          //   );
-          // }
-
-         { 
+        .subscribe({ 
           next:(response:any)=>{
           this.notificationService.success('Asset(s) upload is in progress.')
             console.log('res ',response);
-            if(response =='Success'){
-              console.log("hiiis")
-            }
+            this.loaderService.hide()
             this.dialogRef.close(true);
+
           },
           error:()=>{
             this.uploadProcessing = false;
+            this.loaderService.hide()
             this.notificationService.error(
               'Something went wrong while uploading the file(s).'
             );

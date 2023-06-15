@@ -67,7 +67,7 @@ export class SearchService {
         page_size: 3,
       },
       sort: {
-        sort_field: '*',
+        sort_field: 'ASC',
         sort_direction: sortType,
       },
     });

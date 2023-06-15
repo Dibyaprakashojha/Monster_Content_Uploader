@@ -49,3 +49,29 @@ mat-dialog-content {
 .margin-b-4 {
     margin-bottom: 4px;
 }
+
+
+@media screen and ((max-width: 599px)) {
+
+    .close-button,.finish-button{
+            border-radius: 4px;
+            font-family: $font-family;
+            font-size: 20px;
+            color: white;
+            font-weight: bold;
+            word-spacing: 2%;
+            margin-right: 30px;
+            height: 35px;
+            width: 75px;
+            letter-spacing: 2px;
+            -ms-transform: skewX(-10deg);
+            -webkit-transform: skewX(-10deg);
+            transform: skewX(-10deg);
+            background: linear-gradient(270deg, #49c732 -11.81%, #248512 93.7%);
+        }
+
+        // mat-dialog-content{
+
+        // }
+
+}

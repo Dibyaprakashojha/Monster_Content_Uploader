@@ -20,6 +20,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatChipsModule} from '@angular/material/chips';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 const modules = [
   CdkTableModule,
   MatToolbarModule,
@@ -41,7 +42,8 @@ const modules = [
   MatNativeDateModule,
   MatDialogModule,
   MatChipsModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatProgressSpinnerModule
 ];
 @NgModule({
   declarations: [],

@@ -386,10 +386,11 @@ export class CreativeFormComponent implements OnInit, OnChanges {
 
   deleteJob(jobId: any) {
    
-    this.router.navigateByUrl('apps/dashboard');
     this.notificationService.success('Job has been deleted sucessfully ');
     this.formService.deleteJob(jobId).subscribe((data:any)=>{
       console.log(data)
+    this.router.navigateByUrl('apps/dashboard');
+
     })
   }
 
@@ -412,24 +413,27 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     
   }
 
-  getMetaDataAsset(){
+  // getMetaDataAsset(){
 
-    console.log(this.getBrand(this.jobDetails.get('brand')?.value),
-    this.getProductLine(this.jobDetails.get('productLine')?.value),
-    this.getCountry(this.jobDetails.get('country')?.value),
-    this.jobDetails.get('albumName')?.value,
-    this.getDepartment(this.jobDetails.controls['department']?.value),
-    this.jobDetails.controls['department'].value,
-    this.getAssetType(this.jobDetails.controls['assetType'].value),
-    this.getAssetSubType(this.jobDetails.controls['assetSubType'].value),
-    this.getUseCase(this.jobDetails.controls['useCase'].value),
-    this.jobDetails.controls['comments'].value)
+  //   console.log(this.getBrand(this.jobDetails.get('brand')?.value),
+  //   this.getProductLine(this.jobDetails.get('productLine')?.value),
+  //   this.getCountry(this.jobDetails.get('country')?.value),
+  //   this.jobDetails.get('albumName')?.value,
+  //   this.getDepartment(this.jobDetails.controls['department']?.value),
+  //   this.jobDetails.controls['department'].value,
+  //   this.getAssetType(this.jobDetails.controls['assetType'].value),
+  //   this.getAssetSubType(this.jobDetails.controls['assetSubType'].value),
+  //   this.getUseCase(this.jobDetails.controls['useCase'].value),
+  //   this.jobDetails.controls['comments'].value)
     
-  }
+  // }
 
 
   maxFileSize=null
   uploadAsset(BucketName:string){
+
+    if(this.jobDetails.valid){
+
 
     this.otmmService.getSessioons().subscribe({
       next:(data)=>{
@@ -444,7 +448,6 @@ export class CreativeFormComponent implements OnInit, OnChanges {
         })
       }}
     )
-    this.getMetaDataAsset();
     this.assetData.metadata_model_id = environment.MetadataModel;
     this.assetData.template_id = environment.folder_template_id;
     this.assetData.folderId  = environment.folder_id
@@ -573,6 +576,9 @@ export class CreativeFormComponent implements OnInit, OnChanges {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {});
+  }else{
+    this.notificationService.error('please fill the form details')
+  }
 }
 
 

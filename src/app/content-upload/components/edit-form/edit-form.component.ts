@@ -7,8 +7,9 @@ import { NotificationServiceService } from 'src/app/shared/services/notification
 import { FormService } from '../../services/form.service';
 import { formatDate } from '@angular/common';
 import { OtmmService } from 'src/app/shared/services/otmm.service';
-import { environment as env } from 'src/environments/environment';
+import { environment as env, environment } from 'src/environments/environment';
 import { PreviewImageComponent } from 'src/app/shared/components/preview-image/preview-image.component';
+import { UploadComponent } from 'src/app/shared/components/upload/upload.component';
 @Component({
   selector: 'mcu-edit-form',
   templateUrl: './edit-form.component.html',
@@ -57,6 +58,7 @@ export class EditFormComponent implements OnInit {
   lastModifiedBy: any;
   lastModifiedDate: any;
   finalImageList: any;
+  departments:any
 
   ngOnInit() {
     this.getImagesFromOtmm();
@@ -79,6 +81,9 @@ export class EditFormComponent implements OnInit {
       }
       this.jobId = data.jobId;
     });
+    this.formService.getAllDepartmentName().subscribe((data:any)=>{
+      this.departments=data
+    })
   }
 
   getAllbrands() {
@@ -302,13 +307,7 @@ export class EditFormComponent implements OnInit {
       this.formService
         .getByBrandId(data.brand.brandId)
         .subscribe((eachBrand: any) => {
-          this.setTheFormVlaues(data);
-
-          // this.producs = eachBrand.productLines;
-          // this.filteredProductLine = this.producs;
-          // this.countries = eachBrand.countries;
-          // this.filterCountries = this.countries;
-        });
+          this.setTheFormVlaues(data);});
       console.log(data);
     });
   }
@@ -346,10 +345,6 @@ export class EditFormComponent implements OnInit {
     );
 
     this.jobDetails.controls['comments'].setValue(jobData.comments);
-    // this.getAllAssets();comments
-    // this.getAllUseCase();eventDate
-    // this.getAllSubAssetTypes();
-    // this.disableFormFields();useCase
   }
 
   disableFormFields() {
@@ -414,18 +409,199 @@ export class EditFormComponent implements OnInit {
       });
   }
 
-  deleteJob(jobId: any) {
-    this.formService.deleteJob(jobId).subscribe({
-      next: (data) => {
-        this.router.navigateByUrl('apps/dashboard');
-        this.notificationService.success('Job has been deleted sucessfully ');
+  assetData :any= {
+    "metadata": {
+      "metadata_element_list":[]
+    },
+    "metadata_model_id":"",
+    "security_policy_list": [1],
+    "template_id": environment.folder_template_id,
+    "folderId": environment.folder_id,
+  };
+
+
+  getDepartment(departMentId:any){
+    const dept:any =this.departments.find((each:any)=>each.dptId==departMentId)
+
+    console.log('deperkpoere',dept)
+    return dept['dptDsName']
+    
+  }
+
+
+  maxFileSize=null
+  uploadAsset(BucketName:string){
+
+    if(this.jobDetails.valid){
+
+
+    this.otmmService.getSessioons().subscribe({
+      next:(data)=>{
+        console.log(data)
       },
-      error: (err) => {
-        this.notificationService.error(
-          'Job is not deleted please verify the form'
-        );
+      error:(error)=>{
+        this.otmmService.postSession().subscribe({
+          next:(data)=>{
+            this.otmmService.jSession='';
+            this.otmmService.jSession=data.session_resource.session.id;
+          }
+        })
+      }}
+    )
+   
+    this.assetData.metadata_model_id = environment.MetadataModel;
+    this.assetData.template_id = environment.folder_template_id;
+    this.assetData.folderId  = environment.folder_id
+    this.assetData.metadata.metadata_element_list = [
+      {
+        id: 'MCU_DETAILS_BRAND',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value: `${this.getBrand(this.jobDetails.get('brand')?.value)}^${this.getProductLine(this.jobDetails.get('productLine')?.value)}^${this.getCountry(this.jobDetails.get('country')?.value)}`
+          },
+        },
+      },
+      {
+        id: 'MCU_DETAILS_DEPARTMENT',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value: this.getDepartment(this.jobDetails.controls['department']?.value),
+          },
+        },
+      },
+      {
+        id: 'MCU_DETAIL_ALBUM_NAME',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value: this.jobDetails.controls['albumName']?.value,
+          },
+        },
+      },
+      {
+        id: 'MCU_DETAILS_SAP_NUMBER',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: "decimal",
+            value: this.jobDetails.controls['sapNumber']?.value,
+          },
+        },
+      },
+      {
+        id: 'MCU_DETAILS_DATE',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'dateTime',
+            value: this.jobDetails.controls['eventDate']?.value,
+          },
+        },
+      },
+      {
+        id: 'MCU_DETAILS_COMMENTS',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value: this.jobDetails.controls['comments']?.value,
+          },
+        },
+      },
+      {
+        id: 'MCU_DETAILS_BUCKET_NAME',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value: BucketName,
+          },
+        },
+      },
+      {
+        id: 'MCU_DETAILSJOB_ID',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value: this.jobId,
+          },
+        },
+      },
+      {
+        id: 'MCU_DETAILS_USECASE',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value:this.getUseCase(this.jobDetails.controls['useCase'].value)
+          },
+        },
+      },
+      {
+        id: 'MCU_ASSET_TYPE',
+        type: 'com.artesia.metadata.MetadataField',
+        value: {
+          value: {
+            type: 'string',
+            value: `${this.getAssetType(this.jobDetails.controls['assetType'].value)}^${this.getAssetSubType(this.jobDetails.controls['assetSubType'].value)}`
+          },
+        },
+      },
+      
+      
+    ];
+    console.log(this.assetData.metadata.metadata_element_list)
+    let fileToRevision;
+    let isRevision = false;
+  
+    let maxFiles = null;
+    const allowDuplicateDeliverable = false;
+    isRevision = false;
+
+
+    const dialogRef = this.dialog.open(UploadComponent, {
+      width: '60%',
+      disableClose: true,
+      data: {
+        assetData: this.assetData,
+        isRevisionUpload: isRevision,
+        fileToRevision,
+        maxFiles,
+        maxFileSize: this.maxFileSize,
       },
     });
+    dialogRef.afterClosed().subscribe((result) => {});
+  }else{
+    this.notificationService.error('please fill the form details')
+  }
+}
+
+
+  getMetaDataAsset(){
+
+    let asstetMetaData={
+      'brand':this.getBrand(this.jobDetails.get('brand')?.value),
+      'productLine':this.getProductLine(this.jobDetails.get('productLine')?.value),
+      "country":this.getCountry(this.jobDetails.get('country')?.value),
+      "albumName":this.jobDetails.get('albumName')?.value,
+      "department":this.getDepartment(this.jobDetails.controls['department']?.value),
+      "assetType":this.getAssetType(this.jobDetails.controls['assetType'].value),
+      "assetSubType":this.getAssetSubType(this.jobDetails.controls['assetSubType'].value),
+      "useCase":this.getUseCase(this.jobDetails.controls['useCase'].value),
+      "comments": this.jobDetails.controls['comments'].value,
+      "sapNo":this.jobDetails.controls['sapNumber'].value,
+      "eventDate":this.jobDetails.controls['eventDate'].value
+
+    }
+    return asstetMetaData
+    
+    
   }
 
   finalHitCount!: number;
@@ -434,6 +610,7 @@ export class EditFormComponent implements OnInit {
     this.otmmService.getSessioons().subscribe({
       next: (data) => {
         console.log(data);
+        this.otmmService.jSession = data.session_resource.session.id;
       },
       error: (error) => {
         this.otmmService.postSession().subscribe({
@@ -460,15 +637,30 @@ export class EditFormComponent implements OnInit {
       });
   };
 
-  previewImage(imageList: any, bucketName: any) {
+  previewImage(imageList: any,bucketName:any) {
+   let assetMetadataVlaues= this.getMetaDataAsset();
     this.dialog.open(PreviewImageComponent, {
       width: '900px',
       height: '700px',
       data: {
         imageList: imageList,
-        bucketName: bucketName,
         finalHitCount: this.finalHitCount,
+        validStatus:this.jobDetails.valid,
+        bucketName:bucketName,
+        assetMetadata:assetMetadataVlaues,
+        JobId:this.jobId
+
       },
     });
   }
+
+  deleteJob(jobId: any) {
+   
+    this.router.navigateByUrl('apps/dashboard');
+    this.notificationService.success('Job has been deleted sucessfully ');
+    this.formService.deleteJob(jobId).subscribe((data:any)=>{
+      console.log(data)
+    })
+  }
+
 }

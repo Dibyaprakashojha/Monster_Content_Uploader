@@ -47,6 +47,8 @@ import { ButtonModule } from 'primeng/button';
     PaginatorDirective,
     UTCToLocalPipePipe,
     FilterByTextPipe,
+    
+  
   ],
   providers: [NotificationServiceService, MatSnackBarModule, OtmmService],
 })

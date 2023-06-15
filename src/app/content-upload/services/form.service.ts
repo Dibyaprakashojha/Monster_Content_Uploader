@@ -166,6 +166,8 @@ export class FormService {
 
   deleteJob(id: any) {
     let url = `${this.base_url}job-details/job-details/`;
-    return this._http.delete(url.concat(id));
+    return this._http.delete(url.concat(id), {params: {
+      hardIndex: true,
+    }},);
   }
 }

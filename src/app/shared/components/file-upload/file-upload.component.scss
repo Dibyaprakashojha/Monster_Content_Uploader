@@ -238,3 +238,39 @@ mat-chip{
 .mat-card{
     padding-top: 10px !important;
 }
+
+
+@media screen and ((max-width: 599px)) {
+
+.actionbuttons{
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-family: $font-family;
+    font-size: 13px;
+    color: white;
+    font-weight: bold;
+    word-spacing: 2%;
+    margin-right: 30px;
+    height: 35px;
+    width: 81px;
+    letter-spacing: 2px;
+    -ms-transform: skewX(-10deg);
+    -webkit-transform: skewX(-10deg);
+    transform: skewX(-10deg);
+    background: linear-gradient(270deg, #49c732 -11.81%, #248512 93.7%);
+}
+
+.actions-holder{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.select-cont{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: flex-start;
+}
+}

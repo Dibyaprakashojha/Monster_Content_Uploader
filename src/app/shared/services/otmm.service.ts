@@ -1098,10 +1098,10 @@ export class OtmmService {
       withCredentials: true,
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded',
-        'X-Requested-By': JSON.stringify(this.jSession),
+        'X-Requested-By': this.jSession.toString(),
       }),
     };
-    if (this.jSession === null || this.jSession == '0') {
+    if (this.jSession.toString() === null || this.jSession.toString() == '') {
       console.log('jsession error');
     }
     console.log(`JSEssion: `, this.jSession);

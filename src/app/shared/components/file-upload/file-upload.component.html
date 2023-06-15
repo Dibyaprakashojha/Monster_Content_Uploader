@@ -2,11 +2,14 @@
     <div class="acron-file-upload-action">
         <div class="actions-align">
             <div class="actions-holder">
-                <button mat-raised-button class="actionbuttons" *ngIf="selectedFiles.length > 1" (click)="removeAll()"
-                    matTooltip="Click here to remove all selected files">Remove All</button>
-                <button mat-raised-button class="actionbuttons" (click)="isQDSUpload ? openQDSFileChooser() : fileBtn.click()"
-                    matTooltip="Click here to select Files">Select
-                    Files</button>
+                <div class="select-cont">
+                    <button mat-raised-button class="actionbuttons" *ngIf="selectedFiles.length > 1" (click)="removeAll()"
+                        matTooltip="Click here to remove all selected files">Remove All</button>
+                    <button mat-raised-button class="actionbuttons" (click)="isQDSUpload ? openQDSFileChooser() : fileBtn.click()"
+                        matTooltip="Click here to select Files">Select
+                        Files</button>
+                </div>
+                
                    
                 <mat-chip-listbox class="actions chips">
                     <mat-chip *ngIf="selectedFiles.length" matTooltip="No. of Files Selected">Selected ({{selectedFiles.length}})</mat-chip>
