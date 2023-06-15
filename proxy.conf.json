@@ -1,24 +1,17 @@
 [
   {
-
-  "context":["/api"],
+    "context": ["/api"],
     "target": "https://micromm.acheron-tech.com/mcu/api/v1/",
     "secure": false
-}
-,
-{
-  "context": [
-      "**/otdsws/**"
-  ],
-  "target": "https://micromm.acheron-tech.com/",
-  "secure": false
-},
-{
-  "context": [
-      "**/otmmapi/**",
-      "**/otmm/**"
-  ],
- "target": "https://micromm.acheron-tech.com/",
- "secure": false
-}
+  },
+  {
+    "context": ["**/otdsws/**"],
+    "target": "https://micromm.acheron-tech.com/",
+    "secure": false
+  },
+  {
+    "context": ["**/otmmapi/**", "**/otmm/**"],
+    "target": "https://micromm.acheron-tech.com/",
+    "secure": false
+  }
 ]
