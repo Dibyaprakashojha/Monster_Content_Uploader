@@ -1085,9 +1085,10 @@ export class OtmmService {
       'search_config_id=' +
       searchConfigId +
       '&' +
-      'folder_filter_type=all' +
+      'folder_filter_type=direct' +
       '&' +
       'folder_filter=' +
+      env.folder_id +
       '&' +
       'search_condition_list=' +
       encodeURIComponent(JSON.stringify(search_condition_list));

@@ -15,6 +15,8 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 import { OtmmService } from './services/otmm.service';
 import { PreviewImageComponent } from './components/preview-image/preview-image.component';
+import { GalleriaModule } from 'primeng/galleria';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { PreviewImageComponent } from './components/preview-image/preview-image.
     ReactiveFormsModule,
     MaterialModule,
     MatSnackBarModule,
+    GalleriaModule,
+    ButtonModule,
   ],
   exports: [
     MaterialModule,
@@ -44,6 +48,6 @@ import { PreviewImageComponent } from './components/preview-image/preview-image.
     UTCToLocalPipePipe,
     FilterByTextPipe,
   ],
-  providers: [NotificationServiceService, MatSnackBarModule,OtmmService],
+  providers: [NotificationServiceService, MatSnackBarModule, OtmmService],
 })
 export class SharedModule {}

@@ -232,10 +232,20 @@ mat-form-field {
     position: absolute;
     left: 5em;
   }
-  p {
-    img {
-      display: inline-block;
+  ul {
+    display: flex;
+    li {
+      list-style: none;
+      margin-right: -19px;
+      position: relative;
+      right: 70px;
     }
+  }
+  .preview-button {
+    border: none !important;
+    background-color: transparent !important;
+    position: absolute;
+    left: 23em;
   }
   .add {
     position: absolute;

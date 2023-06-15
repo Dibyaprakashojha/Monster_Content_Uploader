@@ -460,12 +460,14 @@ export class EditFormComponent implements OnInit {
       });
   };
 
-  previewImage(imageList: any) {
+  previewImage(imageList: any, bucketName: any) {
     this.dialog.open(PreviewImageComponent, {
       width: '900px',
       height: '700px',
       data: {
         imageList: imageList,
+        bucketName: bucketName,
+        finalHitCount: this.finalHitCount,
       },
     });
   }
