@@ -256,31 +256,85 @@
 
         <div class="typeOfUpload final">
           <p class="upload-text">Final</p>
-          <p class="upload-count">(300)</p>
-          <div class="image-preview">
-            <button class="add">+</button>
-          </div>
+          <p class="upload-count" style="left: 3.8em">({{ finalHitCount }})</p>
+          <button
+            class="preview-button"
+            *ngIf="finalImageList"
+            (click)="previewImage(finalImageList, 'FINAL')"
+          >
+            <ul>
+              <li *ngFor="let image of finalImageList">
+                <img
+                  class="image-stack"
+                  src="{{ image }}"
+                  width="30px"
+                  height="40px"
+                />
+              </li>
+            </ul>
+          </button>
         </div>
         <div class="typeOfUpload proof">
           <p class="upload-text">Proof</p>
-          <p class="upload-count">(300)</p>
-          <div class="image-preview">
-            <button class="add">+</button>
-          </div>
+          <p class="upload-count" style="left: 3.8em">({{ proofHitCount }})</p>
+          <button
+            class="preview-button"
+            *ngIf="proofImageList"
+            (click)="previewImage(proofImageList, 'PROOF')"
+          >
+            <ul>
+              <li *ngFor="let image of proofImageList">
+                <img
+                  class="image-stack"
+                  src="{{ image }}"
+                  width="30px"
+                  height="40px"
+                />
+              </li>
+            </ul>
+          </button>
         </div>
         <div class="typeOfUpload resources">
           <p class="upload-text">Resources</p>
-          <p class="upload-count">(300)</p>
-          <div class="image-preview">
-            <button class="add">+</button>
-          </div>
+          <p class="upload-count">({{ resourcesHitCount }})</p>
+          <button
+            class="preview-button"
+            *ngIf="resourcesImageList"
+            (click)="previewImage(resourcesImageList, 'RESOURCES')"
+          >
+            <ul>
+              <li *ngFor="let image of resourcesImageList">
+                <img
+                  class="image-stack"
+                  src="{{ image }}"
+                  width="30px"
+                  height="40px"
+                />
+              </li>
+            </ul>
+          </button>
         </div>
         <div class="typeOfUpload working">
           <p class="upload-text">Working</p>
-          <p class="upload-count">(300)</p>
-          <div class="image-preview">
-            <button class="add">+</button>
-          </div>
+          <p class="upload-count" style="left: 4.3em">
+            ({{ workingHitCount }})
+          </p>
+          <button
+            class="preview-button"
+            *ngIf="workingImageList"
+            (click)="previewImage(workingImageList, 'WORKING')"
+          >
+            <ul>
+              <li *ngFor="let image of workingImageList">
+                <img
+                  class="image-stack"
+                  src="{{ image }}"
+                  width="30px"
+                  height="40px"
+                />
+              </li>
+            </ul>
+          </button>
         </div>
         <div class="action-buttons">
           <button

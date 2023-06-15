@@ -282,7 +282,7 @@
           <p class="upload-count" style="left: 3.5em">({{ proofHitCount }})</p>
           <button
             class="preview-button"
-            *ngIf="finalImageList"
+            *ngIf="proofImageList"
             (click)="previewImage(proofImageList, 'PROOF')"
           >
             <ul>
@@ -305,7 +305,7 @@
           <p class="upload-count">({{ resourcesHitCount }})</p>
           <button
             class="preview-button"
-            *ngIf="finalImageList"
+            *ngIf="resourcesImageList"
             (click)="previewImage(resourcesImageList, 'RESOURCES')"
           >
             <ul>
@@ -330,7 +330,7 @@
           </p>
           <button
             class="preview-button"
-            *ngIf="finalImageList"
+            *ngIf="workingImageList"
             (click)="previewImage(workingImageList, 'WORKING')"
           >
             <ul>

@@ -226,24 +226,29 @@ mat-form-field {
   margin: 0 0 31px 0;
   .upload-text {
     position: relative;
-    right: 4.5rem;
+    right: 10.4rem;
   }
   .upload-count {
     position: absolute;
     left: 5em;
   }
-  .add {
+  ul {
+    display: flex;
+    li {
+      list-style: none;
+      margin-right: -12px;
+      position: relative;
+      right: 8em;
+    }
+  }
+  .preview-button {
+    border: none !important;
+    background-color: transparent !important;
     position: absolute;
-    top: 0.5rem;
-    left: 10em;
+    left: 23em;
   }
 }
 
-.add {
-  background-color: transparent;
-  border-width: 0px;
-  font-size: 36px;
-}
 .final {
   background: linear-gradient(180deg, #56e63c 0%, #248512 100%);
 }

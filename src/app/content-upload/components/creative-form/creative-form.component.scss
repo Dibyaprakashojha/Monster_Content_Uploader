@@ -220,8 +220,6 @@ mat-form-field {
   font-weight: bold;
   font-size: 22px;
   margin: 0 0 31px 0;
-
-}
   .upload-text {
     position: relative;
     right: 4.5rem;
@@ -229,23 +227,46 @@ mat-form-field {
   .upload-count {
     position: absolute;
     left: 5em;
-    
   }
-  // .add {
-  //   position: absolute;
-  //   top: 0.5rem;
-  //   left: 10em;
-  // }
-
-
+  ul {
+    display: flex;
+    li {
+      list-style: none;
+      margin-right: -12px;
+      position: relative;
+      right: 8em;
+    }
+  }
+  .preview-button {
+    border: none !important;
+    background-color: transparent !important;
+    position: absolute;
+    left: 23em;
+  }
+  .add {
+    position: absolute;
+    top: 0.5rem;
+    left: 9.8em;
+    background-color: transparent;
+    border-width: 0px;
+    font-size: 36px;
+  }
+  .reload {
+    position: absolute;
+    top: 10px;
+    left: 23.9rem;
+    mat-icon {
+      font-size: 22px;
+      font-weight: bolder;
+    }
+  }
+}
 .add {
-  position: absolute;
-  top: 0.5rem;
-  left: 10em;
   background-color: transparent;
   border-width: 0px;
   font-size: 36px;
 }
+
 .final {
   background: linear-gradient(180deg, #56e63c 0%, #248512 100%);
 }
@@ -324,14 +345,12 @@ p {
     border: 0px;
   }
 
-  .upload-count{
-     margin-left: 25px;
+  .upload-count {
+    margin-left: 25px;
   }
 }
 
 @media screen and (((max-width: 599px)) or ((width:430px)and (height:932px))) {
-
-  
   .action-buttons {
     display: flex;
     justify-content: space-between;
@@ -388,7 +407,28 @@ p {
     font-family: $font-family;
     font-weight: bold;
     font-size: 22px;
-    width:75%
+    width: 75%;
+    .upload-text {
+      position: relative;
+      right: 3rem;
+    }
+    .add {
+      position: absolute;
+      top: 0rem;
+      left: 7em;
+      background-color: transparent;
+      border-width: 0px;
+      font-size: 36px;
+    }
+    .reload {
+      position: absolute;
+      top: 3px;
+      left: 17.2rem;
+      mat-icon {
+        font-size: 22px;
+        font-weight: bolder;
+      }
+    }
   }
   .upload-container {
     align-items: center;
@@ -396,19 +436,18 @@ p {
   .mat-mdc-form-field {
     margin: 0 0 2em 0;
     border: 0px;
-  }  
-
-  .add{
-  // position: absolute;
-  // top: 0rem;
-  left: 7em;
-  background-color: transparent;
-  border-width: 0px;
-  font-size: 36px;
   }
-  .upload-text{
+
+  .add {
+    // position: absolute;
+    // top: 0rem;
+    left: 7em;
+    background-color: transparent;
+    border-width: 0px;
+    font-size: 36px;
+  }
+  .upload-text {
     position: relative;
-    right:3.5rem;
+    right: 3.5rem;
   }
 }
-

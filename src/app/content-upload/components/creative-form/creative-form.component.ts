@@ -11,7 +11,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationServiceService } from 'src/app/shared/services/notification-service.service';
 import { GlobalConfig as config } from 'src/Utils/config/config';
-import { environment } from 'src/environments/environment';
+import { environment as env } from 'src/environments/environment';
 import { UploadComponent } from 'src/app/shared/components/upload/upload.component';
 import { OtmmService } from 'src/app/shared/services/otmm.service';
 import { PreviewImageComponent } from 'src/app/shared/components/preview-image/preview-image.component';
@@ -148,6 +148,7 @@ export class CreativeFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.getImagesFromOtmm();
     console.log(`jonbId in onint`, this.jobId);
 
     this.formService.getAllBrands().subscribe(
@@ -385,8 +386,8 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     },
     metadata_model_id: '',
     security_policy_list: [1],
-    template_id: environment.folder_template_id,
-    folderId: environment.folder_id,
+    template_id: env.folder_template_id,
+    folderId: env.folder_id,
   };
 
   getDepartment(departMentId: any) {
@@ -414,9 +415,9 @@ export class CreativeFormComponent implements OnInit, OnChanges {
           });
         },
       });
-      this.assetData.metadata_model_id = environment.MetadataModel;
-      this.assetData.template_id = environment.folder_template_id;
-      this.assetData.folderId = environment.folder_id;
+      this.assetData.metadata_model_id = env.MetadataModel;
+      this.assetData.template_id = env.folder_template_id;
+      this.assetData.folderId = env.folder_id;
       this.assetData.metadata.metadata_element_list = [
         {
           id: 'MCU_DETAILS_BRAND',
@@ -577,8 +578,52 @@ export class CreativeFormComponent implements OnInit, OnChanges {
     return asstetMetaData;
   }
 
-  finalHitCount!: number;
+  proofImageList: any;
+  resourcesImageList: any;
+  workingImageList: any;
+  finalHitCount: number = 0;
+  proofHitCount: number = 0;
+  resourcesHitCount: number = 0;
+  workingHitCount: number = 0;
+  downloadUrl!: any;
   JOB_ID!: string;
+
+  refresh(bucketName: any) {
+    this.otmmService.getSessioons().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.otmmService.jSession = data.session_resource.session.id;
+      },
+      error: (error) => {
+        this.otmmService.postSession().subscribe({
+          next: (data) => {
+            this.otmmService.jSession = '';
+            this.otmmService.jSession = data.session_resource.session.id;
+          },
+        });
+      },
+    });
+    this.otmmService
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, bucketName, this.jobId)
+      .subscribe({
+        next: (res: any) => {
+          this.finalHitCount =
+            res.search_result_resource.search_result.total_hit_count;
+          this.downloadUrl = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.master_content_info.url;
+            }
+          );
+          this.finalImageList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.delivery_service_url;
+            }
+          );
+          console.log(`Download Url:  `, this.downloadUrl);
+          console.log(`Metadata: `, res);
+        },
+      });
+  }
   /* Preview Image List from OTMM */
   getImagesFromOtmm = () => {
     this.activatedRoute.queryParams.subscribe((data: any) => {
@@ -598,19 +643,70 @@ export class CreativeFormComponent implements OnInit, OnChanges {
         });
       },
     });
+    console.log(`Inside OTMM METADATA:`, this.otmmService.jSession);
+
+    /**FINAL BUCKET */
     this.otmmService
-      .otmmMetadataSearch(
-        environment.searchConfigId,
-        0,
-        5,
-        'FINAL',
-        this.JOB_ID
-      )
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'FINAL', this.JOB_ID)
       .subscribe({
         next: (res: any) => {
           this.finalHitCount =
             res.search_result_resource.search_result.total_hit_count;
+          this.downloadUrl = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.master_content_info.url;
+            }
+          );
           this.finalImageList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.delivery_service_url;
+            }
+          );
+          console.log(`Download Url:  `, this.downloadUrl);
+          console.log(`Metadata: `, res);
+        },
+      });
+
+    /**PROOF BUCKET */
+    this.otmmService
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'PROOF', this.JOB_ID)
+      .subscribe({
+        next: (res: any) => {
+          this.proofHitCount =
+            res.search_result_resource.search_result.total_hit_count;
+          this.proofImageList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.delivery_service_url;
+            }
+          );
+          console.log(`Metadata: `, res);
+        },
+      });
+
+    /**RESOURCES BUCKET */
+    this.otmmService
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'RESOURCES', this.JOB_ID)
+      .subscribe({
+        next: (res: any) => {
+          this.resourcesHitCount =
+            res.search_result_resource.search_result.total_hit_count;
+          this.resourcesImageList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.delivery_service_url;
+            }
+          );
+          console.log(`Metadata: `, res);
+        },
+      });
+
+    /**WORKING BUCKET */
+    this.otmmService
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'WORKING', this.JOB_ID)
+      .subscribe({
+        next: (res: any) => {
+          this.workingHitCount =
+            res.search_result_resource.search_result.total_hit_count;
+          this.workingImageList = res.search_result_resource.asset_list.map(
             (asset: any) => {
               return asset.delivery_service_url;
             }

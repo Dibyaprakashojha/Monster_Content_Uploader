@@ -5,6 +5,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationServiceService } from 'src/app/shared/services/notification-service.service';
 import { FormService } from '../../services/form.service';
+import { PreviewImageComponent } from 'src/app/shared/components/preview-image/preview-image.component';
+import { OtmmService } from 'src/app/shared/services/otmm.service';
+import { environment as env } from 'src/environments/environment';
 
 @Component({
   selector: 'mcu-view-form',
@@ -18,7 +21,8 @@ export class ViewFormComponent {
     private router: Router,
     public dialog: MatDialog,
     private notificationService: NotificationServiceService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private otmmService: OtmmService
   ) {
     this.jobDetails = this.fb.group({
       brand: ['', [Validators.required]],
@@ -52,8 +56,18 @@ export class ViewFormComponent {
   selectedBrand: any;
   lastModifiedBy: any;
   lastModifiedDate: any;
+  finalImageList: any;
+  proofImageList: any;
+  resourcesImageList: any;
+  workingImageList: any;
+  finalHitCount: number = 0;
+  proofHitCount: number = 0;
+  resourcesHitCount: number = 0;
+  workingHitCount: number = 0;
+  departments: any;
 
   ngOnInit() {
+    this.getImagesFromOtmm();
     this.activatedRoute.queryParams.subscribe((data: any) => {
       if (data.jobId) {
         this.getAllbrands();
@@ -202,7 +216,7 @@ export class ViewFormComponent {
     let element = this.filteredProductLine.find(
       (e: any) => e.prdLineId == prdLineId
     );
-    return element['prdLineDsName']
+    return element!['prdLineDsName'];
   }
 
   getCountry(countryId: any): any {
@@ -436,6 +450,115 @@ export class ViewFormComponent {
       });
   }
 
+  downloadUrl!: any;
+  JOB_ID!: string;
+  /* Preview Image List from OTMM */
+  getImagesFromOtmm = () => {
+    this.activatedRoute.queryParams.subscribe((data: any) => {
+      this.JOB_ID = data.jobId;
+    });
+    this.otmmService.getSessioons().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.otmmService.jSession = data.session_resource.session.id;
+      },
+      error: (error) => {
+        this.otmmService.postSession().subscribe({
+          next: (data) => {
+            this.otmmService.jSession = '';
+            this.otmmService.jSession = data.session_resource.session.id;
+          },
+        });
+      },
+    });
+    console.log(`Inside OTMM METADATA:`, this.otmmService.jSession);
+
+    /**FINAL BUCKET */
+    this.otmmService
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'FINAL', this.JOB_ID)
+      .subscribe({
+        next: (res: any) => {
+          this.finalHitCount =
+            res.search_result_resource.search_result.total_hit_count;
+          this.downloadUrl = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.master_content_info.url;
+            }
+          );
+          this.finalImageList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.delivery_service_url;
+            }
+          );
+          console.log(`Download Url:  `, this.downloadUrl);
+          console.log(`Metadata: `, res);
+        },
+      });
+
+    /**PROOF BUCKET */
+    this.otmmService
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'PROOF', this.JOB_ID)
+      .subscribe({
+        next: (res: any) => {
+          this.proofHitCount =
+            res.search_result_resource.search_result.total_hit_count;
+          this.proofImageList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.delivery_service_url;
+            }
+          );
+          console.log(`Metadata: `, res);
+        },
+      });
+
+    /**RESOURCES BUCKET */
+    this.otmmService
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'RESOURCES', this.JOB_ID)
+      .subscribe({
+        next: (res: any) => {
+          this.resourcesHitCount =
+            res.search_result_resource.search_result.total_hit_count;
+          this.resourcesImageList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.delivery_service_url;
+            }
+          );
+          console.log(`Metadata: `, res);
+        },
+      });
+
+    /**WORKING BUCKET */
+    this.otmmService
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'WORKING', this.JOB_ID)
+      .subscribe({
+        next: (res: any) => {
+          this.workingHitCount =
+            res.search_result_resource.search_result.total_hit_count;
+          this.workingImageList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.delivery_service_url;
+            }
+          );
+          console.log(`Metadata: `, res);
+        },
+      });
+  };
+
+  previewImage(imageList: any, bucketName: any) {
+    this.dialog.open(PreviewImageComponent, {
+      width: '900px',
+      height: '700px',
+      data: {
+        imageList: imageList,
+        finalHitCount: this.finalHitCount,
+        validStatus: this.jobDetails.valid,
+        bucketName: bucketName,
+        JobId: this.jobId,
+        upload: false,
+      },
+    });
+  }
+
   deleteJob(jobId: any) {
     this.formService.deleteJob(jobId).subscribe({
       next: (data) => {
@@ -450,7 +573,7 @@ export class ViewFormComponent {
     });
   }
 
-  navigateBack(){
-    this.router.navigateByUrl('apps/dashboard')
+  navigateBack() {
+    this.router.navigateByUrl('apps/dashboard');
   }
 }

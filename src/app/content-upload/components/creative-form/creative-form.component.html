@@ -230,7 +230,6 @@
             matInput
             type="number"
             formControlName="sapNumber"
-            
           />
         </mat-form-field>
 
@@ -257,15 +256,12 @@
       <div class="upload-container">
         <div class="typeOfUpload final">
           <p class="upload-text">Final</p>
-          <p class="upload-count" *ngIf="finalImageList">
-            ({{ finalHitCount }})
-          </p>
+          <p class="upload-count" style="left: 3.5em">({{ finalHitCount }})</p>
           <button
             class="preview-button"
             *ngIf="finalImageList"
             (click)="previewImage(finalImageList, 'FINAL')"
           >
-            <!-- <mat-icon> visibility </mat-icon> -->
             <ul>
               <li *ngFor="let image of finalImageList">
                 <img
@@ -278,35 +274,105 @@
             </ul>
           </button>
           <div class="image-preview">
-            <button  (click)="uploadAsset('Final')" class="add">
-              +
+            <button (click)="uploadAsset('Final')" class="add">+</button>
+            <button
+              mat-button
+              class="reload approved"
+              (click)="refresh('FINAL')"
+            >
+              <mat-icon>refresh</mat-icon>
             </button>
           </div>
         </div>
         <div class="typeOfUpload proof">
           <p class="upload-text">Proof</p>
-          <p class="upload-count">(300)</p>
+          <p class="upload-count" style="left: 3.5em">({{ proofHitCount }})</p>
+          <button
+            class="preview-button"
+            *ngIf="proofImageList"
+            (click)="previewImage(proofImageList, 'PROOF')"
+          >
+            <ul>
+              <li *ngFor="let image of proofImageList">
+                <img
+                  class="image-stack"
+                  src="{{ image }}"
+                  width="30px"
+                  height="40px"
+                />
+              </li>
+            </ul>
+          </button>
           <div class="image-preview">
-            <button class="add"  (click)="uploadAsset('Proof')">
-              +
+            <button class="add" (click)="uploadAsset('Proof')">+</button>
+            <button
+              mat-button
+              class="reload approved"
+              (click)="refresh('PROOF')"
+            >
+              <mat-icon>refresh</mat-icon>
             </button>
           </div>
         </div>
         <div class="typeOfUpload resources">
           <p class="upload-text">Resources</p>
-          <p class="upload-count">(300)</p>
+          <p class="upload-count">({{ resourcesHitCount }})</p>
+          <button
+            class="preview-button"
+            *ngIf="resourcesImageList"
+            (click)="previewImage(resourcesImageList, 'RESOURCES')"
+          >
+            <ul>
+              <li *ngFor="let image of resourcesImageList">
+                <img
+                  class="image-stack"
+                  src="{{ image }}"
+                  width="30px"
+                  height="40px"
+                />
+              </li>
+            </ul>
+          </button>
           <div class="image-preview">
-            <button class="add"  (click)="uploadAsset('Resources')">
-              +
+            <button class="add" (click)="uploadAsset('Resources')">+</button>
+            <button
+              mat-button
+              class="reload approved"
+              (click)="refresh('RESOURCES')"
+            >
+              <mat-icon>refresh</mat-icon>
             </button>
           </div>
         </div>
         <div class="typeOfUpload working">
           <p class="upload-text">Working</p>
-          <p class="upload-count">(300)</p>
+          <p class="upload-count" style="left: 4.3em">
+            ({{ workingHitCount }})
+          </p>
+          <button
+            class="preview-button"
+            *ngIf="workingImageList"
+            (click)="previewImage(workingImageList, 'WORKING')"
+          >
+            <ul>
+              <li *ngFor="let image of workingImageList">
+                <img
+                  class="image-stack"
+                  src="{{ image }}"
+                  width="30px"
+                  height="40px"
+                />
+              </li>
+            </ul>
+          </button>
           <div class="image-preview">
-            <button class="add"  (click)="uploadAsset('Working')">
-              +
+            <button class="add" (click)="uploadAsset('Working')">+</button>
+            <button
+              mat-button
+              class="reload approved"
+              (click)="refresh('WORKING')"
+            >
+              <mat-icon>refresh</mat-icon>
             </button>
           </div>
         </div>
@@ -325,7 +391,7 @@
             color="accent"
             (click)="SaveForm()"
           >
-            Save
+            SAVE
           </button>
           <button
             class="submit-btn"
