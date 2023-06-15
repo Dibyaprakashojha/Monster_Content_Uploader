@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LoginService } from './content-upload/services/login.service';
 import { OtmmService } from './shared/services/otmm.service';
-import { GlobalConfig as config } from  '../Utils/config/config'
+import { GlobalConfig as config } from '../Utils/config/config';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -32,8 +32,8 @@ export class AppComponent {
   //       console.log(`error: `, err);
   //     },
   //   });
-    // this.otmmService.postSession().subscribe((data)=>{
-    //   config.setOtmmSession=data
-    // })
-
-  }
+  // }
+}
+// this.otmmService.postSession().subscribe((data)=>{
+//   config.setOtmmSession=data
+// })

@@ -38,7 +38,8 @@ export class PreviewImageComponent implements OnInit {
         env.searchConfigId,
         0,
         this.finalHitCount,
-        this.bucketName
+        this.bucketName,
+        this.data.JobId
       )
       .subscribe({
         next: (res: any) => {
