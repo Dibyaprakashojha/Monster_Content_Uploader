@@ -157,6 +157,18 @@
       </li>
 
       <li class="menu-container" role="listitem">
+        <button routerLink="my-tasks" class="menu-button">
+          <img class="menu-image" src="assets/images/mytasks.png" />
+        </button>
+        <span
+          [ngClass]="
+            checkMenu('my-tasks') ? 'selected-menu' : 'unselected-menu'
+          "
+        >
+        </span>
+      </li>
+
+      <li class="menu-container" role="listitem">
         <button routerLink="my-workflows" class="menu-button">
           <img class="menu-image" src="assets/images/myworkflows.png" />
         </button>
@@ -168,17 +180,6 @@
         </span>
       </li>
 
-      <li class="menu-container" role="listitem">
-        <button routerLink="my-tasks" class="menu-button">
-          <img class="menu-image" src="assets/images/mytasks.png" />
-        </button>
-        <span
-          [ngClass]="
-            checkMenu('my-tasks') ? 'selected-menu' : 'unselected-menu'
-          "
-        >
-        </span>
-      </li>
     </ul>
     <ul class="menu-items-container-open" *ngIf="isMenuOpen">
       <li class="menu-container-small">
@@ -317,6 +318,19 @@
       </span>
 
       <li class="menu-container">
+        <button routerLink="my-tasks" class="menu-button-expanded">
+          <img class="menu-image" src="assets/images/mytasks-2.png" />
+          <p class="menu-text">My Tasks</p>
+        </button>
+      </li>
+      <span
+        [ngClass]="
+          checkMenu('my-tasks') ? 'selected-menu-expanded' : 'unselected-menu'
+        "
+      >
+      </span>
+
+      <li class="menu-container">
         <button routerLink="my-workflows" class="menu-button-expanded">
           <img class="menu-image" src="assets/images/myworkflows-2.png" />
           <p class="menu-text">My WorkFlows</p>
@@ -376,18 +390,7 @@
       >
       </span>
 
-      <li class="menu-container">
-        <button routerLink="my-tasks" class="menu-button-expanded">
-          <img class="menu-image" src="assets/images/mytasks-2.png" />
-          <p class="menu-text">My Tasks</p>
-        </button>
-      </li>
-      <span
-        [ngClass]="
-          checkMenu('my-tasks') ? 'selected-menu-expanded' : 'unselected-menu'
-        "
-      >
-      </span>
+      
     </ul>
   </mat-sidenav>
 

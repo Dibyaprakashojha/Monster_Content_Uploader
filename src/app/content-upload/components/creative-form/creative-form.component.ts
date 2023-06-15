@@ -599,7 +599,7 @@ getImagesFromOtmm = () => {
     },
   });
   this.otmmService
-    .otmmMetadataSearch(environment.searchConfigId, 0, 5, 'FINAL')
+    .otmmMetadataSearch(environment.searchConfigId, 0, 5, 'FINAL',this.jobId)
     .subscribe({
       next: (res: any) => {
         this.finalHitCount =
