@@ -1038,6 +1038,15 @@ export class OtmmService {
       }
     });
   }
+
+  /**
+   * Search based on the OTMM Meta-data
+   * @param searchConfigId
+   * @param startIndex
+   * @param endIndex
+   * @param BucketName
+   * @returns
+   */
   otmmMetadataSearch(
     searchConfigId: any,
     startIndex: any,
@@ -1111,5 +1120,37 @@ export class OtmmService {
         return response;
       })
     );
+  }
+
+  /**
+   * For downloading Assets from OTMM
+   * @param fileURL
+   * @param fileName
+   */
+  initiateDownload(fileURL: any, fileName: any) {
+    // for non-IE
+    // if (!window['ActiveXObject']) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', fileURL, true);
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhr.withCredentials = true;
+    xhr.responseType = 'blob';
+    xhr.onload = function () {
+      const urlCreator = window.URL || window['webkitURL'];
+      const imageUrl = urlCreator.createObjectURL(this.response);
+      const tag = document.createElement('a');
+      tag.href = imageUrl;
+      tag.download = fileName;
+      document.body.appendChild(tag);
+      tag.click();
+      document.body.removeChild(tag);
+    };
+    xhr.send();
+    // } else if (window['ActiveXObject'] && document.execCommand) {
+    let customWindow: any = window.open(fileURL, '_blank');
+    customWindow.document.close();
+    customWindow.document.execCommand('SaveAs', true, fileName || fileURL);
+    customWindow.close();
+    // }
   }
 }

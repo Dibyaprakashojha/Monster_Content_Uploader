@@ -1,11 +1,19 @@
 <div class="main-container">
-<<<<<<< Updated upstream
   <div class="header">
     <h1>PREVIEW</h1>
-    <mat-icon> close </mat-icon>
+    <span class="spacer"></span>
+    <button class="close-button" (click)="closeDialog()">
+      <mat-icon> close </mat-icon>
+    </button>
   </div>
   <div class="bucket-name">
     <h3>{{ bucketName }}</h3>
+    <button class="submit-button" (click)="uploadMore()">
+      <mat-icon> cloud_upload </mat-icon>
+    </button>
+    <button class="submit-button" (click)="download()">
+      <mat-icon> cloud_download </mat-icon>
+    </button>
   </div>
   <div class="card">
     <p-galleria [value]="imageList" [numVisible]="10">
@@ -25,27 +33,3 @@
     </p-galleria>
   </div>
 </div>
-=======
-    <div class="header">
-      <h1>PREVIEW</h1>
-    </div>
-    <div class="bucket-name-container">
-      <h3 class="bucket-name"> Final</h3>
-      <button class="submit-button" (click)="uploadMore()">upload</button>
-    </div>
-    <div class="card">
-      <p-galleria [value]="imageList"   [numVisible]="15" [showItemNavigators]="true">
-        <ng-template pTemplate="item" let-item>
-          <mat-card class="image-card"
-            ><img [src]="item" style="width: 300px; height:300px"
-          /></mat-card>
-        </ng-template>
-        <ng-template pTemplate="thumbnail" let-item>
-          <div class="grid grid-nogutter justify-content-center">
-            <img [src]="item" style="width: 30%; height: 50px" />
-          </div>
-        </ng-template>
-      </p-galleria>
-    </div>
-  </div>
->>>>>>> Stashed changes

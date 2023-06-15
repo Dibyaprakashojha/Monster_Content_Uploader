@@ -58,7 +58,14 @@ export class EditFormComponent implements OnInit {
   lastModifiedBy: any;
   lastModifiedDate: any;
   finalImageList: any;
-  departments:any
+  proofImageList: any;
+  resourcesImageList: any;
+  workingImageList: any;
+  finalHitCount: number = 0;
+  proofHitCount: number = 0;
+  resourcesHitCount: number = 0;
+  workingHitCount: number = 0;
+  departments: any;
 
   ngOnInit() {
     this.getImagesFromOtmm();
@@ -81,9 +88,9 @@ export class EditFormComponent implements OnInit {
       }
       this.jobId = data.jobId;
     });
-    this.formService.getAllDepartmentName().subscribe((data:any)=>{
-      this.departments=data
-    })
+    this.formService.getAllDepartmentName().subscribe((data: any) => {
+      this.departments = data;
+    });
   }
 
   getAllbrands() {
@@ -307,7 +314,8 @@ export class EditFormComponent implements OnInit {
       this.formService
         .getByBrandId(data.brand.brandId)
         .subscribe((eachBrand: any) => {
-          this.setTheFormVlaues(data);});
+          this.setTheFormVlaues(data);
+        });
       console.log(data);
     });
   }
@@ -409,202 +417,205 @@ export class EditFormComponent implements OnInit {
       });
   }
 
-  assetData :any= {
-    "metadata": {
-      "metadata_element_list":[]
+  assetData: any = {
+    metadata: {
+      metadata_element_list: [],
     },
-    "metadata_model_id":"",
-    "security_policy_list": [1],
-    "template_id": environment.folder_template_id,
-    "folderId": environment.folder_id,
+    metadata_model_id: '',
+    security_policy_list: [1],
+    template_id: environment.folder_template_id,
+    folderId: environment.folder_id,
   };
 
+  getDepartment(departMentId: any) {
+    const dept: any = this.departments.find(
+      (each: any) => each.dptId == departMentId
+    );
 
-  getDepartment(departMentId:any){
-    const dept:any =this.departments.find((each:any)=>each.dptId==departMentId)
-
-    console.log('deperkpoere',dept)
-    return dept['dptDsName']
-    
+    console.log('deperkpoere', dept);
+    return dept['dptDsName'];
   }
 
+  maxFileSize = null;
+  uploadAsset(BucketName: string) {
+    if (this.jobDetails.valid) {
+      this.otmmService.getSessioons().subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (error) => {
+          this.otmmService.postSession().subscribe({
+            next: (data) => {
+              this.otmmService.jSession = '';
+              this.otmmService.jSession = data.session_resource.session.id;
+            },
+          });
+        },
+      });
 
-  maxFileSize=null
-  uploadAsset(BucketName:string){
-
-    if(this.jobDetails.valid){
-
-
-    this.otmmService.getSessioons().subscribe({
-      next:(data)=>{
-        console.log(data)
-      },
-      error:(error)=>{
-        this.otmmService.postSession().subscribe({
-          next:(data)=>{
-            this.otmmService.jSession='';
-            this.otmmService.jSession=data.session_resource.session.id;
-          }
-        })
-      }}
-    )
-   
-    this.assetData.metadata_model_id = environment.MetadataModel;
-    this.assetData.template_id = environment.folder_template_id;
-    this.assetData.folderId  = environment.folder_id
-    this.assetData.metadata.metadata_element_list = [
-      {
-        id: 'MCU_DETAILS_BRAND',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
+      this.assetData.metadata_model_id = environment.MetadataModel;
+      this.assetData.template_id = environment.folder_template_id;
+      this.assetData.folderId = environment.folder_id;
+      this.assetData.metadata.metadata_element_list = [
+        {
+          id: 'MCU_DETAILS_BRAND',
+          type: 'com.artesia.metadata.MetadataField',
           value: {
-            type: 'string',
-            value: `${this.getBrand(this.jobDetails.get('brand')?.value)}^${this.getProductLine(this.jobDetails.get('productLine')?.value)}^${this.getCountry(this.jobDetails.get('country')?.value)}`
+            value: {
+              type: 'string',
+              value: `${this.getBrand(
+                this.jobDetails.get('brand')?.value
+              )}^${this.getProductLine(
+                this.jobDetails.get('productLine')?.value
+              )}^${this.getCountry(this.jobDetails.get('country')?.value)}`,
+            },
           },
         },
-      },
-      {
-        id: 'MCU_DETAILS_DEPARTMENT',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
+        {
+          id: 'MCU_DETAILS_DEPARTMENT',
+          type: 'com.artesia.metadata.MetadataField',
           value: {
-            type: 'string',
-            value: this.getDepartment(this.jobDetails.controls['department']?.value),
+            value: {
+              type: 'string',
+              value: this.getDepartment(
+                this.jobDetails.controls['department']?.value
+              ),
+            },
           },
         },
-      },
-      {
-        id: 'MCU_DETAIL_ALBUM_NAME',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
+        {
+          id: 'MCU_DETAIL_ALBUM_NAME',
+          type: 'com.artesia.metadata.MetadataField',
           value: {
-            type: 'string',
-            value: this.jobDetails.controls['albumName']?.value,
+            value: {
+              type: 'string',
+              value: this.jobDetails.controls['albumName']?.value,
+            },
           },
         },
-      },
-      {
-        id: 'MCU_DETAILS_SAP_NUMBER',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
+        {
+          id: 'MCU_DETAILS_SAP_NUMBER',
+          type: 'com.artesia.metadata.MetadataField',
           value: {
-            type: "decimal",
-            value: this.jobDetails.controls['sapNumber']?.value,
+            value: {
+              type: 'decimal',
+              value: this.jobDetails.controls['sapNumber']?.value,
+            },
           },
         },
-      },
-      {
-        id: 'MCU_DETAILS_DATE',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
+        {
+          id: 'MCU_DETAILS_DATE',
+          type: 'com.artesia.metadata.MetadataField',
           value: {
-            type: 'dateTime',
-            value: this.jobDetails.controls['eventDate']?.value,
+            value: {
+              type: 'dateTime',
+              value: this.jobDetails.controls['eventDate']?.value,
+            },
           },
         },
-      },
-      {
-        id: 'MCU_DETAILS_COMMENTS',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
+        {
+          id: 'MCU_DETAILS_COMMENTS',
+          type: 'com.artesia.metadata.MetadataField',
           value: {
-            type: 'string',
-            value: this.jobDetails.controls['comments']?.value,
+            value: {
+              type: 'string',
+              value: this.jobDetails.controls['comments']?.value,
+            },
           },
         },
-      },
-      {
-        id: 'MCU_DETAILS_BUCKET_NAME',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
+        {
+          id: 'MCU_DETAILS_BUCKET_NAME',
+          type: 'com.artesia.metadata.MetadataField',
           value: {
-            type: 'string',
-            value: BucketName,
+            value: {
+              type: 'string',
+              value: BucketName,
+            },
           },
         },
-      },
-      {
-        id: 'MCU_DETAILSJOB_ID',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
+        {
+          id: 'MCU_DETAILSJOB_ID',
+          type: 'com.artesia.metadata.MetadataField',
           value: {
-            type: 'string',
-            value: this.jobId,
+            value: {
+              type: 'string',
+              value: this.jobId,
+            },
           },
         },
-      },
-      {
-        id: 'MCU_DETAILS_USECASE',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
+        {
+          id: 'MCU_DETAILS_USECASE',
+          type: 'com.artesia.metadata.MetadataField',
           value: {
-            type: 'string',
-            value:this.getUseCase(this.jobDetails.controls['useCase'].value)
+            value: {
+              type: 'string',
+              value: this.getUseCase(this.jobDetails.controls['useCase'].value),
+            },
           },
         },
-      },
-      {
-        id: 'MCU_ASSET_TYPE',
-        type: 'com.artesia.metadata.MetadataField',
-        value: {
+        {
+          id: 'MCU_ASSET_TYPE',
+          type: 'com.artesia.metadata.MetadataField',
           value: {
-            type: 'string',
-            value: `${this.getAssetType(this.jobDetails.controls['assetType'].value)}^${this.getAssetSubType(this.jobDetails.controls['assetSubType'].value)}`
+            value: {
+              type: 'string',
+              value: `${this.getAssetType(
+                this.jobDetails.controls['assetType'].value
+              )}^${this.getAssetSubType(
+                this.jobDetails.controls['assetSubType'].value
+              )}`,
+            },
           },
         },
-      },
-      
-      
-    ];
-    console.log(this.assetData.metadata.metadata_element_list)
-    let fileToRevision;
-    let isRevision = false;
-  
-    let maxFiles = null;
-    const allowDuplicateDeliverable = false;
-    isRevision = false;
+      ];
+      console.log(this.assetData.metadata.metadata_element_list);
+      let fileToRevision;
+      let isRevision = false;
 
+      let maxFiles = null;
+      const allowDuplicateDeliverable = false;
+      isRevision = false;
 
-    const dialogRef = this.dialog.open(UploadComponent, {
-      width: '60%',
-      disableClose: true,
-      data: {
-        assetData: this.assetData,
-        isRevisionUpload: isRevision,
-        fileToRevision,
-        maxFiles,
-        maxFileSize: this.maxFileSize,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => {});
-  }else{
-    this.notificationService.error('please fill the form details')
-  }
-}
-
-
-  getMetaDataAsset(){
-
-    let asstetMetaData={
-      'brand':this.getBrand(this.jobDetails.get('brand')?.value),
-      'productLine':this.getProductLine(this.jobDetails.get('productLine')?.value),
-      "country":this.getCountry(this.jobDetails.get('country')?.value),
-      "albumName":this.jobDetails.get('albumName')?.value,
-      "department":this.getDepartment(this.jobDetails.controls['department']?.value),
-      "assetType":this.getAssetType(this.jobDetails.controls['assetType'].value),
-      "assetSubType":this.getAssetSubType(this.jobDetails.controls['assetSubType'].value),
-      "useCase":this.getUseCase(this.jobDetails.controls['useCase'].value),
-      "comments": this.jobDetails.controls['comments'].value,
-      "sapNo":this.jobDetails.controls['sapNumber'].value,
-      "eventDate":this.jobDetails.controls['eventDate'].value
-
+      const dialogRef = this.dialog.open(UploadComponent, {
+        width: '60%',
+        disableClose: true,
+        data: {
+          assetData: this.assetData,
+          isRevisionUpload: isRevision,
+          fileToRevision,
+          maxFiles,
+          maxFileSize: this.maxFileSize,
+        },
+      });
+      dialogRef.afterClosed().subscribe((result) => {});
+    } else {
+      this.notificationService.error('please fill the form details');
     }
-    return asstetMetaData
-    
-    
   }
 
-  finalHitCount!: number;
+  getMetaDataAsset() {
+    let asstetMetaData = {
+      brand: this.getBrand(this.jobDetails.get('brand')?.value),
+      productLine: this.getProductLine(
+        this.jobDetails.get('productLine')?.value
+      ),
+      country: this.getCountry(this.jobDetails.get('country')?.value),
+      albumName: this.jobDetails.get('albumName')?.value,
+      department: this.getDepartment(
+        this.jobDetails.controls['department']?.value
+      ),
+      assetType: this.getAssetType(this.jobDetails.controls['assetType'].value),
+      assetSubType: this.getAssetSubType(
+        this.jobDetails.controls['assetSubType'].value
+      ),
+      useCase: this.getUseCase(this.jobDetails.controls['useCase'].value),
+      comments: this.jobDetails.controls['comments'].value,
+      sapNo: this.jobDetails.controls['sapNumber'].value,
+      eventDate: this.jobDetails.controls['eventDate'].value,
+    };
+    return asstetMetaData;
+  }
+
   /* Preview Image List from OTMM */
   getImagesFromOtmm = () => {
     this.otmmService.getSessioons().subscribe({
@@ -621,6 +632,7 @@ export class EditFormComponent implements OnInit {
         });
       },
     });
+    /**FINAL BUCKET */
     this.otmmService
       .otmmMetadataSearch(env.searchConfigId, 0, 5, 'FINAL')
       .subscribe({
@@ -635,32 +647,77 @@ export class EditFormComponent implements OnInit {
           console.log(`Metadata: `, res);
         },
       });
+
+    /**PROOF BUCKET */
+    this.otmmService
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'PROOF')
+      .subscribe({
+        next: (res: any) => {
+          this.proofHitCount =
+            res.search_result_resource.search_result.total_hit_count;
+          this.proofImageList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.delivery_service_url;
+            }
+          );
+          console.log(`Metadata: `, res);
+        },
+      });
+
+    /**RESOURCES BUCKET */
+    this.otmmService
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'RESOURCES')
+      .subscribe({
+        next: (res: any) => {
+          this.resourcesHitCount =
+            res.search_result_resource.search_result.total_hit_count;
+          this.resourcesImageList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.delivery_service_url;
+            }
+          );
+          console.log(`Metadata: `, res);
+        },
+      });
+
+    /**WORKING BUCKET */
+    this.otmmService
+      .otmmMetadataSearch(env.searchConfigId, 0, 5, 'WORKING')
+      .subscribe({
+        next: (res: any) => {
+          this.workingHitCount =
+            res.search_result_resource.search_result.total_hit_count;
+          this.workingImageList = res.search_result_resource.asset_list.map(
+            (asset: any) => {
+              return asset.delivery_service_url;
+            }
+          );
+          console.log(`Metadata: `, res);
+        },
+      });
   };
 
-  previewImage(imageList: any,bucketName:any) {
-   let assetMetadataVlaues= this.getMetaDataAsset();
+  previewImage(imageList: any, bucketName: any) {
+    let assetMetadataVlaues = this.getMetaDataAsset();
     this.dialog.open(PreviewImageComponent, {
       width: '900px',
       height: '700px',
       data: {
         imageList: imageList,
         finalHitCount: this.finalHitCount,
-        validStatus:this.jobDetails.valid,
-        bucketName:bucketName,
-        assetMetadata:assetMetadataVlaues,
-        JobId:this.jobId
-
+        validStatus: this.jobDetails.valid,
+        bucketName: bucketName,
+        assetMetadata: assetMetadataVlaues,
+        JobId: this.jobId,
       },
     });
   }
 
   deleteJob(jobId: any) {
-   
     this.router.navigateByUrl('apps/dashboard');
     this.notificationService.success('Job has been deleted sucessfully ');
-    this.formService.deleteJob(jobId).subscribe((data:any)=>{
-      console.log(data)
-    })
+    this.formService.deleteJob(jobId).subscribe((data: any) => {
+      console.log(data);
+    });
   }
-
 }
