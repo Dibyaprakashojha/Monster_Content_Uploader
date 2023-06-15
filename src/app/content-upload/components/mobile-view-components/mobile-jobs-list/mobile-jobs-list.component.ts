@@ -98,8 +98,8 @@ export class MobileJobsListComponent implements OnInit {
         .getMyJobsForMobile(this.documentIndexMyJobs, 1)
         .subscribe((solrData: any) => {
           console.log(solrData);
-          // this.jobList = [...this.jobList, ...solrData.data];
-          this.jobList.push.apply(solrData.data)
+          this.jobList = [...this.jobList, ...solrData.data];
+          // this.jobList.push.apply(solrData.data)
 
           
         });
